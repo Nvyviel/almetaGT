@@ -81,7 +81,7 @@ class AuthenticatedSessionController extends Controller
 
     public function roomAdmin(Request $request)
     {
-        $query = User::query();
+        $query = User::query()->where('id', '!=', 1);
 
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
@@ -97,8 +97,11 @@ class AuthenticatedSessionController extends Controller
         $profits = $paymentController->calculateProfits();
 
         $users = $query->paginate(5);
+
         $totalUsers = User::where('is_admin', 0)->count();
-        $totalAdmins = User::where('is_admin', 1)->count();
+        $totalAdmins = User::where('is_admin', 1)
+            ->where('id', '!=', 1)
+            ->count();
         $totalShipments = Shipment::count();
         $totalSeals = StockSeal::sum('stock');
 
@@ -111,6 +114,7 @@ class AuthenticatedSessionController extends Controller
             'profits'
         ));
     }
+
 
     public function detail($id)
     {

@@ -12,11 +12,11 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'user_id' => '10000000',
-            'name' => 'Aldivo Ishen',
-            'email' => 'aldivo.ishen@gmail.com',
+            'name' => 'Hendra Agust',
+            'email' => 'hendra@almetagt.com',
             'password' => Hash::make('aldivo99'),
             'company_name' => 'PT. ALMETA GLOBAL TRILINDO',
-            'company_phone_number' => '081216996352',
+            'company_phone_number' => '082139808850',
             'company_location' => 'Surabaya',
             'company_address' => 'Jl. Petemon 1 No. 56D, Surabaya, Jawa Timur',
             'is_admin' => true,

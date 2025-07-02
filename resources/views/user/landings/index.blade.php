@@ -702,7 +702,9 @@
             </div>
         </div>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f9fafb" fill-opacity="1" d="M0,320L1440,192L1440,320L0,320Z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#f9fafb" fill-opacity="1" d="M0,320L1440,192L1440,320L0,320Z"></path>
+        </svg>
 
         <!-- Footer with improved styling -->
         <footer class="bg-gray-50 text-black" id="contact">
@@ -757,7 +759,7 @@
                                 <div>
                                     <h4 class="font-medium text-gray-900 text-sm sm:text-base">Phone</h4>
                                     <p class="text-xs sm:text-sm text-gray-600 hover:text-red-600 transition-colors">
-                                        <a href="tel:+6281216996352" class="hover:underline">+62 812-1699-6352</a>
+                                        <a href="tel:+6281216996352" class="hover:underline">+62 821-3980-8850</a>
                                     </p>
                                 </div>
                             </div>
@@ -781,7 +783,7 @@
                                     <h4 class="font-medium text-gray-900 text-sm sm:text-base">Company</h4>
                                     <p class="text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors">
                                         <a href="mailto:almetagt@gmail.com"
-                                            class="hover:underline">almetagt@gmail.com</a>
+                                            class="hover:underline">hendra@almetagt.com</a>
                                     </p>
                                 </div>
                             </div>
@@ -794,7 +796,7 @@
                                     <h4 class="font-medium text-gray-900 text-sm sm:text-base">Customer Service</h4>
                                     <p class="text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors">
                                         <a href="mailto:aldivo.ishen@gmail.com"
-                                            class="hover:underline">aldivo.ishen@gmail.com</a>
+                                            class="hover:underline">cs@almetagt.com</a>
                                     </p>
                                 </div>
                             </div>
