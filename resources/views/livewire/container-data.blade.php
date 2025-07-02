@@ -118,7 +118,7 @@
                                     class="peer sr-only">
                                 <span
                                     class="flex items-center justify-center px-4 py-3 bg-white border-2 border-gray-300 text-sm font-medium rounded-l-md peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:text-blue-600 hover:bg-gray-50 cursor-pointer w-full transition-all">
-                                    Filled
+                                    Full
                                 </span>
                             </label>
                             <label class="relative flex-1">
@@ -187,13 +187,6 @@
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700">Quantity</label>
                         <div class="relative">
-                            {{-- <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-                                </svg>
-                            </div> --}}
                             <input type="number" wire:model="quantity" min="1"
                                 class="pl-10 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
                                 placeholder="Enter quantity">
@@ -206,13 +199,6 @@
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700">Commodity</label>
                         <div class="relative">
-                            {{-- <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                </svg>
-                            </div> --}}
                             <input type="text" wire:model="commodity"
                                 class="pl-10 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm uppercase transition-all"
                                 placeholder="Enter commodity" autofocus>
@@ -225,13 +211,6 @@
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700">Weight (KG)</label>
                         <div class="relative rounded-md shadow-sm">
-                            {{-- <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                                </svg>
-                            </div> --}}
                             <input type="number" wire:model="weight"
                                 class="pl-10 w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm pr-12 transition-all"
                                 placeholder="Enter weight">

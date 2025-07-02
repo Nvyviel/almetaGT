@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->bigInteger('phone_number');
             $table->text('consignee_address');
-            // $table->unsignedBigInteger('ktp_number');
+            $table->string('npwp')->nullable();
+            $table->string('ktp')->nullable();
             $table->timestamps();
         });
     }

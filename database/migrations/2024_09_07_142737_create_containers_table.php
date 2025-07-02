@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('shipment_id')->constrained()->onDelete('cascade');
             $table->enum('stuffing', ['Outdoor', 'Indoor']);
             $table->enum('ownership_container', ['COC', 'SOC']);
-            $table->enum('load_type', ['Filled', 'Empty']);
+            $table->enum('load_type', ['Full', 'Empty']);
             $table->text('notes')->nullable();
 
             // CONTAINER DATA
