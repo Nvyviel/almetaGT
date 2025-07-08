@@ -24,13 +24,13 @@
 
 <body class="font-sans text-gray-900 antialiased ">
     <main class="flex-1 min-h-screen">
-                <div>
-                    {{ $slot }}
-                </div>
-            </main>
+        <div>
+            {{ $slot }}
+        </div>
+    </main>
     {{-- SWEETALERT CDN --}}
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @stack('register-script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

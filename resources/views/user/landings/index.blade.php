@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @section('title-guest', 'Almeta Global Logistics')
+    @section('title-guest', 'Almeta Global Trilindo')
 
     @php
         $fromCities = [
@@ -155,7 +155,7 @@
                         <!-- Right side - Image -->
                         <div class="flex justify-center lg:justify-end mt-4 lg:mt-0">
                             <div
-                                class="relative w-4/5 sm:w-2/3 lg:w-full max-w-sm aspect-square overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
+                                class=" relative w-4/5 sm:w-2/3 lg:w-full max-w-md aspect-square overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
                                 <img src="{{ asset('assets/img/Almeta-ship.png') }}" alt="Almeta Ship"
                                     class="w-full h-full object-cover">
                             </div>
@@ -213,10 +213,10 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <div
+                                {{-- <div
                                     class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none text-gray-400 group-hover:text-blue-500 transition-colors">
                                     <i class="fas fa-chevron-down text-sm sm:text-base"></i>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -249,10 +249,10 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <div
+                                {{-- <div
                                     class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none text-gray-400 group-hover:text-red-500 transition-colors">
                                     <i class="fas fa-chevron-down text-sm sm:text-base"></i>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -756,12 +756,23 @@
                                     class="mr-3 sm:mr-4 p-2 sm:p-3 bg-gradient-to-br from-red-100 to-red-50 rounded-lg shadow-sm">
                                     <i class="fas fa-phone text-red-500"></i>
                                 </div>
+                                @php
+                                    $customerName = Auth::user()->name ?? 'Customer baru';
+                                    $whatsappNumber = '6282139808850';
+                                    $message = "Halo, Almeta Global Trilindo. Saya $customerName, ada kebutuhan pengiriman. Apa bisa dibantu?";
+                                    $encodedMessage = urlencode($message);
+                                @endphp
+
                                 <div>
-                                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">Phone</h4>
-                                    <p class="text-xs sm:text-sm text-gray-600 hover:text-red-600 transition-colors">
-                                        <a href="tel:+6281216996352" class="hover:underline">+62 821-3980-8850</a>
+                                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">WhatsApp</h4>
+                                    <p class="text-xs sm:text-sm text-gray-600 hover:text-green-600 transition-colors">
+                                        <a href="https://wa.me/{{ $whatsappNumber }}?text={{ $encodedMessage }}"
+                                            target="_blank" class="hover:underline">
+                                            +62 821-3980-8850
+                                        </a>
                                     </p>
                                 </div>
+
                             </div>
                         </div>
                     </div>
