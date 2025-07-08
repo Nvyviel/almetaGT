@@ -34,21 +34,7 @@ class StatusMiddleware
         $currentRoute = $request->route() ? $request->route()->getName() : 'NO_ROUTE_NAME';
         Log::info('StatusMiddleware: Current route name: ' . $currentRoute);
 
-        if ($user->is_admin) {
-            Log::info('StatusMiddleware: User is admin, allowing access');
-            return $next($request);
-        }
-
-        if ($user->status === 'Approved') {
-            Log::info('StatusMiddleware: User status is Approved');
-            if ($request->routeIs('pending-view')) {
-                Log::info('StatusMiddleware: Redirecting approved user from pending-view to dashboard');
-                return redirect()->route('dashboard');
-            }
-            Log::info('StatusMiddleware: Allowing approved user to continue');
-            return $next($request);
-        }
-
+        // Check for restricted statuses first, regardless of admin status
         if ($user->status === 'Under Verification' || $user->status === 'Warned') {
             Log::info('StatusMiddleware: User has restricted status: ' . $user->status);
 
@@ -70,6 +56,22 @@ class StatusMiddleware
                 Log::info('StatusMiddleware: REDIRECTING FROM: ' . $currentRoute . ' TO: pending-view');
                 return redirect()->route('pending-view')->with('warning', 'Akses terbatas. Status akun Anda: ' . $user->status);
             }
+        }
+
+        // Only check for admin if they don't have a restricted status
+        if ($user->is_admin) {
+            Log::info('StatusMiddleware: User is admin, allowing access');
+            return $next($request);
+        }
+
+        if ($user->status === 'Approved') {
+            Log::info('StatusMiddleware: User status is Approved');
+            if ($request->routeIs('pending-view')) {
+                Log::info('StatusMiddleware: Redirecting approved user from pending-view to dashboard');
+                return redirect()->route('dashboard');
+            }
+            Log::info('StatusMiddleware: Allowing approved user to continue');
+            return $next($request);
         }
 
         Log::info('StatusMiddleware: No status match, redirecting to login');

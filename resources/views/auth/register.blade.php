@@ -489,174 +489,217 @@
 
                             {{-- Document Upload Section --}}
                             {{-- Document Upload Section --}}
-<div id="documents-section" class="section-content hidden">
-    <div class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- KTP Upload -->
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm" id="ktp-container">
-                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-                    </svg>
-                    Upload KTP
-                </label>
-                
-                <!-- Upload Area -->
-                <div class="flex items-center justify-center w-full" id="ktp-upload-area">
-                    <label for="ktp"
-                        class="flex flex-col items-center justify-center w-full h-28 border border-gray-300 border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
-                        <div class="flex flex-col items-center justify-center pt-4 pb-4">
-                            <svg class="w-8 h-8 mb-2 text-gray-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                            </svg>
-                            <p class="mb-1 text-sm text-gray-700"><span class="font-medium text-blue-600">Click to upload</span></p>
-                            <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
-                        </div>
-                        <input id="ktp" type="file" name="ktp" accept="image/*" class="hidden" />
-                    </label>
-                </div>
+                            <div id="documents-section" class="section-content hidden">
+                                <div class="space-y-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                        <!-- KTP Upload -->
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm"
+                                            id="ktp-container">
+                                            <label
+                                                class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-5 w-5 mr-2 text-blue-600" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                                                </svg>
+                                                Upload KTP
+                                            </label>
 
-                <!-- Success State (Hidden by default) -->
-                <div class="hidden w-full" id="ktp-success-area">
-                    <div class="flex flex-col items-center justify-center p-4 bg-green-50 border-2 border-green-200 border-dashed rounded-md">
-                        <!-- Success Icon -->
-                        <div class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
-                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <!-- File Info -->
-                        <div class="text-center mb-3">
-                            <p class="text-sm font-medium text-green-800" id="ktp-filename">Document uploaded</p>
-                            <p class="text-xs text-green-600" id="ktp-filesize">0 KB</p>
-                        </div>
-                        <!-- Upload Button -->
-                        <button type="button" onclick="retriggerUpload('ktp')"
-                            class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-                            Upload File
-                        </button>
-                    </div>
-                </div>
-                
-                @error('ktp')
-                    <p class="text-red-600 text-xs mt-1 ml-1">{{ $message }}</p>
-                @enderror
-            </div>
+                                            <!-- Upload Area -->
+                                            <div class="flex items-center justify-center w-full" id="ktp-upload-area">
+                                                <label for="ktp"
+                                                    class="flex flex-col items-center justify-center w-full h-28 border border-gray-300 border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                                    <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                                                        <svg class="w-8 h-8 mb-2 text-gray-500" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 20 16">
+                                                            <path stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2"
+                                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                        </svg>
+                                                        <p class="mb-1 text-sm text-gray-700"><span
+                                                                class="font-medium text-blue-600">Click to
+                                                                upload</span></p>
+                                                        <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
+                                                    </div>
+                                                    <input id="ktp" type="file" name="ktp"
+                                                        accept="image/*" class="hidden" />
+                                                </label>
+                                            </div>
 
-            <!-- NPWP Upload -->
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm" id="npwp-container">
-                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
-                    Upload NPWP
-                </label>
-                
-                <!-- Upload Area -->
-                <div class="flex items-center justify-center w-full" id="npwp-upload-area">
-                    <label for="npwp"
-                        class="flex flex-col items-center justify-center w-full h-28 border border-gray-300 border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
-                        <div class="flex flex-col items-center justify-center pt-4 pb-4">
-                            <svg class="w-8 h-8 mb-2 text-gray-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                            </svg>
-                            <p class="mb-1 text-sm text-gray-700"><span class="font-medium text-blue-600">Click to upload</span></p>
-                            <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
-                        </div>
-                        <input id="npwp" type="file" name="npwp" accept="image/*" class="hidden" />
-                    </label>
-                </div>
+                                            <!-- Success State (Hidden by default) -->
+                                            <div class="hidden w-full" id="ktp-success-area">
+                                                <div
+                                                    class="flex flex-col items-center justify-center p-4 bg-green-50 border-2 border-green-200 border-dashed rounded-md">
+                                                    <!-- Success Icon -->
+                                                    <div
+                                                        class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
+                                                        <svg class="w-8 h-8 text-green-500" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <!-- File Info -->
+                                                    <div class="text-center mb-3">
+                                                        <p class="text-sm font-medium text-green-800"
+                                                            id="ktp-filename">Document uploaded</p>
+                                                        <p class="text-xs text-green-600" id="ktp-filesize">0 KB</p>
+                                                    </div>
+                                                    <!-- Upload Button -->
+                                                    <button type="button" onclick="retriggerUpload('ktp')"
+                                                        class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                                                        Upload File
+                                                    </button>
+                                                </div>
+                                            </div>
 
-                <!-- Success State (Hidden by default) -->
-                <div class="hidden w-full" id="npwp-success-area">
-                    <div class="flex flex-col items-center justify-center p-4 bg-green-50 border-2 border-green-200 border-dashed rounded-md">
-                        <!-- Success Icon -->
-                        <div class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
-                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <!-- File Info -->
-                        <div class="text-center mb-3">
-                            <p class="text-sm font-medium text-green-800" id="npwp-filename">Document uploaded</p>
-                            <p class="text-xs text-green-600" id="npwp-filesize">0 KB</p>
-                        </div>
-                        <!-- Upload Button -->
-                        <button type="button" onclick="retriggerUpload('npwp')"
-                            class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-                            Upload File
-                        </button>
-                    </div>
-                </div>
-                
-                @error('npwp')
-                    <p class="text-red-600 text-xs mt-1 ml-1">{{ $message }}</p>
-                @enderror
-            </div>
+                                            @error('ktp')
+                                                <p class="text-red-600 text-xs mt-1 ml-1">{{ $message }}</p>
+                                            @enderror
+                                        </div>
 
-            <!-- NIB Upload -->
-            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm" id="nib-container">
-                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                    </svg>
-                    Upload NIB
-                </label>
-                
-                <!-- Upload Area -->
-                <div class="flex items-center justify-center w-full" id="nib-upload-area">
-                    <label for="nib"
-                        class="flex flex-col items-center justify-center w-full h-28 border border-gray-300 border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
-                        <div class="flex flex-col items-center justify-center pt-4 pb-4">
-                            <svg class="w-8 h-8 mb-2 text-gray-500" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                            </svg>
-                            <p class="mb-1 text-sm text-gray-700"><span class="font-medium text-blue-600">Click to upload</span></p>
-                            <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
-                        </div>
-                        <input id="nib" type="file" name="nib" accept="image/*" class="hidden" />
-                    </label>
-                </div>
+                                        <!-- NPWP Upload -->
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm"
+                                            id="npwp-container">
+                                            <label
+                                                class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-5 w-5 mr-2 text-blue-600" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                                </svg>
+                                                Upload NPWP
+                                            </label>
 
-                <!-- Success State (Hidden by default) -->
-                <div class="hidden w-full" id="nib-success-area">
-                    <div class="flex flex-col items-center justify-center p-4 bg-green-50 border-2 border-green-200 border-dashed rounded-md">
-                        <!-- Success Icon -->
-                        <div class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
-                            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <!-- File Info -->
-                        <div class="text-center mb-3">
-                            <p class="text-sm font-medium text-green-800" id="nib-filename">Document uploaded</p>
-                            <p class="text-xs text-green-600" id="nib-filesize">0 KB</p>
-                        </div>
-                        <!-- Upload Button -->
-                        <button type="button" onclick="retriggerUpload('nib')"
-                            class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-                            Upload File
-                        </button>
-                    </div>
-                </div>
-                
-                @error('nib')
-                    <p class="text-red-600 text-xs mt-1 ml-1">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
+                                            <!-- Upload Area -->
+                                            <div class="flex items-center justify-center w-full"
+                                                id="npwp-upload-area">
+                                                <label for="npwp"
+                                                    class="flex flex-col items-center justify-center w-full h-28 border border-gray-300 border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                                    <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                                                        <svg class="w-8 h-8 mb-2 text-gray-500" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 20 16">
+                                                            <path stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2"
+                                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                        </svg>
+                                                        <p class="mb-1 text-sm text-gray-700"><span
+                                                                class="font-medium text-blue-600">Click to
+                                                                upload</span></p>
+                                                        <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
+                                                    </div>
+                                                    <input id="npwp" type="file" name="npwp"
+                                                        accept="image/*" class="hidden" />
+                                                </label>
+                                            </div>
+
+                                            <!-- Success State (Hidden by default) -->
+                                            <div class="hidden w-full" id="npwp-success-area">
+                                                <div
+                                                    class="flex flex-col items-center justify-center p-4 bg-green-50 border-2 border-green-200 border-dashed rounded-md">
+                                                    <!-- Success Icon -->
+                                                    <div
+                                                        class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
+                                                        <svg class="w-8 h-8 text-green-500" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <!-- File Info -->
+                                                    <div class="text-center mb-3">
+                                                        <p class="text-sm font-medium text-green-800"
+                                                            id="npwp-filename">Document uploaded</p>
+                                                        <p class="text-xs text-green-600" id="npwp-filesize">0 KB</p>
+                                                    </div>
+                                                    <!-- Upload Button -->
+                                                    <button type="button" onclick="retriggerUpload('npwp')"
+                                                        class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                                                        Upload File
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            @error('npwp')
+                                                <p class="text-red-600 text-xs mt-1 ml-1">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+
+                                        <!-- NIB Upload -->
+                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm"
+                                            id="nib-container">
+                                            <label
+                                                class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-5 w-5 mr-2 text-blue-600" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                                                </svg>
+                                                Upload NIB
+                                            </label>
+
+                                            <!-- Upload Area -->
+                                            <div class="flex items-center justify-center w-full" id="nib-upload-area">
+                                                <label for="nib"
+                                                    class="flex flex-col items-center justify-center w-full h-28 border border-gray-300 border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                                    <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                                                        <svg class="w-8 h-8 mb-2 text-gray-500" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 20 16">
+                                                            <path stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="2"
+                                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                        </svg>
+                                                        <p class="mb-1 text-sm text-gray-700"><span
+                                                                class="font-medium text-blue-600">Click to
+                                                                upload</span></p>
+                                                        <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
+                                                    </div>
+                                                    <input id="nib" type="file" name="nib"
+                                                        accept="image/*" class="hidden" />
+                                                </label>
+                                            </div>
+
+                                            <!-- Success State (Hidden by default) -->
+                                            <div class="hidden w-full" id="nib-success-area">
+                                                <div
+                                                    class="flex flex-col items-center justify-center p-4 bg-green-50 border-2 border-green-200 border-dashed rounded-md">
+                                                    <!-- Success Icon -->
+                                                    <div
+                                                        class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-3">
+                                                        <svg class="w-8 h-8 text-green-500" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <!-- File Info -->
+                                                    <div class="text-center mb-3">
+                                                        <p class="text-sm font-medium text-green-800"
+                                                            id="nib-filename">Document uploaded</p>
+                                                        <p class="text-xs text-green-600" id="nib-filesize">0 KB</p>
+                                                    </div>
+                                                    <!-- Upload Button -->
+                                                    <button type="button" onclick="retriggerUpload('nib')"
+                                                        class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                                                        Upload File
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            @error('nib')
+                                                <p class="text-red-600 text-xs mt-1 ml-1">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                     <div class="flex justify-between mt-8">
                                         <button type="button"
@@ -710,739 +753,788 @@
         </div>
     </div>
 
-    <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section-content').forEach(section => {
-                section.classList.add('hidden');
-            });
-    
-            // Show the selected section
-            document.getElementById(sectionId + '-section').classList.remove('hidden');
-    
-            // Update active tab
-            document.querySelectorAll('a[href^="#"]').forEach(tab => {
-                if (tab.getAttribute('href') === '#' + sectionId) {
-                    tab.classList.add('text-blue-600', 'border-blue-600');
-                    tab.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700',
-                        'hover:border-gray-300');
-                } else {
-                    tab.classList.remove('text-blue-600', 'border-blue-600');
-                    tab.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700',
-                        'hover:border-gray-300');
-                }
-            });
-        }
-    
-        // Password Toggle Functionality for Register Form
-        function setupPasswordToggle(inputId, toggleId, eyeId, eyeSlashId, rippleId) {
-            const passwordInput = document.getElementById(inputId);
-            const toggleButton = document.getElementById(toggleId);
-            const eyeIcon = document.getElementById(eyeId);
-            const eyeSlashIcon = document.getElementById(eyeSlashId);
-            const ripple = document.getElementById(rippleId);
-    
-            if (!passwordInput || !toggleButton || !eyeIcon || !eyeSlashIcon) return;
-    
-            function createRippleEffect() {
-                if (ripple) {
-                    ripple.classList.add('ripple-animation');
-                    setTimeout(() => {
-                        ripple.classList.remove('ripple-animation');
-                    }, 300);
-                }
-            }
-    
-            function togglePasswordVisibility() {
-                const isPassword = passwordInput.type === 'password';
-    
-                // Toggle password type
-                passwordInput.type = isPassword ? 'text' : 'password';
-    
-                // Toggle icons with animation
-                if (isPassword) {
-                    eyeIcon.classList.add('hidden');
-                    eyeSlashIcon.classList.remove('hidden');
-                    eyeSlashIcon.classList.add('icon-fade-in');
-                } else {
-                    eyeSlashIcon.classList.add('hidden');
-                    eyeIcon.classList.remove('hidden');
-                    eyeIcon.classList.add('icon-fade-in');
-                }
-    
-                // Remove animation class after animation completes
-                setTimeout(() => {
-                    eyeIcon.classList.remove('icon-fade-in');
-                    eyeSlashIcon.classList.remove('icon-fade-in');
-                }, 200);
-    
-                // Update aria-label for accessibility
-                toggleButton.setAttribute('aria-label',
-                    isPassword ? 'Hide password' : 'Show password'
-                );
-    
-                // Create ripple effect
-                createRippleEffect();
-    
-                // Brief focus back to input for better UX
-                passwordInput.focus();
-            }
-    
-            // Click event
-            toggleButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                togglePasswordVisibility();
-            });
-    
-            // Keyboard support
-            toggleButton.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    togglePasswordVisibility();
-                }
-            });
-    
-            // Touch support for mobile
-            let touchStarted = false;
-            toggleButton.addEventListener('touchstart', function() {
-                touchStarted = true;
-            });
-    
-            toggleButton.addEventListener('touchend', function(e) {
-                if (touchStarted) {
-                    e.preventDefault();
-                    togglePasswordVisibility();
-                    touchStarted = false;
-                }
-            });
-    
-            // Prevent form submission when clicking toggle
-            toggleButton.addEventListener('mousedown', function(e) {
-                e.preventDefault();
-            });
-        }
-    
-        // Enhanced File Upload with Success State
-        function setupEnhancedFileUpload() {
-            const fileInputs = ['ktp', 'npwp', 'nib'];
-    
-            fileInputs.forEach(inputId => {
-                const input = document.getElementById(inputId);
-                if (input) {
-                    input.addEventListener('change', function() {
-                        const file = this.files[0];
-                        if (file) {
-                            handleFileUploadSuccess(inputId, file);
-                        }
-                    });
-                }
-            });
-        }
-    
-        function handleFileUploadSuccess(inputId, file) {
-            const uploadArea = document.getElementById(`${inputId}-upload-area`);
-            const successArea = document.getElementById(`${inputId}-success-area`);
-            const filenameElement = document.getElementById(`${inputId}-filename`);
-            const filesizeElement = document.getElementById(`${inputId}-filesize`);
-            
-            // Format file size
-            const fileSize = formatFileSize(file.size);
-            
-            // Update success area content
-            if (filenameElement) {
-                filenameElement.textContent = file.name;
-            }
-            if (filesizeElement) {
-                filesizeElement.textContent = fileSize;
-            }
-            
-            // Hide upload area and show success area
-            if (uploadArea && successArea) {
-                uploadArea.classList.add('hidden');
-                successArea.classList.remove('hidden');
-                
-                // Add success animation
-                successArea.style.opacity = '0';
-                successArea.style.transform = 'scale(0.95)';
-                
-                requestAnimationFrame(() => {
-                    successArea.style.transition = 'all 0.3s ease-out';
-                    successArea.style.opacity = '1';
-                    successArea.style.transform = 'scale(1)';
+    @push('register-script')
+        <script>
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.add('hidden');
                 });
-            }
-            
-            // Update container styling
-            const container = document.getElementById(`${inputId}-container`);
-            if (container) {
-                container.classList.remove('bg-gray-50', 'border-gray-200');
-                container.classList.add('bg-green-50', 'border-green-200');
-            }
-        }
-    
-        function retriggerUpload(inputId) {
-            const input = document.getElementById(inputId);
-            const uploadArea = document.getElementById(`${inputId}-upload-area`);
-            const successArea = document.getElementById(`${inputId}-success-area`);
-            const container = document.getElementById(`${inputId}-container`);
-            
-            // Reset file input
-            if (input) {
-                input.value = '';
-                input.click();
-            }
-            
-            // Show upload area and hide success area
-            if (uploadArea && successArea) {
-                successArea.classList.add('hidden');
-                uploadArea.classList.remove('hidden');
-            }
-            
-            // Reset container styling
-            if (container) {
-                container.classList.remove('bg-green-50', 'border-green-200');
-                container.classList.add('bg-gray-50', 'border-gray-200');
-            }
-        }
-    
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-    
-        // DOM Content Loaded Event - Main Initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // Initialize Password Toggle Functions
-            setupPasswordToggle('password', 'togglePassword', 'eyeIcon', 'eyeSlashIcon', 'ripple');
-            setupPasswordToggle('password_confirmation', 'togglePasswordConfirm', 'eyeIconConfirm',
-                'eyeSlashIconConfirm', 'rippleConfirm');
-    
-            // Setup enhanced file upload
-            setupEnhancedFileUpload();
-    
-            // Password Strength Checker (Optional Enhancement)
-            const passwordInput = document.getElementById('password');
-            if (passwordInput) {
-                passwordInput.addEventListener('input', function() {
-                    const password = this.value;
-                    // You can add password strength validation here if needed
-                    // For example: checkPasswordStrength(password);
-                });
-            }
-    
-            // Password Confirmation Validation
-            const passwordConfirmInput = document.getElementById('password_confirmation');
-            if (passwordConfirmInput && passwordInput) {
-                function validatePasswordMatch() {
-                    const password = passwordInput.value;
-                    const passwordConfirm = passwordConfirmInput.value;
-    
-                    if (passwordConfirm && password !== passwordConfirm) {
-                        passwordConfirmInput.setCustomValidity('Password tidak cocok');
-                        passwordConfirmInput.classList.add('border-red-500');
-                        passwordConfirmInput.classList.remove('border-gray-300');
+
+                // Show the selected section
+                document.getElementById(sectionId + '-section').classList.remove('hidden');
+
+                // Update active tab
+                document.querySelectorAll('a[href^="#"]').forEach(tab => {
+                    if (tab.getAttribute('href') === '#' + sectionId) {
+                        tab.classList.add('text-blue-600', 'border-blue-600');
+                        tab.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700',
+                            'hover:border-gray-300');
                     } else {
-                        passwordConfirmInput.setCustomValidity('');
-                        passwordConfirmInput.classList.remove('border-red-500');
-                        passwordConfirmInput.classList.add('border-gray-300');
+                        tab.classList.remove('text-blue-600', 'border-blue-600');
+                        tab.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700',
+                            'hover:border-gray-300');
+                    }
+                });
+            }
+
+            // Password Toggle Functionality for Register Form
+            function setupPasswordToggle(inputId, toggleId, eyeId, eyeSlashId, rippleId) {
+                const passwordInput = document.getElementById(inputId);
+                const toggleButton = document.getElementById(toggleId);
+                const eyeIcon = document.getElementById(eyeId);
+                const eyeSlashIcon = document.getElementById(eyeSlashId);
+                const ripple = document.getElementById(rippleId);
+
+                if (!passwordInput || !toggleButton || !eyeIcon || !eyeSlashIcon) return;
+
+                function createRippleEffect() {
+                    if (ripple) {
+                        ripple.classList.add('ripple-animation');
+                        setTimeout(() => {
+                            ripple.classList.remove('ripple-animation');
+                        }, 300);
                     }
                 }
-    
-                passwordConfirmInput.addEventListener('input', validatePasswordMatch);
-                passwordInput.addEventListener('input', function() {
-                    if (passwordConfirmInput.value) {
-                        validatePasswordMatch();
+
+                function togglePasswordVisibility() {
+                    const isPassword = passwordInput.type === 'password';
+
+                    // Toggle password type
+                    passwordInput.type = isPassword ? 'text' : 'password';
+
+                    // Toggle icons with animation
+                    if (isPassword) {
+                        eyeIcon.classList.add('hidden');
+                        eyeSlashIcon.classList.remove('hidden');
+                        eyeSlashIcon.classList.add('icon-fade-in');
+                    } else {
+                        eyeSlashIcon.classList.add('hidden');
+                        eyeIcon.classList.remove('hidden');
+                        eyeIcon.classList.add('icon-fade-in');
                     }
+
+                    // Remove animation class after animation completes
+                    setTimeout(() => {
+                        eyeIcon.classList.remove('icon-fade-in');
+                        eyeSlashIcon.classList.remove('icon-fade-in');
+                    }, 200);
+
+                    // Update aria-label for accessibility
+                    toggleButton.setAttribute('aria-label',
+                        isPassword ? 'Hide password' : 'Show password'
+                    );
+
+                    // Create ripple effect
+                    createRippleEffect();
+
+                    // Brief focus back to input for better UX
+                    passwordInput.focus();
+                }
+
+                // Click event
+                toggleButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    togglePasswordVisibility();
                 });
-            }
-    
-            // Form Validation Enhancement
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    // Additional validation can be added here
-                    const requiredFields = form.querySelectorAll('[required]');
-                    let isValid = true;
-    
-                    requiredFields.forEach(field => {
-                        if (!field.value.trim()) {
-                            field.classList.add('border-red-500');
-                            isValid = false;
-                        } else {
-                            field.classList.remove('border-red-500');
-                        }
-                    });
-    
-                    if (!isValid) {
+
+                // Keyboard support
+                toggleButton.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        showSection('personal');
+                        togglePasswordVisibility();
+                    }
+                });
+
+                // Touch support for mobile
+                let touchStarted = false;
+                toggleButton.addEventListener('touchstart', function() {
+                    touchStarted = true;
+                });
+
+                toggleButton.addEventListener('touchend', function(e) {
+                    if (touchStarted) {
+                        e.preventDefault();
+                        togglePasswordVisibility();
+                        touchStarted = false;
+                    }
+                });
+
+                // Prevent form submission when clicking toggle
+                toggleButton.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                });
+            }
+
+            // Enhanced File Upload with Success State
+            function setupEnhancedFileUpload() {
+                const fileInputs = ['ktp', 'npwp', 'nib'];
+
+                fileInputs.forEach(inputId => {
+                    const input = document.getElementById(inputId);
+                    if (input) {
+                        input.addEventListener('change', function() {
+                            const file = this.files[0];
+                            if (file) {
+                                handleFileUploadSuccess(inputId, file);
+                            }
+                        });
                     }
                 });
             }
-    
-            function checkSectionCompletion(sectionId) {
-                const section = document.getElementById(sectionId + '-section');
-                if (!section) return false;
-    
-                const requiredFields = section.querySelectorAll('[required]');
-                return Array.from(requiredFields).every(field => field.value.trim() !== '');
-            }
-    
-            // Auto-advance to next section when current section is completed (Optional)
-            document.querySelectorAll('input[required], textarea[required], select[required]').forEach(field => {
-                field.addEventListener('blur', function() {
-                    const currentSection = this.closest('.section-content');
-                    if (currentSection) {
-                        const sectionId = currentSection.id.replace('-section', '');
-                        if (checkSectionCompletion(sectionId)) {
-                            // Optional: Auto-advance to next section
-                            // Uncomment the next lines if you want auto-advance
-                            // if (sectionId === 'personal') showSection('business');
-                            // else if (sectionId === 'business') showSection('documents');
-                        }
-                    }
-                });
-            });
-    
-            console.log('Register form initialized successfully');
-        });
-    
-        // Utility function for password strength (if needed later)
-        function checkPasswordStrength(password) {
-            let score = 0;
-    
-            if (password.length >= 8) score += 1;
-            if (password.length >= 12) score += 1;
-            if (/[a-z]/.test(password)) score += 1;
-            if (/[A-Z]/.test(password)) score += 1;
-            if (/[0-9]/.test(password)) score += 1;
-            if (/[^A-Za-z0-9]/.test(password)) score += 1;
-    
-            // Return strength level
-            if (score < 2) return { level: 'weak', color: 'red' };
-            if (score < 4) return { level: 'fair', color: 'orange' };
-            if (score < 5) return { level: 'good', color: 'yellow' };
-            if (score < 6) return { level: 'strong', color: 'blue' };
-            return { level: 'very-strong', color: 'green' };
-        }
-    
-        // Additional utility functions
-        function formatPhoneNumber(input) {
-            // Format phone number as user types (Optional)
-            let value = input.value.replace(/\D/g, '');
-            if (value.startsWith('0')) {
-                value = '+62' + value.substring(1);
-            }
-            return value;
-        }
-    
-        // Initialize additional features when needed
-        function initializeAdvancedFeatures() {
-            // Phone number formatting
-            const phoneInput = document.getElementById('company_phone_number');
-            if (phoneInput) {
-                phoneInput.addEventListener('input', function() {
-                    // Optional: Format phone number
-                    // this.value = formatPhoneNumber(this);
-                });
-            }
-    
-            // Company name uppercase transformation
-            const companyNameInput = document.getElementById('company_name');
-            if (companyNameInput) {
-                companyNameInput.addEventListener('input', function() {
-                    this.value = this.value.toUpperCase();
-                });
-            }
-    
-            // File drag and drop support
-            const fileContainers = ['ktp', 'npwp', 'nib'];
-            fileContainers.forEach(containerId => {
-                const container = document.getElementById(`${containerId}-upload-area`);
+
+            function handleFileUploadSuccess(inputId, file) {
+                const uploadArea = document.getElementById(`${inputId}-upload-area`);
+                const successArea = document.getElementById(`${inputId}-success-area`);
+                const filenameElement = document.getElementById(`${inputId}-filename`);
+                const filesizeElement = document.getElementById(`${inputId}-filesize`);
+
+                // Format file size
+                const fileSize = formatFileSize(file.size);
+
+                // Update success area content
+                if (filenameElement) {
+                    filenameElement.textContent = file.name;
+                }
+                if (filesizeElement) {
+                    filesizeElement.textContent = fileSize;
+                }
+
+                // Hide upload area and show success area
+                if (uploadArea && successArea) {
+                    uploadArea.classList.add('hidden');
+                    successArea.classList.remove('hidden');
+
+                    // Add success animation
+                    successArea.style.opacity = '0';
+                    successArea.style.transform = 'scale(0.95)';
+
+                    requestAnimationFrame(() => {
+                        successArea.style.transition = 'all 0.3s ease-out';
+                        successArea.style.opacity = '1';
+                        successArea.style.transform = 'scale(1)';
+                    });
+                }
+
+                // Update container styling
+                const container = document.getElementById(`${inputId}-container`);
                 if (container) {
-                    container.addEventListener('dragover', function(e) {
-                        e.preventDefault();
-                        container.classList.add('border-blue-400', 'bg-blue-50');
+                    container.classList.remove('bg-gray-50', 'border-gray-200');
+                    container.classList.add('bg-green-50', 'border-green-200');
+                }
+            }
+
+            function retriggerUpload(inputId) {
+                const input = document.getElementById(inputId);
+                const uploadArea = document.getElementById(`${inputId}-upload-area`);
+                const successArea = document.getElementById(`${inputId}-success-area`);
+                const container = document.getElementById(`${inputId}-container`);
+
+                // Reset file input
+                if (input) {
+                    input.value = '';
+                    input.click();
+                }
+
+                // Show upload area and hide success area
+                if (uploadArea && successArea) {
+                    successArea.classList.add('hidden');
+                    uploadArea.classList.remove('hidden');
+                }
+
+                // Reset container styling
+                if (container) {
+                    container.classList.remove('bg-green-50', 'border-green-200');
+                    container.classList.add('bg-gray-50', 'border-gray-200');
+                }
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            // DOM Content Loaded Event - Main Initialization
+            document.addEventListener('DOMContentLoaded', function() {
+
+                // Initialize Password Toggle Functions
+                setupPasswordToggle('password', 'togglePassword', 'eyeIcon', 'eyeSlashIcon', 'ripple');
+                setupPasswordToggle('password_confirmation', 'togglePasswordConfirm', 'eyeIconConfirm',
+                    'eyeSlashIconConfirm', 'rippleConfirm');
+
+                // Setup enhanced file upload
+                setupEnhancedFileUpload();
+
+                // Password Strength Checker (Optional Enhancement)
+                const passwordInput = document.getElementById('password');
+                if (passwordInput) {
+                    passwordInput.addEventListener('input', function() {
+                        const password = this.value;
+                        // You can add password strength validation here if needed
+                        // For example: checkPasswordStrength(password);
                     });
-    
-                    container.addEventListener('dragleave', function(e) {
-                        e.preventDefault();
-                        container.classList.remove('border-blue-400', 'bg-blue-50');
+                }
+
+                // Password Confirmation Validation
+                const passwordConfirmInput = document.getElementById('password_confirmation');
+                if (passwordConfirmInput && passwordInput) {
+                    function validatePasswordMatch() {
+                        const password = passwordInput.value;
+                        const passwordConfirm = passwordConfirmInput.value;
+
+                        if (passwordConfirm && password !== passwordConfirm) {
+                            passwordConfirmInput.setCustomValidity('Password tidak cocok');
+                            passwordConfirmInput.classList.add('border-red-500');
+                            passwordConfirmInput.classList.remove('border-gray-300');
+                        } else {
+                            passwordConfirmInput.setCustomValidity('');
+                            passwordConfirmInput.classList.remove('border-red-500');
+                            passwordConfirmInput.classList.add('border-gray-300');
+                        }
+                    }
+
+                    passwordConfirmInput.addEventListener('input', validatePasswordMatch);
+                    passwordInput.addEventListener('input', function() {
+                        if (passwordConfirmInput.value) {
+                            validatePasswordMatch();
+                        }
                     });
-    
-                    container.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        container.classList.remove('border-blue-400', 'bg-blue-50');
-                        
-                        const files = e.dataTransfer.files;
-                        if (files.length > 0) {
-                            const input = document.getElementById(containerId);
-                            if (input) {
-                                input.files = files;
-                                const event = new Event('change', { bubbles: true });
-                                input.dispatchEvent(event);
+                }
+
+                // Form Validation Enhancement
+                const form = document.querySelector('form');
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        // Additional validation can be added here
+                        const requiredFields = form.querySelectorAll('[required]');
+                        let isValid = true;
+
+                        requiredFields.forEach(field => {
+                            if (!field.value.trim()) {
+                                field.classList.add('border-red-500');
+                                isValid = false;
+                            } else {
+                                field.classList.remove('border-red-500');
+                            }
+                        });
+
+                        if (!isValid) {
+                            e.preventDefault();
+                            showSection('personal');
+                        }
+                    });
+                }
+
+                function checkSectionCompletion(sectionId) {
+                    const section = document.getElementById(sectionId + '-section');
+                    if (!section) return false;
+
+                    const requiredFields = section.querySelectorAll('[required]');
+                    return Array.from(requiredFields).every(field => field.value.trim() !== '');
+                }
+
+                // Auto-advance to next section when current section is completed (Optional)
+                document.querySelectorAll('input[required], textarea[required], select[required]').forEach(field => {
+                    field.addEventListener('blur', function() {
+                        const currentSection = this.closest('.section-content');
+                        if (currentSection) {
+                            const sectionId = currentSection.id.replace('-section', '');
+                            if (checkSectionCompletion(sectionId)) {
+                                // Optional: Auto-advance to next section
+                                // Uncomment the next lines if you want auto-advance
+                                // if (sectionId === 'personal') showSection('business');
+                                // else if (sectionId === 'business') showSection('documents');
                             }
                         }
                     });
-                }
+                });
+
+                console.log('Register form initialized successfully');
             });
-        }
-    
-        // Call advanced features initialization
-        document.addEventListener('DOMContentLoaded', initializeAdvancedFeatures);
-    
-        // File validation function
-        function validateFile(file, maxSize = 2 * 1024 * 1024) { // 2MB default
-            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-            
-            if (!allowedTypes.includes(file.type)) {
-                alert('File type not supported. Please upload JPG, JPEG, or PNG files only.');
-                return false;
+
+            // Utility function for password strength (if needed later)
+            function checkPasswordStrength(password) {
+                let score = 0;
+
+                if (password.length >= 8) score += 1;
+                if (password.length >= 12) score += 1;
+                if (/[a-z]/.test(password)) score += 1;
+                if (/[A-Z]/.test(password)) score += 1;
+                if (/[0-9]/.test(password)) score += 1;
+                if (/[^A-Za-z0-9]/.test(password)) score += 1;
+
+                // Return strength level
+                if (score < 2) return {
+                    level: 'weak',
+                    color: 'red'
+                };
+                if (score < 4) return {
+                    level: 'fair',
+                    color: 'orange'
+                };
+                if (score < 5) return {
+                    level: 'good',
+                    color: 'yellow'
+                };
+                if (score < 6) return {
+                    level: 'strong',
+                    color: 'blue'
+                };
+                return {
+                    level: 'very-strong',
+                    color: 'green'
+                };
             }
-            
-            if (file.size > maxSize) {
-                alert('File size too large. Please upload files smaller than 2MB.');
-                return false;
+
+            // Additional utility functions
+            function formatPhoneNumber(input) {
+                // Format phone number as user types (Optional)
+                let value = input.value.replace(/\D/g, '');
+                if (value.startsWith('0')) {
+                    value = '+62' + value.substring(1);
+                }
+                return value;
             }
-            
-            return true;
-        }
-    
-        // Enhanced file upload with validation
-        function enhancedFileHandler(inputId, file) {
-            if (validateFile(file)) {
-                handleFileUploadSuccess(inputId, file);
-            } else {
-                // Reset input if validation fails
-                const input = document.getElementById(inputId);
-                if (input) {
-                    input.value = '';
+
+            // Initialize additional features when needed
+            function initializeAdvancedFeatures() {
+                // Phone number formatting
+                const phoneInput = document.getElementById('company_phone_number');
+                if (phoneInput) {
+                    phoneInput.addEventListener('input', function() {
+                        // Optional: Format phone number
+                        // this.value = formatPhoneNumber(this);
+                    });
+                }
+
+                // Company name uppercase transformation
+                const companyNameInput = document.getElementById('company_name');
+                if (companyNameInput) {
+                    companyNameInput.addEventListener('input', function() {
+                        this.value = this.value.toUpperCase();
+                    });
+                }
+
+                // File drag and drop support
+                const fileContainers = ['ktp', 'npwp', 'nib'];
+                fileContainers.forEach(containerId => {
+                    const container = document.getElementById(`${containerId}-upload-area`);
+                    if (container) {
+                        container.addEventListener('dragover', function(e) {
+                            e.preventDefault();
+                            container.classList.add('border-blue-400', 'bg-blue-50');
+                        });
+
+                        container.addEventListener('dragleave', function(e) {
+                            e.preventDefault();
+                            container.classList.remove('border-blue-400', 'bg-blue-50');
+                        });
+
+                        container.addEventListener('drop', function(e) {
+                            e.preventDefault();
+                            container.classList.remove('border-blue-400', 'bg-blue-50');
+
+                            const files = e.dataTransfer.files;
+                            if (files.length > 0) {
+                                const input = document.getElementById(containerId);
+                                if (input) {
+                                    input.files = files;
+                                    const event = new Event('change', {
+                                        bubbles: true
+                                    });
+                                    input.dispatchEvent(event);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Call advanced features initialization
+            document.addEventListener('DOMContentLoaded', initializeAdvancedFeatures);
+
+            // File validation function
+            function validateFile(file, maxSize = 2 * 1024 * 1024) { // 2MB default
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+                if (!allowedTypes.includes(file.type)) {
+                    alert('File type not supported. Please upload JPG, JPEG, or PNG files only.');
+                    return false;
+                }
+
+                if (file.size > maxSize) {
+                    alert('File size too large. Please upload files smaller than 2MB.');
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Enhanced file upload with validation
+            function enhancedFileHandler(inputId, file) {
+                if (validateFile(file)) {
+                    handleFileUploadSuccess(inputId, file);
+                } else {
+                    // Reset input if validation fails
+                    const input = document.getElementById(inputId);
+                    if (input) {
+                        input.value = '';
+                    }
                 }
             }
-        }
-    </script>
+        </script>
+    @endpush
 
-<style>
-    /* Background grid pattern */
-    .bg-grid-pattern {
-        background-size: 20px 20px;
-        background-image:
-            linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-    }
-
-    /* Basic animations */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .animate-fade-in {
-        animation: fadeIn 0.3s ease-in-out;
-    }
-
-    /* Password toggle button styles */
-    #togglePassword, #togglePasswordConfirm {
-        border-left: 1px solid transparent;
-        transition: all 0.2s ease-in-out;
-    }
-
-    #togglePassword:hover, #togglePasswordConfirm:hover {
-        border-left-color: rgba(229, 231, 235, 0.8);
-    }
-
-    #togglePassword:focus, #togglePasswordConfirm:focus {
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-        border-radius: 0 0.5rem 0.5rem 0;
-    }
-
-    /* Input focus enhancement */
-    #password:focus + button, #password_confirmation:focus + button {
-        border-left-color: rgba(59, 130, 246, 0.3);
-    }
-
-    /* Ripple animation for password toggle */
-    @keyframes ripple {
-        0% {
-            transform: scale(0);
-            opacity: 0.6;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 0;
-        }
-    }
-
-    .ripple-animation {
-        animation: ripple 0.3s ease-out;
-    }
-
-    /* Icon animation on toggle */
-    @keyframes iconFadeIn {
-        0% {
-            opacity: 0;
-            transform: scale(0.8) rotate(-10deg);
-        }
-        100% {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-        }
-    }
-
-    .icon-fade-in {
-        animation: iconFadeIn 0.2s ease-out;
-    }
-
-    /* Enhanced file upload animations */
-    @keyframes successPulse {
-        0% { 
-            transform: scale(1); 
-        }
-        50% { 
-            transform: scale(1.05); 
-        }
-        100% { 
-            transform: scale(1); 
-        }
-    }
-
-    .upload-success-enter {
-        animation: successPulse 0.5s ease-out;
-    }
-
-    /* Success state transitions */
-    .success-area-transition {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Upload button hover effects */
-    .upload-retry-btn {
-        transition: all 0.2s ease-in-out;
-    }
-
-    .upload-retry-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-    }
-
-    /* Container state changes */
-    .upload-container-success {
-        border-color: #10b981 !important;
-        background-color: #ecfdf5 !important;
-    }
-
-    /* File upload drag and drop styles */
-    .drag-over {
-        border-color: #3b82f6 !important;
-        background-color: #eff6ff !important;
-    }
-
-    /* Remove number input arrows */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-
-    /* Enhanced focus styles */
-    input:focus,
-    textarea:focus,
-    select:focus,
-    button:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    /* Form validation styles */
-    .border-red-500 {
-        border-color: #ef4444 !important;
-    }
-
-    .border-green-500 {
-        border-color: #10b981 !important;
-    }
-
-    /* Tab navigation enhancements */
-    .tab-indicator {
-        position: relative;
-    }
-
-    .tab-indicator::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background-color: currentColor;
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-    }
-
-    .tab-indicator.active::after {
-        transform: scaleX(1);
-    }
-
-    /* Loading states */
-    .loading {
-        opacity: 0.6;
-        pointer-events: none;
-    }
-
-    .loading::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 20px;
-        height: 20px;
-        margin: -10px 0 0 -10px;
-        border: 2px solid #f3f3f3;
-        border-top: 2px solid #3498db;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Button enhancements */
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    /* File upload area enhancements */
-    .file-upload-area {
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .file-upload-area::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-        transform: rotate(45deg);
-        transition: all 0.5s;
-        opacity: 0;
-    }
-
-    .file-upload-area:hover::before {
-        opacity: 1;
-        animation: shimmer 1.5s ease-in-out infinite;
-    }
-
-    @keyframes shimmer {
-        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-
-    /* Success state styling */
-    .success-state {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        animation: successGlow 2s ease-in-out;
-    }
-
-    @keyframes successGlow {
-        0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
-        50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
-    }
-
-    /* Mobile responsiveness */
-    @media (max-width: 768px) {
+    <style>
+        /* Background grid pattern */
         .bg-grid-pattern {
-            background-size: 15px 15px;
-        }
-        
-        .file-upload-area {
-            min-height: 120px;
-        }
-        
-        .upload-retry-btn {
-            padding: 8px 16px;
-            font-size: 12px;
-        }
-    }
-
-    /* Dark mode support (optional) */
-    @media (prefers-color-scheme: dark) {
-        .bg-grid-pattern {
+            background-size: 20px 20px;
             background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+                linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
         }
-    }
 
-    /* Accessibility improvements */
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-    }
+        /* Basic animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
 
-    /* High contrast mode support */
-    @media (prefers-contrast: high) {
-        input, textarea, button {
-            border-width: 2px !important;
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Password toggle button styles */
+        #togglePassword,
+        #togglePasswordConfirm {
+            border-left: 1px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #togglePassword:hover,
+        #togglePasswordConfirm:hover {
+            border-left-color: rgba(229, 231, 235, 0.8);
+        }
+
+        #togglePassword:focus,
+        #togglePasswordConfirm:focus {
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        /* Input focus enhancement */
+        #password:focus+button,
+        #password_confirmation:focus+button {
+            border-left-color: rgba(59, 130, 246, 0.3);
+        }
+
+        /* Ripple animation for password toggle */
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        .ripple-animation {
+            animation: ripple 0.3s ease-out;
+        }
+
+        /* Icon animation on toggle */
+        @keyframes iconFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) rotate(-10deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .icon-fade-in {
+            animation: iconFadeIn 0.2s ease-out;
+        }
+
+        /* Enhanced file upload animations */
+        @keyframes successPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .upload-success-enter {
+            animation: successPulse 0.5s ease-out;
+        }
+
+        /* Success state transitions */
+        .success-area-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Upload button hover effects */
         .upload-retry-btn {
-            border-width: 2px !important;
+            transition: all 0.2s ease-in-out;
         }
-    }
 
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-        * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
+        .upload-retry-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
         }
-    }
 
-    /* Print styles */
-    @media print {
-        .file-upload-area,
-        .upload-retry-btn,
-        button {
-            display: none !important;
+        /* Container state changes */
+        .upload-container-success {
+            border-color: #10b981 !important;
+            background-color: #ecfdf5 !important;
         }
-    }
-</style>
+
+        /* File upload drag and drop styles */
+        .drag-over {
+            border-color: #3b82f6 !important;
+            background-color: #eff6ff !important;
+        }
+
+        /* Remove number input arrows */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Enhanced focus styles */
+        input:focus,
+        textarea:focus,
+        select:focus,
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Form validation styles */
+        .border-red-500 {
+            border-color: #ef4444 !important;
+        }
+
+        .border-green-500 {
+            border-color: #10b981 !important;
+        }
+
+        /* Tab navigation enhancements */
+        .tab-indicator {
+            position: relative;
+        }
+
+        .tab-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-indicator.active::after {
+            transform: scaleX(1);
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Button enhancements */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* File upload area enhancements */
+        .file-upload-area {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload-area::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        .file-upload-area:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        /* Success state styling */
+        .success-state {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            animation: successGlow 2s ease-in-out;
+        }
+
+        @keyframes successGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .bg-grid-pattern {
+                background-size: 15px 15px;
+            }
+
+            .file-upload-area {
+                min-height: 120px;
+            }
+
+            .upload-retry-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+        }
+
+        /* Dark mode support (optional) */
+        @media (prefers-color-scheme: dark) {
+            .bg-grid-pattern {
+                background-image:
+                    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            }
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+
+            input,
+            textarea,
+            button {
+                border-width: 2px !important;
+            }
+
+            .upload-retry-btn {
+                border-width: 2px !important;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+
+            .file-upload-area,
+            .upload-retry-btn,
+            button {
+                display: none !important;
+            }
+        }
+    </style>
 </x-guest-layout>
