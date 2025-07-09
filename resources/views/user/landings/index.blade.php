@@ -175,36 +175,35 @@
         </div>
 
         <!-- Search Section -->
-        <div class="py-12 sm:py-16 lg:py-24 bg-white relative" id="filtering">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-8 sm:mb-10 lg:mb-14">
-                    <span
-                        class="inline-block px-3 py-1.5 bg-blue-100 text-blue-800 text-xs sm:text-sm font-medium rounded-full mb-3 animate-pulse">Search
-                        Routes</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2 sm:mb-3">
+        <div class="py-8 sm:py-12 lg:py-24 bg-white relative" id="filtering">
+            <div class="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8">
+                <div class="text-center mb-6 sm:mb-8 lg:mb-14">
+                    <h2
+                        class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2 sm:mb-3 px-2">
                         Find Your Perfect Shipping Route
                     </h2>
-                    <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">Select ports and discover available
+                    <p class="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">Select ports and
+                        discover available
                         shipments with competitive rates</p>
                 </div>
 
                 <!-- Search Form with floating effect -->
                 <form action="{{ route('landing-page') }}#filtering" method="GET"
-                    class="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 lg:p-10 mb-10 sm:mb-16 border border-gray-100 transform hover:translate-y-[-5px] transition-all duration-300"
+                    class="bg-white rounded-md sm:rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-6 sm:mb-10 lg:mb-16 border border-gray-100 transform hover:translate-y-[-2px] sm:hover:translate-y-[-5px] transition-all duration-300"
                     onsubmit="handleFormSubmit(event)">
                     @csrf
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-end">
+                    <div class="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-5 lg:items-end">
                         <!-- POL Selection -->
                         <div class="lg:col-span-5">
-                            <label for="pol" class="block mb-2 text-sm font-bold text-gray-700">
+                            <label for="pol" class="block mb-2 text-xs sm:text-sm font-bold text-gray-700">
                                 <span class="flex items-center">
-                                    <i class="fas fa-anchor text-blue-600 mr-2"></i>
-                                    Port of Loading (POL)
+                                    <i class="fas fa-anchor text-blue-600 mr-1.5 sm:mr-2 text-xs sm:text-sm"></i>
+                                    <span class="text-xs sm:text-sm">Port of Loading (POL)</span>
                                 </span>
                             </label>
                             <div class="relative group">
                                 <select name="pol" id="pol"
-                                    class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 border-gray-200 hover:border-blue-400 rounded-lg sm:rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
+                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 border-gray-200 hover:border-blue-400 rounded-md focus:ring-2 sm:focus:ring-4 focus:ring-blue-100 focus:border-blue-500 appearance-none bg-white shadow-sm transition-colors text-sm">
                                     <option disabled selected>Select Port of Loading</option>
                                     @foreach ($fromCities as $city)
                                         <option value="{{ $city }}"
@@ -213,34 +212,42 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                {{-- <div
-                                    class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none text-gray-400 group-hover:text-blue-500 transition-colors">
-                                    <i class="fas fa-chevron-down text-sm sm:text-base"></i>
-                                </div> --}}
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400 text-xs sm:text-sm"></i>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Direction Icon with pulse animation -->
+                        <!-- Direction Icon - Hidden on mobile, visible on large screens -->
                         <div class="hidden lg:flex lg:col-span-2 justify-center items-center">
                             <div
-                                class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg relative">
+                                class="w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg relative">
                                 <span
                                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-30"></span>
-                                <i class="fa-solid fa-ship text-white text-lg"></i>
+                                <i class="fa-solid fa-ship text-white text-sm lg:text-lg"></i>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Direction Arrow - Only visible on mobile -->
+                        <div class="flex lg:hidden justify-center py-2">
+                            <div
+                                class="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md rotate-90">
+                                <i class="fas fa-arrow-right text-white text-xs"></i>
                             </div>
                         </div>
 
                         <!-- POD Selection -->
                         <div class="lg:col-span-5">
-                            <label for="pod" class="block mb-2 text-sm font-bold text-gray-700">
+                            <label for="pod" class="block mb-2 text-xs sm:text-sm font-bold text-gray-700">
                                 <span class="flex items-center">
-                                    <i class="fas fa-anchor text-red-600 mr-2"></i>
-                                    Port of Discharge (POD)
+                                    <i class="fas fa-anchor text-red-600 mr-1.5 sm:mr-2 text-xs sm:text-sm"></i>
+                                    <span class="text-xs sm:text-sm">Port of Discharge (POD)</span>
                                 </span>
                             </label>
                             <div class="relative group">
                                 <select name="pod" id="pod"
-                                    class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 border-gray-200 hover:border-red-400 rounded-lg sm:rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
+                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 border-gray-200 hover:border-red-400 rounded-md focus:ring-2 sm:focus:ring-4 focus:ring-red-100 focus:border-red-500 appearance-none bg-white shadow-sm transition-colors text-sm">
                                     <option disabled selected>Select Port of Discharge</option>
                                     @foreach ($fromCities as $city)
                                         <option value="{{ $city }}"
@@ -249,19 +256,19 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                {{-- <div
-                                    class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none text-gray-400 group-hover:text-red-500 transition-colors">
-                                    <i class="fas fa-chevron-down text-sm sm:text-base"></i>
-                                </div> --}}
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400 text-xs sm:text-sm"></i>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Search Button -->
-                        <div class="lg:col-span-12 pt-2 sm:pt-4" id="filtering">
+                        <div class="lg:col-span-12 pt-3 sm:pt-4" id="filtering">
                             <button id="submitButton" type="submit"
-                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl hover:from-blue-500 hover:to-blue-800 transition-all duration-300 font-bold flex items-center justify-center text-base sm:text-lg shadow-lg hover:shadow-blue-200">
+                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 sm:py-4 px-4 sm:px-6 lg:px-8 rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 font-bold flex items-center justify-center text-sm sm:text-base lg:text-lg shadow-lg hover:shadow-blue-200 active:scale-95">
                                 <span id="buttonText" class="mr-2">Find Available Ships</span>
-                                <i class="fas fa-search"></i>
+                                <i class="fas fa-search text-xs sm:text-sm"></i>
                                 <span id="loadingSpinner" class="hidden ml-2">
                                     <i class="fas fa-spinner fa-spin"></i>
                                 </span>
@@ -272,97 +279,114 @@
 
                 <!-- Results Section -->
                 @if (request('pol') && request('pod'))
-                    <div class="space-y-6 sm:space-y-8">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 gap-3">
-                            <div>
-                                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Available Shipments
-                                </h2>
-                                <p class="text-gray-500 mt-1">From {{ strtoupper(request('pol')) }} to
-                                    {{ strtoupper(request('pod')) }}</p>
+                    <div class="space-y-4 sm:space-y-6 lg:space-y-8">
+                        <div
+                            class="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:justify-between mb-4 sm:mb-6 lg:mb-8">
+                            <div class="text-center md:text-left">
+                                <h2 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
+                                    Available Shipments</h2>
+                                <p class="text-gray-500 mt-1 text-sm sm:text-base">From
+                                    {{ strtoupper(request('pol')) }} to {{ strtoupper(request('pod')) }}</p>
                             </div>
                             <div
-                                class="px-4 py-2 sm:px-5 sm:py-3 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-800 rounded-full font-medium flex items-center shadow-sm text-sm sm:text-base">
-                                <i class="fas fa-route mr-2"></i>
+                                class="px-3 py-2 sm:px-4 sm:py-2 lg:px-5 lg:py-3 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-800 rounded-md font-medium flex items-center justify-center shadow-sm text-xs sm:text-sm lg:text-base">
+                                <i class="fas fa-route mr-1.5 sm:mr-2 text-xs sm:text-sm"></i>
                                 <span>{{ $shipments->count() }} routes found</span>
                             </div>
                         </div>
 
                         @if ($shipments->isEmpty())
                             <div
-                                class="bg-white rounded-xl shadow-lg sm:shadow-xl p-6 sm:p-10 lg:p-16 text-center border border-gray-100">
+                                class="bg-white rounded-md shadow-lg p-6 sm:p-8 lg:p-16 text-center border border-gray-100">
                                 <div
-                                    class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-blue-50 rounded-full mb-4 sm:mb-6 animate-pulse">
-                                    <i class="fas fa-ship text-3xl sm:text-4xl lg:text-5xl text-blue-300"></i>
+                                    class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 bg-blue-50 rounded-full mb-4 sm:mb-6 animate-pulse">
+                                    <i class="fas fa-ship text-xl sm:text-2xl lg:text-4xl text-blue-300"></i>
                                 </div>
-                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">No
+                                <h3 class="text-base sm:text-lg lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">No
                                     Routes Available</h3>
-                                <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto mb-4 sm:mb-6">We couldn't
-                                    find any shipments
-                                    for the selected route. Please try different ports or check back later.</p>
+                                <p class="text-gray-600 text-sm sm:text-base lg:text-lg max-w-md mx-auto mb-4 sm:mb-6">
+                                    We couldn't find any shipments for the selected route. Please try different ports or
+                                    check back later.</p>
                                 <a href="#filtering"
-                                    class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium rounded-lg transition-colors">
-                                    <i class="fas fa-search mr-2"></i>
+                                    class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium rounded-md transition-colors text-sm sm:text-base">
+                                    <i class="fas fa-search mr-1.5 sm:mr-2"></i>
                                     Try Another Route
                                 </a>
                             </div>
                         @else
-                            <div class="grid grid-cols-1 gap-6 sm:gap-8">
+                            <div class="space-y-4 sm:space-y-6 lg:space-y-8">
                                 @foreach ($shipments as $shipment)
                                     <div
-                                        class="bg-white rounded-xl shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
-                                        <!-- Shipment Card Header with gradient background -->
+                                        class="bg-white rounded-md shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-lg sm:hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
+                                        <!-- Shipment Card Header -->
                                         <div
-                                            class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-6">
-                                            <div class="absolute top-0 right-0 w-16 sm:w-20 h-16 sm:h-20">
+                                            class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 sm:p-4 lg:p-6">
+                                            <div
+                                                class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20">
                                                 <div
-                                                    class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-35px] top-[28px] sm:top-[32px] w-[170px] shadow-md text-xs sm:text-sm">
-                                                    Available</div>
+                                                    class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] lg:right-[-35px] top-[20px] sm:top-[24px] lg:top-[28px] w-[120px] sm:w-[140px] lg:w-[170px] shadow-md text-xs">
+                                                    Available
+                                                </div>
                                             </div>
 
-                                            <div class="flex flex-col sm:flex-row justify-between items-start">
-                                                <div>
-                                                    <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">
-                                                        {{ $shipment->vessel_name }}
-                                                    </h3>
-                                                    <div
-                                                        class="flex items-center text-white text-sm sm:text-base lg:text-lg">
-                                                        <span
-                                                            class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
-                                                        <div class="flex items-center mx-2 sm:mx-3 space-x-1">
-                                                            <span
-                                                                class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full"></span>
-                                                            <span class="w-10 sm:w-16 h-0.5 bg-white"></span>
-                                                            <span
-                                                                class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full"></span>
+                                            <div class="pr-8 sm:pr-12 lg:pr-16">
+                                                <h3
+                                                    class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-2 break-words">
+                                                    {{ $shipment->vessel_name }}
+                                                </h3>
+                                                <div
+                                                    class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
+                                                    <span
+                                                        class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+
+                                                    <!-- Mobile Route Indicator -->
+                                                    <div class="flex sm:hidden items-center justify-center my-2">
+                                                        <div class="flex flex-col items-center space-y-1">
+                                                            <span class="w-1 h-1 bg-white rounded-full"></span>
+                                                            <span class="w-0.5 h-8 bg-white"></span>
+                                                            <span class="w-1 h-1 bg-white rounded-full"></span>
                                                         </div>
-                                                        <span
-                                                            class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                                     </div>
+
+                                                    <!-- Desktop Route Indicator -->
+                                                    <div class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
+                                                        <span
+                                                            class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                        <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
+                                                        <span
+                                                            class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                    </div>
+
+                                                    <span
+                                                        class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="p-4 sm:p-6 lg:p-8">
-                                            <!-- Timeline with improved styling -->
+                                        <div class="p-3 sm:p-4 lg:p-6 xl:p-8">
+                                            <!-- Timeline Section -->
                                             <div
-                                                class="bg-gradient-to-r from-gray-50 to-white rounded-lg sm:rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-gray-200 shadow-sm">
+                                                class="bg-gradient-to-r from-gray-50 to-white rounded-md p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-gray-200 shadow-sm">
                                                 <h4
-                                                    class="text-base sm:text-lg font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
-                                                    <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>
-                                                    Voyage Schedule
+                                                    class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 flex items-center">
+                                                    <i
+                                                        class="fas fa-calendar-alt text-blue-600 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
+                                                    <span class="text-sm sm:text-base lg:text-lg">Voyage
+                                                        Schedule</span>
                                                 </h4>
 
                                                 <div class="relative">
-                                                    <!-- Timeline bar -->
+                                                    <!-- Desktop Timeline bar -->
                                                     <div
-                                                        class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-16 sm:mx-20">
+                                                        class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
                                                     </div>
 
+                                                    <!-- Mobile: Vertical Timeline -->
                                                     <div
-                                                        class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-10 relative">
+                                                        class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 xl:gap-10 relative">
                                                         @foreach (['etb', 'etd', 'eta'] as $index => $timeKey)
                                                             <div
-                                                                class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
+                                                                class="bg-white rounded-md p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
                                                                 <div
                                                                     class="flex items-center justify-between mb-2 sm:mb-3">
                                                                     <p
@@ -370,13 +394,13 @@
                                                                         {{ strtoupper($timeKey) }}
                                                                     </p>
                                                                     <div
-                                                                        class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
+                                                                        class="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
                                                                         <i
                                                                             class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs sm:text-sm"></i>
                                                                     </div>
                                                                 </div>
                                                                 <p
-                                                                    class="font-bold text-gray-800 text-base sm:text-lg lg:text-xl">
+                                                                    class="font-bold text-gray-800 text-sm sm:text-base lg:text-lg xl:text-xl">
                                                                     {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                                 </p>
                                                                 <p
@@ -387,70 +411,21 @@
                                                             </div>
                                                         @endforeach
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <!-- Additional shipment details with improved cards -->
-                                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                                                <div
-                                                    class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                    <p class="text-xs text-gray-500 mb-1">Vessel Type</p>
-                                                    <p
-                                                        class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                        <i
-                                                            class="fas fa-ship text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                        Container Ship
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                    <p class="text-xs text-gray-500 mb-1">Transit Time</p>
-                                                    <p
-                                                        class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                        <i
-                                                            class="fas fa-clock text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                        {{ \Carbon\Carbon::parse($shipment->etb)->diffInDays(\Carbon\Carbon::parse($shipment->eta)) }}
-                                                        Days
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                    <p class="text-xs text-gray-500 mb-1">Freetime </p>
-                                                    <p
-                                                        class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                        <i
-                                                            class="fas fa-box text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                        5-7 Days
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Price and Book Now Button -->
-                                            <div
-                                                class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 border-t border-gray-100 pt-4 sm:pt-6">
-                                                <div class="flex flex-col items-center sm:items-start">
-                                                    <p class="text-xs sm:text-sm text-gray-500 mb-1">Price per
-                                                        Container</p>
-                                                    <div class="flex items-center">
-                                                        <span
-                                                            class="text-xs sm:text-sm text-gray-500 mr-1 sm:mr-2">IDR</span>
-                                                        <span
-                                                            class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-700">
-                                                            {{ number_format($shipment->rate_per_container, 0, ',', '.') }}
-                                                        </span>
-                                                    </div>
+                                                    <!-- Mobile: Connect lines between timeline items -->
                                                     <div
-                                                        class="flex items-center mt-1 sm:mt-2 text-green-600 text-xs sm:text-sm">
-                                                        <i class="fas fa-tag mr-1"></i>
-                                                        <span>Best available rate</span>
+                                                        class="sm:hidden absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2 z-0">
                                                     </div>
                                                 </div>
+                                            </div>
 
+                                            <!-- Book Now Button -->
+                                            <div class="flex justify-center">
                                                 <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}"
-                                                    class="w-full sm:w-auto inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-lg sm:rounded-xl hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group">
-                                                    Book Now
+                                                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-12 lg:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group active:scale-95">
+                                                    <span class="mr-2">View Details & Book</span>
                                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-4 w-4 sm:h-5 sm:w-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                                                        class="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2" d="M9 5l7 7-7 7" />
@@ -467,397 +442,411 @@
             </div>
         </div>
 
-        <!-- Features Section with improved styling and color scheme -->
-        <div class="py-16 sm:py-20 lg:py-28" id="features">
+        <!-- Features Section -->
+        <div class="pt-16 sm:pt-20 lg:pt-28" id="features">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 sm:mb-16 lg:mb-24">
-                    <div class="relative inline-block">
+                <!-- Header Section -->
+                <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+                    <div class="inline-block">
                         <span
-                            class="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-sm sm:text-base font-medium rounded-full mb-3 sm:mb-4 shadow-md">Our
-                            Promise</span>
-                        <div
-                            class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-red-500 to-orange-400 rounded-full">
-                        </div>
+                            class="inline-block px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-md mb-4 shadow-sm">
+                            Our Promise
+                        </span>
                     </div>
-                    <h2
-                        class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-600 mb-4 sm:mb-6">
-                        Why Choose Almeta?</h2>
-                    <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">Experience superior
-                        logistics services tailored for businesses across Indonesia</p>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+                        Why Choose Almeta?
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Experience superior logistics services backed by proven performance metrics and comprehensive
+                        solutions tailored for businesses across Indonesia
+                    </p>
                 </div>
 
-                <!-- Stats with improved gradient cards -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-16 sm:mb-20">
-                    <div
-                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-red-600/5 to-red-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10">
-                            <div
-                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-red-600 to-red-400 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-red-200/50 transform group-hover:scale-110 transition-all duration-500">
-                                <i class="fas fa-anchor text-2xl sm:text-3xl text-white"></i>
-                            </div>
-                            <div
-                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400 mb-2 sm:mb-3">
-                                10+</div>
-                            <div class="text-sm sm:text-base text-gray-700 font-medium">Major Ports</div>
-                        </div>
+                <!-- Key Metrics Section -->
+                <div class="bg-white shadow-sm border border-gray-200 rounded-md mb-16 sm:mb-20 overflow-hidden">
+                    <div class="px-6 py-4 bg-gray-900 text-white">
+                        <h3 class="text-lg font-semibold">Performance Metrics</h3>
+                        <p class="text-sm text-gray-300 mt-1">Proven track record of excellence in logistics services
+                        </p>
                     </div>
 
-                    <div
-                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10">
+                    <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
+                        <div class="p-6 text-center hover:bg-gray-50 transition-colors duration-200">
                             <div
-                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-blue-600 to-blue-400 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-blue-200/50 transform group-hover:scale-110 transition-all duration-500">
-                                <i class="fas fa-stopwatch text-2xl sm:text-3xl text-white"></i>
+                                class="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-md mx-auto mb-3">
+                                <i class="fas fa-anchor text-lg"></i>
                             </div>
-                            <div
-                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-2 sm:mb-3">
-                                98%</div>
-                            <div class="text-sm sm:text-base text-gray-700 font-medium">On-Time Delivery</div>
+                            <div class="text-3xl font-bold text-gray-900 mb-1">10+</div>
+                            <div class="text-sm text-gray-600 font-medium">Major Ports Connected</div>
+                            <p class="text-xs text-gray-500 mt-2">Comprehensive port coverage across Indonesia</p>
                         </div>
-                    </div>
 
-                    <div
-                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-green-600/5 to-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10">
+                        <div class="p-6 text-center hover:bg-gray-50 transition-colors duration-200">
                             <div
-                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-green-600 to-green-400 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-green-200/50 transform group-hover:scale-110 transition-all duration-500">
-                                <i class="fas fa-star text-2xl sm:text-3xl text-white"></i>
+                                class="flex items-center justify-center w-12 h-12 bg-green-100 text-green-600 rounded-md mx-auto mb-3">
+                                <i class="fas fa-clock text-lg"></i>
                             </div>
-                            <div
-                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400 mb-2 sm:mb-3">
-                                4.9<span class="text-xl sm:text-2xl">/5</span></div>
-                            <div class="text-sm sm:text-base text-gray-700 font-medium">Client Rating</div>
+                            <div class="text-3xl font-bold text-gray-900 mb-1">98%</div>
+                            <div class="text-sm text-gray-600 font-medium">On-Time Delivery Rate</div>
+                            <p class="text-xs text-gray-500 mt-2">Consistent punctuality you can rely on</p>
                         </div>
-                    </div>
 
-                    <div
-                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-yellow-600/5 to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10">
+                        <div class="p-6 text-center hover:bg-gray-50 transition-colors duration-200">
                             <div
-                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-yellow-500 to-yellow-300 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-yellow-200/50 transform group-hover:scale-110 transition-all duration-500">
-                                <i class="fas fa-headset text-2xl sm:text-3xl text-white"></i>
+                                class="flex items-center justify-center w-12 h-12 bg-yellow-100 text-yellow-600 rounded-md mx-auto mb-3">
+                                <i class="fas fa-star text-lg"></i>
                             </div>
+                            <div class="text-3xl font-bold text-gray-900 mb-1">4.9<span class="text-lg">/5</span>
+                            </div>
+                            <div class="text-sm text-gray-600 font-medium">Customer Satisfaction</div>
+                            <p class="text-xs text-gray-500 mt-2">Based on 500+ verified reviews</p>
+                        </div>
+
+                        <div class="p-6 text-center hover:bg-gray-50 transition-colors duration-200">
                             <div
-                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-yellow-400 mb-2 sm:mb-3">
-                                24/7</div>
-                            <div class="text-sm sm:text-base text-gray-700 font-medium">Support</div>
+                                class="flex items-center justify-center w-12 h-12 bg-purple-100 text-purple-600 rounded-md mx-auto mb-3">
+                                <i class="fas fa-headset text-lg"></i>
+                            </div>
+                            <div class="text-3xl font-bold text-gray-900 mb-1">24/7</div>
+                            <div class="text-sm text-gray-600 font-medium">Customer Support</div>
+                            <p class="text-xs text-gray-500 mt-2">Round-the-clock assistance available</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Feature cards with improved design -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 relative">
-                    <!-- Decorative elements -->
-                    <div
-                        class="absolute hidden lg:block top-1/2 left-0 w-32 h-32 bg-blue-100 rounded-full -translate-x-1/2 -translate-y-1/2 filter blur-3xl opacity-30">
-                    </div>
-                    <div
-                        class="absolute hidden lg:block bottom-0 right-0 w-48 h-48 bg-red-100 rounded-full translate-x-1/3 translate-y-1/3 filter blur-3xl opacity-30">
-                    </div>
-
-                    <!-- Feature 1 -->
-                    <div
-                        class="relative p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br from-white to-red-50 shadow-xl border border-red-100 hover:shadow-2xl hover:shadow-red-200/30 transition-all duration-500 transform hover:-translate-y-2 z-10">
-                        <div
-                            class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-red-600 to-red-400 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-lg shadow-red-200/50">
-                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <h3
-                            class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400 mb-4 sm:mb-5">
-                            Fast Delivery</h3>
-                        <p class="text-base text-gray-600 leading-relaxed mb-6 sm:mb-8">Quick and efficient logistics
-                            solutions to meet your business needs with guaranteed timely delivery across Indonesia's
-                            most challenging routes.</p>
-                        <div
-                            class="flex items-center text-red-600 font-medium cursor-pointer hover:text-red-700 transition-colors group">
-                            <span>Learn more</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </div>
+                <!-- Core Services Section -->
+                <div class="mb-16 sm:mb-20">
+                    <div class="text-center mb-12">
+                        <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Core Service Advantages</h3>
+                        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                            Three fundamental pillars that make Almeta the preferred logistics partner for businesses
+                            nationwide
+                        </p>
                     </div>
 
-                    <!-- Feature 2 -->
-                    <div
-                        class="relative p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br from-white to-blue-50 shadow-xl border border-blue-100 hover:shadow-2xl hover:shadow-blue-200/30 transition-all duration-500 transform hover:-translate-y-2 z-10">
-                        <div
-                            class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-600 to-blue-400 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-lg shadow-blue-200/50">
-                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                        </div>
-                        <h3
-                            class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-4 sm:mb-5">
-                            Safe & Secure</h3>
-                        <p class="text-base text-gray-600 leading-relaxed mb-6 sm:mb-8">Your cargo's safety is our top
-                            priority with comprehensive end-to-end security measures and real-time tracking throughout
-                            the journey.</p>
-                        <div
-                            class="flex items-center text-blue-600 font-medium cursor-pointer hover:text-blue-700 transition-colors group">
-                            <span>Learn more</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <!-- Feature 3 -->
-                    <div
-                        class="relative p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br from-white to-green-50 shadow-xl border border-green-100 hover:shadow-2xl hover:shadow-green-200/30 transition-all duration-500 transform hover:-translate-y-2 z-10">
-                        <div
-                            class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-green-600 to-green-400 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-lg shadow-green-200/50">
-                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <h3
-                            class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400 mb-4 sm:mb-5">
-                            Reliable Service</h3>
-                        <p class="text-base text-gray-600 leading-relaxed mb-6 sm:mb-8">Consistent and dependable
-                            logistics solutions you can count on, backed by years of experience and deep knowledge of
-                            local markets.</p>
-                        <div
-                            class="flex items-center text-green-600 font-medium cursor-pointer hover:text-green-700 transition-colors group">
-                            <span>Learn more</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimonial with modern design -->
-                <div class="mt-16 sm:mt-20 lg:mt-28">
-                    <div
-                        class="relative p-8 sm:p-10 lg:p-14 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-xl overflow-hidden">
-                        <!-- Decorative elements -->
-                        <div
-                            class="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full opacity-20 -translate-x-1/2 -translate-y-1/2 blur-3xl">
-                        </div>
-                        <div
-                            class="absolute bottom-0 right-0 w-72 h-72 bg-blue-400 rounded-full opacity-20 translate-x-1/2 translate-y-1/2 blur-3xl">
-                        </div>
-
-                        <div class="relative z-10">
-                            <div class="flex flex-col items-center">
+                    <div class="space-y-8 lg:space-y-12">
+                        <!-- Service 1 -->
+                        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                            <div class="flex-shrink-0">
                                 <div
-                                    class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-lg transform hover:scale-110 transition-transform duration-500">
-                                    <i class="fas fa-quote-right text-3xl text-blue-600"></i>
+                                    class="w-16 h-16 bg-blue-600 text-white rounded-md flex items-center justify-center shadow-sm">
+                                    <i class="fas fa-shipping-fast text-2xl"></i>
                                 </div>
-
-                                <div class="flex space-x-1 mb-4">
-                                    {!! str_repeat(
-                                        '<svg class="w-6 h-6 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>',
-                                        5,
-                                    ) !!}
-                                </div>
-
-                                <p
-                                    class="text-xl sm:text-2xl lg:text-3xl text-center font-medium mb-8 italic max-w-3xl mx-auto">
-                                    "Almeta has transformed how we manage our supply chain. Their reliable service and
-                                    professional team make shipping easy, even to remote islands across Indonesia."
+                            </div>
+                            <div class="flex-1 text-center lg:text-left">
+                                <h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Fast & Efficient Delivery
+                                </h4>
+                                <p class="text-gray-600 mb-4 leading-relaxed">
+                                    Advanced logistics network ensuring quick delivery times across Indonesia's most
+                                    challenging routes.
+                                    Our optimized supply chain reduces transit time by up to 30% compared to traditional
+                                    methods.
                                 </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Express shipping options available
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Real-time tracking system
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Priority handling for urgent cargo
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Multi-modal transportation
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <!-- Service 2 -->
+                        <div class="flex flex-col lg:flex-row-reverse items-center lg:items-start gap-8">
+                            <div class="flex-shrink-0">
                                 <div
-                                    class="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1.5 pl-2 pr-4">
-                                    <div
-                                        class="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white font-bold text-lg mr-3 shadow-md">
-                                        P</div>
-                                    <div>
-                                        <div class="font-bold text-white text-base sm:text-lg">PT. Pacific Industries
-                                        </div>
-                                        <div class="text-sm text-blue-100">Jakarta, Indonesia</div>
+                                    class="w-16 h-16 bg-gray-700 text-white rounded-md flex items-center justify-center shadow-sm">
+                                    <i class="fas fa-shield-alt text-2xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-center lg:text-left">
+                                <h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Comprehensive Security &
+                                    Safety</h4>
+                                <p class="text-gray-600 mb-4 leading-relaxed">
+                                    End-to-end cargo protection with advanced security measures, insurance coverage, and
+                                    temperature-controlled environments for sensitive goods. Your cargo's safety is
+                                    guaranteed.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Full cargo insurance included
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        GPS tracking & monitoring
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Secure warehouse facilities
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Climate-controlled storage
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service 3 -->
+                        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-16 h-16 bg-green-600 text-white rounded-md flex items-center justify-center shadow-sm">
+                                    <i class="fas fa-cogs text-2xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-center lg:text-left">
+                                <h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Reliable & Consistent
+                                    Service</h4>
+                                <p class="text-gray-600 mb-4 leading-relaxed">
+                                    Proven track record with consistent performance across all service levels. Our
+                                    experienced team
+                                    and deep local market knowledge ensure dependable logistics solutions for your
+                                    business needs.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        5+ years industry experience
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Local expertise & knowledge
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Predictable delivery schedules
+                                    </div>
+                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
+                                        <i class="fas fa-check text-green-600 mr-2"></i>
+                                        Dedicated account management
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Customer Testimonial -->
+                <div class="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 bg-gray-900 text-white">
+                        <h3 class="text-lg font-semibold">Customer Success Story</h3>
+                        <p class="text-sm text-gray-300 mt-1">Real feedback from our valued business partners</p>
+                    </div>
+
+                    <div class="p-8 sm:p-10">
+                        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-6">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-16 h-16 bg-blue-600 text-white rounded-md flex items-center justify-center font-bold text-xl">
+                                    PI
+                                </div>
+                            </div>
+                            <div class="flex-1 text-center lg:text-left">
+                                <div class="flex justify-center lg:justify-start space-x-1 mb-4">
+                                    {!! str_repeat('<i class="fas fa-star text-yellow-400"></i>', 5) !!}
+                                </div>
+                                <blockquote class="text-lg text-gray-700 italic mb-6">
+                                    "Almeta has significantly improved our supply chain efficiency. Their professional
+                                    approach,
+                                    reliable delivery schedules, and excellent customer service make them our preferred
+                                    logistics partner.
+                                    We've seen a 25% reduction in shipping delays since partnering with them."
+                                </blockquote>
+                                <div>
+                                    <div class="font-semibold text-gray-900">PT. Pacific Industries</div>
+                                    <div class="text-sm text-gray-600">Manufacturing Company - Jakarta, Indonesia</div>
+                                    <div class="text-xs text-gray-500 mt-1">Partnership since 2022 • 200+ successful
+                                        shipments</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="mt-12 text-center">
+                    <div
+                        class="inline-flex items-center px-6 py-3 bg-blue-50 text-blue-700 rounded-md text-sm font-medium">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Ready to experience reliable logistics solutions? Contact our team for a customized quote.
+                    </div>
+                </div>
             </div>
         </div>
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#f9fafb" fill-opacity="1" d="M0,320L1440,192L1440,320L0,320Z"></path>
+            <path fill="#f3f4f6" fill-opacity="1" d="M0,320L1440,192L1440,320L0,320Z"></path>
         </svg>
 
         <!-- Footer with improved styling -->
-        <footer class="bg-gray-50 text-black" id="contact">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <footer class="bg-gray-100 text-black" id="contact">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
                 <!-- Logo and Description -->
-                <div class="flex flex-col items-center text-center mb-8 sm:mb-10 lg:mb-16">
-                    <a href="#"
-                        class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-500 mb-3 sm:mb-4 flex items-center">
-                        <svg class="w-6 h-6 sm:w-8 sm:h-8 mr-2" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 18L14 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            <path d="M4 12L14 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            <path d="M4 6L14 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            <path d="M18 18L20 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            <path d="M18 12L20 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            <path d="M18 6L20 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                        </svg>
-                        PT. Almeta Global Trilindo
+                <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+                    <a href="#" class="inline-flex items-center justify-center mb-4 sm:mb-6">
+                        <span
+                            class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-500">
+                            PT. Almeta Global Trilindo
+                        </span>
                     </a>
-                    <p class="max-w-md text-sm sm:text-base text-gray-600">Your trusted partner in domestic logistics
-                        solutions since 2020,
-                        providing fast, safe and reliable shipping services throughout Indonesia.</p>
+                    <p class="max-w-3xl mx-auto text-base sm:text-lg text-gray-600 leading-relaxed">
+                        Your trusted partner in domestic logistics solutions since 2020, providing fast, safe and
+                        reliable shipping services throughout Indonesia.
+                    </p>
                 </div>
 
                 <!-- Main Footer Content -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16">
                     <!-- Contact Information -->
-                    <div class="space-y-5">
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 relative">
+                    <div class="sm:col-span-1 lg:col-span-1">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-6 relative pb-2">
                             Contact Information
-                            <span
-                                class="absolute bottom-0 left-0 w-16 sm:w-20 h-1 bg-gradient-to-r from-red-600 to-red-400 rounded-full -mb-2"></span>
+                            <span class="absolute bottom-0 left-0 w-12 h-1 bg-red-600 rounded-full"></span>
                         </h3>
-                        <div class="space-y-4 sm:space-y-6">
-                            <div class="flex items-start">
-                                <div
-                                    class="mr-3 sm:mr-4 p-2 sm:p-3 bg-gradient-to-br from-red-100 to-red-50 rounded-lg shadow-sm">
-                                    <i class="fas fa-map-marker-alt text-red-500"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">Address</h4>
-                                    <p class="text-xs sm:text-sm text-gray-600">Jasamarga Green Residence AD. 6 No. 7
-                                        Sidoarjo, East Java
-                                    </p>
+                        <div class="space-y-5">
+                            <div class="group">
+                                <div class="flex items-start space-x-4">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-red-50 rounded-md flex items-center justify-center group-hover:bg-red-100 transition-colors">
+                                        <i class="fas fa-map-marker-alt text-red-600 text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-gray-900 text-sm mb-1">Office Address</h4>
+                                        <p class="text-sm text-gray-600 leading-relaxed">
+                                            Jasamarga Green Residence AD. 6 No. 7<br>
+                                            Sidoarjo, East Java, Indonesia
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex items-start">
-                                <div
-                                    class="mr-3 sm:mr-4 p-2 sm:p-3 bg-gradient-to-br from-red-100 to-red-50 rounded-lg shadow-sm">
-                                    <i class="fas fa-phone text-red-500"></i>
-                                </div>
-                                @php
-                                    $customerName = Auth::user()->name ?? 'Customer baru';
-                                    $whatsappNumber = '6282139808850';
-                                    $message = "Halo, Almeta Global Trilindo. Saya $customerName, ada kebutuhan pengiriman. Apa bisa dibantu?";
-                                    $encodedMessage = urlencode($message);
-                                @endphp
 
-                                <div>
-                                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">WhatsApp</h4>
-                                    <p class="text-xs sm:text-sm text-gray-600 hover:text-green-600 transition-colors">
+                            <div class="group">
+                                <div class="flex items-start space-x-4">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-green-50 rounded-md flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                                        <i class="fas fa-phone text-green-600 text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        @php
+                                            $customerName = Auth::user()->name ?? 'Customer baru';
+                                            $whatsappNumber = '6282139808850';
+                                            $message = "Halo, Almeta Global Trilindo. Saya $customerName, ada kebutuhan pengiriman. Apa bisa dibantu?";
+                                            $encodedMessage = urlencode($message);
+                                        @endphp
+                                        <h4 class="font-semibold text-gray-900 text-sm mb-1">WhatsApp</h4>
                                         <a href="https://wa.me/{{ $whatsappNumber }}?text={{ $encodedMessage }}"
-                                            target="_blank" class="hover:underline">
+                                            target="_blank"
+                                            class="text-sm text-gray-600 hover:text-green-600 transition-colors hover:underline">
                                             +62 821-3980-8850
                                         </a>
-                                    </p>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
 
                     <!-- Email Information -->
-                    <div class="space-y-5">
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 relative">
+                    <div class="sm:col-span-1 lg:col-span-1">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-6 relative pb-2">
                             Email Us
-                            <span
-                                class="absolute bottom-0 left-0 w-16 sm:w-20 h-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full -mb-2"></span>
+                            <span class="absolute bottom-0 left-0 w-12 h-1 bg-blue-600 rounded-full"></span>
                         </h3>
-                        <div class="space-y-4 sm:space-y-6">
-                            <div class="flex items-start">
-                                <div
-                                    class="mr-3 sm:mr-4 p-2 sm:p-3 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg shadow-sm">
-                                    <i class="fas fa-envelope text-blue-500"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">Company</h4>
-                                    <p class="text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                                        <a href="mailto:almetagt@gmail.com"
-                                            class="hover:underline">hendra@almetagt.com</a>
-                                    </p>
+                        <div class="space-y-5">
+                            <div class="group">
+                                <div class="flex items-start space-x-4">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-md flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                        <i class="fas fa-envelope text-blue-600 text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-gray-900 text-sm mb-1">Bussines Inquiries</h4>
+                                        <a href="mailto:hendra@almetagt.com"
+                                            class="text-sm text-gray-600 hover:text-blue-600 transition-colors hover:underline">
+                                            hendra@almetagt.com
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex items-start">
-                                <div
-                                    class="mr-3 sm:mr-4 p-2 sm:p-3 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg shadow-sm">
-                                    <i class="fas fa-headset text-blue-500"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 text-sm sm:text-base">Customer Service</h4>
-                                    <p class="text-xs sm:text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                                        <a href="mailto:aldivo.ishen@gmail.com"
-                                            class="hover:underline">cs@almetagt.com</a>
-                                    </p>
+
+                            <div class="group">
+                                <div class="flex items-start space-x-4">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-md flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                        <i class="fas fa-headset text-blue-600 text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-gray-900 text-sm mb-1">Customer Service</h4>
+                                        <a href="mailto:cs@almetagt.com"
+                                            class="text-sm text-gray-600 hover:text-blue-600 transition-colors hover:underline">
+                                            cs@almetagt.com
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Newsletter Subscription -->
-                    <div class="space-y-4 sm:space-y-5">
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 relative">
-                            Stay Updated
-                            <span
-                                class="absolute bottom-0 left-0 w-16 sm:w-20 h-1 bg-gradient-to-r from-green-600 to-green-400 rounded-full -mb-2"></span>
+                    <!-- Newsletter & Social -->
+                    <div class="sm:col-span-2 lg:col-span-1">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-6 relative pb-2">
+                            Stay Connected
+                            <span class="absolute bottom-0 left-0 w-12 h-1 bg-green-600 rounded-full"></span>
                         </h3>
-                        <p class="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">Subscribe to our newsletter for
-                            updates on services, promotions
-                            and shipping news.</p>
-                        <form class="space-y-3">
-                            <div class="relative">
-                                <input type="email" placeholder="Your email address"
-                                    class="w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm">
-                                <button type="submit"
-                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-800 text-white p-1.5 sm:p-2 rounded-md transition-colors">
-                                    <i class="fas fa-paper-plane text-xs sm:text-sm"></i>
-                                </button>
-                            </div>
-                        </form>
 
-                        <!-- Social Media Links -->
-                        <div class="mt-6 sm:mt-8">
-                            <p class="text-xs sm:text-sm font-medium text-gray-700 mb-2 sm:mb-3">Follow us</p>
-                            <div class="flex space-x-3 sm:space-x-4">
+                        <!-- Newsletter -->
+                        <div class="mb-8">
+                            <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                                Subscribe to our newsletter for updates on services, promotions and shipping news.
+                            </p>
+                            <form class="space-y-3">
+                                <div class="relative">
+                                    <input type="email" placeholder="Enter your email address"
+                                        class="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm placeholder-gray-400 transition-all">
+                                    <button type="submit"
+                                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition-colors">
+                                        <i class="fas fa-paper-plane text-sm"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div>
+                            <p class="text-sm font-semibold text-gray-700 mb-4">Follow Us</p>
+                            <div class="flex space-x-3">
                                 <a href="#"
-                                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gray-100 to-white flex items-center justify-center hover:from-blue-50 hover:to-blue-100 transition-all duration-300 shadow-sm hover:shadow-md group">
+                                    class="w-10 h-10 rounded-md bg-white border border-gray-200 flex items-center justify-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 group">
                                     <i
-                                        class="fab fa-facebook-f text-blue-600 group-hover:scale-110 transition-transform duration-300"></i>
+                                        class="fab fa-facebook-f text-blue-600 group-hover:scale-110 transition-transform"></i>
                                 </a>
                                 <a href="#"
-                                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gray-100 to-white flex items-center justify-center hover:from-blue-50 hover:to-blue-100 transition-all duration-300 shadow-sm hover:shadow-md group">
+                                    class="w-10 h-10 rounded-md bg-white border border-gray-200 flex items-center justify-center hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 group">
                                     <i
-                                        class="fab fa-twitter text-blue-400 group-hover:scale-110 transition-transform duration-300"></i>
+                                        class="fab fa-twitter text-blue-400 group-hover:scale-110 transition-transform"></i>
                                 </a>
                                 <a href="#"
-                                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gray-100 to-white flex items-center justify-center hover:from-red-50 hover:to-red-100 transition-all duration-300 shadow-sm hover:shadow-md group">
+                                    class="w-10 h-10 rounded-md bg-white border border-gray-200 flex items-center justify-center hover:border-red-500 hover:bg-red-50 transition-all duration-200 group">
                                     <i
-                                        class="fab fa-instagram text-red-500 group-hover:scale-110 transition-transform duration-300"></i>
+                                        class="fab fa-instagram text-red-500 group-hover:scale-110 transition-transform"></i>
                                 </a>
                                 <a href="#"
-                                    class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gray-100 to-white flex items-center justify-center hover:from-blue-50 hover:to-blue-100 transition-all duration-300 shadow-sm hover:shadow-md group">
+                                    class="w-10 h-10 rounded-md bg-white border border-gray-200 flex items-center justify-center hover:border-blue-700 hover:bg-blue-50 transition-all duration-200 group">
                                     <i
-                                        class="fab fa-linkedin-in text-blue-700 group-hover:scale-110 transition-transform duration-300"></i>
+                                        class="fab fa-linkedin-in text-blue-700 group-hover:scale-110 transition-transform"></i>
                                 </a>
                             </div>
                         </div>
@@ -865,27 +854,31 @@
                 </div>
 
                 <!-- Divider -->
-                <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-8 sm:my-10">
-                </div>
-
-                <!-- Bottom Footer -->
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-4 md:mb-0">
-                        <p class="text-xs sm:text-sm text-gray-500">&copy; {{ date('Y') }} PT. ALMETA GLOBAL
-                            TRILINDO. All
-                            rights reserved.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap justify-center gap-4 sm:gap-6 md:space-x-6 md:gap-0">
-                        <a href="#"
-                            class="text-xs sm:text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">Privacy
-                            Policy</a>
-                        <a href="#"
-                            class="text-xs sm:text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">Terms
-                            of
-                            Service</a>
-                        <a href="#"
-                            class="text-xs sm:text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">FAQ</a>
+                <div class="border-t border-gray-300 pt-8 sm:pt-10">
+                    <!-- Bottom Footer -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                        <div class="text-center sm:text-left">
+                            <p class="text-sm text-gray-500">
+                                &copy; {{ date('Y') }} PT. ALMETA GLOBAL TRILINDO. All rights reserved.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-6">
+                            <a href="#"
+                                class="text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">
+                                Privacy Policy
+                            </a>
+                            <a href="#"
+                                class="text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">
+                                Terms of Service
+                            </a>
+                            <a href="#"
+                                class="text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">
+                                FAQ
+                            </a>
+                            <span class="text-sm text-gray-400 bg-gray-200 px-2 py-1 rounded-md">
+                                V.0.1.2
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -985,85 +978,12 @@
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80, // Adjust for header height
+                            top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
                         });
                     }
                 });
             });
         </script>
-
-        <!-- Additional styles for mobile responsiveness -->
-
-        <style>
-            /* Animation for mobile menu */
-            @keyframes fadeIn {
-                0% {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-
-                100% {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .animate-fade-in {
-                animation: fadeIn 0.3s ease-out forwards;
-            }
-
-            /* Improved mobile menu positioning */
-            #mobile-menu {
-                transition: all 0.3s ease-in-out;
-            }
-
-            /* Fix for z-index hierarchy */
-            .z-40 {
-                z-index: 40;
-            }
-
-            /* Ensure menu button has proper hit area */
-            #mobile-menu-button {
-                min-height: 44px;
-                min-width: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .animate-fade-in {
-                animation: fadeIn 0.3s ease-out forwards;
-            }
-
-            /* Smooth scrolling for anchor links */
-            html {
-                scroll-behavior: smooth;
-            }
-
-            /* Fix for mobile overflow issues */
-            body {
-                overflow-x: hidden;
-            }
-
-            /* Responsive font sizes */
-            @media (max-width: 640px) {
-                .text-4xl {
-                    font-size: 2rem;
-                }
-
-                .text-3xl {
-                    font-size: 1.75rem;
-                }
-
-                .text-2xl {
-                    font-size: 1.5rem;
-                }
-
-                .text-xl {
-                    font-size: 1.25rem;
-                }
-            }
-        </style>
     </div>
 </x-guest-layout>
