@@ -23,88 +23,64 @@
     <div class="min-h-screen bg-white relative overflow-hidden">
         <!-- Navigation -->
         <nav class="border-b border-gray-100 bg-white fixed w-full top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
-            <div class="w-full mx-auto">
-                <div class="flex justify-between items-center h-16 md:h-20">
-                    <div class="flex items-center">
-                        <a href="#" class="text-xl md:text-2xl font-extrabold text-red-600 flex items-center">
-                            ALMETA
-                        </a>
-                    </div>
-
-                    <!-- Perbaikan untuk navigasi mobile -->
-                    <nav
-                        class="border-b border-gray-100 bg-white fixed w-full top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div class="flex justify-between items-center h-16 md:h-20">
-                                <div class="flex items-center">
-                                    <a href="#"
-                                        class="text-xl md:text-2xl font-extrabold text-red-600 flex items-center">
-                                        ALMETA
-                                    </a>
-                                </div>
-
-                                <!-- Desktop Navigation Links -->
-                                <div class="hidden md:flex items-center space-x-8">
-                                    <a href="#"
-                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Home</a>
-                                    <a href="#filtering"
-                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Find
-                                        Routes</a>
-                                    <a href="#features"
-                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Why
-                                        Us</a>
-                                    <a href="#contact"
-                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Contact</a>
-                                </div>
-
-                                <!-- Mobile Menu Button -->
-                                <div class="md:hidden flex items-center">
-                                    <button type="button" id="mobile-menu-button"
-                                        class="text-gray-600 hover:text-red-600 focus:outline-none p-2">
-                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 6h16M4 12h16M4 18h16" />
-                                        </svg>
-                                    </button>
-                                </div>
-
-                                <div class="hidden md:flex items-center space-x-4">
-                                    <a href="{{ route('login') }}" wire:navigate
-                                        class="inline-flex items-center px-4 md:px-6 py-2 md:py-2.5 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-blue-200">
-                                        <i class="fas fa-user mr-2"></i>
-                                        <span>Login</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <!-- Mobile Navigation Menu (Separate from nav element) -->
-                    <div id="mobile-menu"
-                        class="hidden fixed top-16 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-lg animate-fade-in">
-                        <div class="px-4 py-3 space-y-2">
-                            <a href="#"
-                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Home</a>
-                            <a href="#filtering"
-                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Find
-                                Routes</a>
-                            <a href="#features"
-                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Why
-                                Us</a>
-                            <a href="#contact"
-                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Contact</a>
-                            <div class="pt-2 pb-1">
-                                <a href="{{ route('login') }}" wire:navigate
-                                    class="inline-flex w-full items-center justify-center px-4 py-2 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300">
-                                    <i class="fas fa-user mr-2"></i>
-                                    <span>Login</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20 relative">
+            <!-- Logo Section - Overflow Height -->
+            <div class="flex items-center relative z-10">
+                <a href="#" class="flex items-center">
+                    <img src="{{ asset('assets/img/Almeta Logo Landing Page V-1.webp') }}" 
+                         alt="Almeta Logo" 
+                         class="h-20 md:h-24 w-auto object-contain">
+                </a>
             </div>
-        </nav>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Home</a>
+                <a href="#filtering" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Find Routes</a>
+                <a href="#features" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Why Us</a>
+                <a href="#contact" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Contact</a>
+            </div>
+
+            <!-- Desktop Login Button -->
+            <div class="hidden md:flex items-center">
+                <a href="{{ route('login') }}" wire:navigate
+                   class="inline-flex items-center px-4 md:px-6 py-2 md:py-2.5 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-blue-200">
+                    <i class="fas fa-user mr-2"></i>
+                    <span>Login</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button type="button" id="mobile-menu-button"
+                        class="text-gray-600 hover:text-red-600 focus:outline-none p-2">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 shadow-lg">
+        <div class="px-4 py-3 space-y-2">
+            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Home</a>
+            <a href="#filtering" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Find Routes</a>
+            <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Why Us</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Contact</a>
+            <div class="pt-2 pb-1">
+                <a href="{{ route('login') }}" wire:navigate
+                   class="inline-flex w-full items-center justify-center px-4 py-2 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300">
+                    <i class="fas fa-user mr-2"></i>
+                    <span>Login</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
 
         <!-- Hero Section with animated background -->
         <div class="pt-20 md:pt-24 bg-blue-600 relative">
@@ -116,12 +92,8 @@
                         <div class="text-left">
                             <h1
                                 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 drop-shadow-sm pb-2 mb-2 animate-fade-in">
-                                Almeta Logistics
+                                Almeta Global Trilindo
                             </h1>
-                            <p
-                                class="text-xl sm:text-2xl font-bold text-white mb-4 md:mb-6 animate-fade-in animation-delay-300">
-                                Management
-                            </p>
                             <div class="animate-fade-in animation-delay-600">
                                 <p class="text-lg sm:text-xl text-white leading-relaxed font-light mb-3 md:mb-4">
                                     <span class="border-b-4 border-yellow-300 pb-1">Fast, Safe, and Reliable</span>

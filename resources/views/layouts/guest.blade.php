@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- ALPINE JS --}}
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link rel="icon" href="assets/img/AGT IMG 1.png" type="image/png">
+    <link rel="icon" href="{{ asset('assets/img/Almeta Logo Website V-1.png') }}" type="image/png">
     <title>@yield('title-guest')</title>
     @livewireStyles
     {{-- FONTAWESOME CDN --}}

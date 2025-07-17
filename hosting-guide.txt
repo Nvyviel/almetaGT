@@ -1,0 +1,52 @@
+Detail
+User: aldivo
+Password:  PoweredByAlmetaGT-2
+Panel: https://de.fastpanel.my.id:8888
+
+DNS Nameserver
+NS #1: fp5.netns.my.id
+NS #2: fp6.netns.my.id 
+
+https://de.fastpanel.my.id:8888/webmail/ 
+
+Username & Login: almetagt
+Password Database: cDEjDyXeve7K11IL
+
+Tutorial Hosting FastPanel:
+- Ubah Nameserver 1 & 2 di website tempat beli Domain
+- Login Panel
+- Masukkan email untuk recovery
+- Klik Create site
+- Pilih Create site manually
+- Buka bagian Database
+- Disesuaikan pada bagian Database,
+1. Name: nama database
+2. Character set: utf8
+3. Server: mysql
+4. Login: username login
+5. Password: recommended auto generate
+
+- Ketika sudah diset semua klik save lalu create site
+- Buka project di vscode, buka terminal dan masukkan "npm run build"
+- Jika sudah lalu di jadikan zip, (select all, lalu "compress to zip")
+- Buka site card, lalu pilih bagian Files, lalu upload file zip
+- File index.php yang ada di dalam Files boleh dihapus
+- Jika sudah ter upload lalu ekstrak
+- Jika sudah kembali ke site card, lalu klik bagian Databases
+- Open phpmyadmin dan login database
+- Lalu impor DB (bila ingin terisi data local)
+- Pada bagian .env yang sudah terupload di bagian Files, ubah:
+DB_DATABASE=(sesuai dengan yang sudah dibuat)
+DB_USERNAME=(sesuai dengan yang sudah dibuat)
+DB_PASSWORD=(sesuai dengan yang sudah dibuat)
+APP_URL=https://namawebsite.com / https://namawebsite.id
+- Balik ke site card, buka bagian Settings
+- Cari menu site directory
+- Ada kolom subdirectory, tambahkan "public" (tanpa petik)
+- Balik ke site card, buka bagian SSL Certificates
+- Klik new certificates, lalu save (email bebas), lalu akan muncul notifikasi valid
+- Balik ke site card, buka bagian Terminals, ketikkan:
+php artisan config:clear
+php artisan cache:clear
+php artisan config:cache
+- Website sudah jadi
