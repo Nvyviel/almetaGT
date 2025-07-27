@@ -82,10 +82,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div
-                                class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none text-gray-400 group-hover:text-blue-500 transition-colors">
-                                <i class="fas fa-chevron-down text-sm sm:text-base"></i>
-                            </div>
+                            
                         </div>
                     </div>
 
@@ -117,10 +114,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div
-                                class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pointer-events-none text-gray-400 group-hover:text-red-500 transition-colors">
-                                <i class="fas fa-chevron-down text-sm sm:text-base"></i>
-                            </div>
                         </div>
                     </div>
 

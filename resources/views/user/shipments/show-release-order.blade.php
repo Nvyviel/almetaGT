@@ -14,7 +14,11 @@
                         </div>
                         <div>
                             <h1 class="text-3xl font-bold text-gray-900">Container Details</h1>
-                            <p class="text-xl text-blue-600 font-semibold mt-1">{{ $container->id_order }}</p>
+                            <button class="text-xl font-semibold mt-1 flex items-center"
+                                onclick="navigator.clipboard.writeText('{{ $container->id_order }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = '{{ $container->id_order }}'; }, 1000); });"
+                                type="button">
+                                {{ $container->id_order }}
+                            </button>
                         </div>
                     </div>
 

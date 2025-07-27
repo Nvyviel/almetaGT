@@ -215,8 +215,12 @@
                             <div
                                 class="bg-gradient-to-br from-slate-50/50 to-gray-50/30 rounded-lg p-4 border border-gray-100/50">
                                 <dt class="text-sm font-medium text-gray-500 mb-1">Account ID</dt>
-                                <dd class="text-lg font-semibold text-gray-900 font-mono">
-                                    {{ str_pad(Auth::user()->user_id, 6, '0', STR_PAD_LEFT) }}</dd>
+                                <button
+                                    class="text-lg font-semibold text-gray-900 font-mono cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                                    onclick="navigator.clipboard.writeText('{{ str_pad(Auth::user()->user_id, 6, '0', STR_PAD_LEFT) }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = '{{ str_pad(Auth::user()->user_id, 6, '0', STR_PAD_LEFT) }}'; }, 1000); });"
+                                    type="button">
+                                    {{ str_pad(Auth::user()->user_id, 6, '0', STR_PAD_LEFT) }}
+                                </button>
                             </div>
                             <div
                                 class="bg-gradient-to-br from-green-50/50 to-emerald-50/30 rounded-lg p-4 border border-green-100/50">

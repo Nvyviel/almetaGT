@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('shipping_instructions', function (Blueprint $table) {
             $table->id();
-            $table->string('instructions_id')->unique();
+            $table->string('instructions_id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('container_id')->constrained()->onDelete('cascade');
             $table->foreignId('shipment_id')->constrained()->onDelete('cascade');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('no_container');
             $table->string('no_seal');
             $table->string('note')->nullable();
-            $table->enum('status', ['Requested','Approved','Rejected'])->default('Requested');
+            $table->enum('status', ['Requested', 'Approved', 'Rejected'])->default('Requested');
             $table->string('upload_file_si')->nullable();
             $table->timestamps();
         });

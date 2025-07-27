@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
+            // $table->string('shipment_id');
             $table->enum('from_city', ['Surabaya', 'Pontianak', 'Semarang', 'Banjarmasin', 'Sampit', 'Jakarta', 'Kumai', 'Samarinda', 'Balikpapan', 'Berau', 'Palu', 'Bitung', 'Gorontalo', 'Ambon']);
             $table->enum('to_city', ['Surabaya', 'Pontianak', 'Semarang', 'Banjarmasin', 'Sampit', 'Jakarta', 'Kumai', 'Samarinda', 'Balikpapan', 'Berau', 'Palu', 'Bitung', 'Gorontalo', 'Ambon']);
             $table->string('vessel_name');

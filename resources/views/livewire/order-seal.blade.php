@@ -84,13 +84,6 @@
                                 </option>
                             @endforeach
                         </select>
-                        <div
-                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
-                            </svg>
-                        </div>
                     </div>
                     @error('pickup_point')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

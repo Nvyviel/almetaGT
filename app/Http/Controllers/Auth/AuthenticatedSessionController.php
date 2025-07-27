@@ -89,7 +89,8 @@ class AuthenticatedSessionController extends Controller
                 $q->where('name', 'like', "%{$searchTerm}%")
                     ->orWhere('email', 'like', "%{$searchTerm}%")
                     ->orWhere('company_name', 'like', "%{$searchTerm}%")
-                    ->orWhere('company_location', 'like', "%{$searchTerm}%");
+                    ->orWhere('company_location', 'like', "%{$searchTerm}%")
+                    ->orWhere('user_id', 'like', "%{$searchTerm}%");
             });
         }
 

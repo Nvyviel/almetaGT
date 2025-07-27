@@ -48,9 +48,11 @@
                             <div class="p-4 sm:p-5">
                                 <!-- Top Section: ID, Date, Status -->
                                 <div class="flex flex-wrap items-center gap-3 mb-3">
-                                    <span class="bg-indigo-50 text-indigo-600 px-3 py-1 border text-xs font-semibold">
+                                    <button class="bg-indigo-50 text-indigo-600 px-3 py-1 border text-xs font-semibold"
+                                        onclick="navigator.clipboard.writeText('{{ $container->id_order }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = '{{ $container->id_order }}'; }, 1000); });"
+                                        type="button">
                                         {{ $container->id_order }}
-                                    </span>
+                                    </button>
                                     <span class="text-xs sm:text-sm text-gray-500">
                                         {{ \Carbon\Carbon::parse($container->created_at)->format('d M Y') }}
                                     </span>
