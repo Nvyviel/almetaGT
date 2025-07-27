@@ -128,7 +128,7 @@
             </div>
 
             <!-- User Management Section -->
-            <div class="bg-white rounded-md shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <!-- Header & Search -->
                 <div class="bg-gradient-to-r from-gray-50 to-white px-6 py-6 border-b border-gray-200">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
@@ -138,52 +138,53 @@
                         </div>
                     </div>
 
-                    <!-- Status Filter Buttons -->
-                    <div class="flex flex-wrap gap-3 mb-6">
-                        <a href="{{ route('dashboard-admin', ['status' => 'Under Verification']) }}" wire:navigate
-                            class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-xl hover:from-yellow-500 hover:to-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Pending Users
-                            <span class="ml-2 px-2.5 py-1 bg-white bg-opacity-30 text-xs font-bold rounded-full">
-                                {{ $pendingUsersCount ?? App\Models\User::where('status', 'Under Verification')->count() }}
-                            </span>
-                        </a>
+                    <!-- Status Filter Buttons & Search Form -->
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <!-- Status Filter Buttons -->
+                        <div class="flex flex-wrap gap-3">
+                            <a href="{{ route('dashboard-admin', ['status' => 'Under Verification']) }}" wire:navigate
+                                class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-lg hover:from-yellow-500 hover:to-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Pending Users
+                                <span class="ml-2 px-2.5 py-1 bg-white bg-opacity-30 text-xs font-bold rounded-md">
+                                    {{ $pendingUsersCount ?? App\Models\User::where('status', 'Under Verification')->count() }}
+                                </span>
+                            </a>
 
-                        <a href="{{ route('dashboard-admin', ['status' => 'Warned']) }}" wire:navigate
-                            class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                            </svg>
-                            Warned Users
-                            <span class="ml-2 px-2.5 py-1 bg-white bg-opacity-30 text-xs font-bold rounded-full">
-                                {{ $warnedUsersCount ?? App\Models\User::where('status', 'Warned')->count() }}
-                            </span>
-                        </a>
-                    </div>
-
-                    <!-- Search Form -->
-                    <form action="{{ route('dashboard-admin') }}" method="GET" class="flex flex-col lg:flex-row gap-4">
-                        <div class="flex-grow">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                </div>
-                                <input type="text" name="search"
-                                    placeholder="Search users by email, name, or company" value="{{ request('search') }}"
-                                    class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200">
-                            </div>
+                            <a href="{{ route('dashboard-admin', ['status' => 'Warned']) }}" wire:navigate
+                                class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                                </svg>
+                                Warned Users
+                                <span class="ml-2 px-2.5 py-1 bg-white bg-opacity-30 text-xs font-bold rounded-md">
+                                    {{ $warnedUsersCount ?? App\Models\User::where('status', 'Warned')->count() }}
+                                </span>
+                            </a>
                         </div>
-                        <div class="flex gap-3">
+
+                        <!-- Search Form -->
+                        <form action="{{ route('dashboard-admin') }}" method="GET" class="flex gap-3 lg:w-auto w-full">
+                            <div class="flex-grow lg:w-80">
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" name="search" placeholder="Search users"
+                                        value="{{ request('search') }}"
+                                        class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                                </div>
+                            </div>
                             <button type="submit"
-                                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg flex items-center">
+                                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg flex items-center">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -192,12 +193,18 @@
                             </button>
                             @if (request('search'))
                                 <a href="{{ route('dashboard-admin') }}" wire:navigate
-                                    class="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200">
-                                    Reset
+                                    class="px-3 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 6L6 18" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M6 6L18 18" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                 </a>
                             @endif
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Results Info -->
@@ -225,18 +232,21 @@
                             <div class="flex justify-between items-start mb-4">
                                 <div class="flex items-center space-x-3">
                                     <div
-                                        class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                        class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                                         <span
                                             class="text-white font-semibold text-sm">{{ substr($user->name, 0, 1) }}</span>
                                     </div>
                                     <div>
-                                        <span class="bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1 rounded-full">
+                                        <button
+                                            class="bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1 rounded-md cursor-pointer hover:bg-gray-200 transition-colors duration-200"
+                                            onclick="navigator.clipboard.writeText('{{ $user->user_id }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = 'ID: {{ $user->user_id }}'; }, 1000); });"
+                                            type="button">
                                             ID: {{ $user->user_id }}
-                                        </span>
+                                        </button>
                                     </div>
                                 </div>
                                 <a href="{{ route('detail-user', $user->id) }}" wire:navigate
-                                    class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 font-medium bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition duration-200">
+                                    class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 font-medium bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md transition duration-200">
                                     View Details
                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -267,12 +277,12 @@
                                 <div class="flex flex-col">
                                     <span class="text-xs text-gray-500 font-medium mb-1">Status</span>
                                     <span
-                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium w-fit
-                                        {{ $user->status == 'Under Verification'
-                                            ? 'bg-yellow-100 text-yellow-800'
-                                            : ($user->status == 'Warned'
-                                                ? 'bg-red-100 text-red-800'
-                                                : 'bg-green-100 text-green-800') }}">
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium w-fit
+                            {{ $user->status == 'Under Verification'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : ($user->status == 'Warned'
+                                    ? 'bg-red-100 text-red-800'
+                                    : 'bg-green-100 text-green-800') }}">
                                         {{ $user->status }}
                                     </span>
                                 </div>
@@ -325,7 +335,12 @@
                                         <div class="flex items-center">
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
-                                                <div class="text-xs text-gray-500">ID: {{ $user->user_id }}</div>
+                                                <button
+                                            class="text-gray-500 text-xs font-medium cursor-pointer"
+                                            onclick="navigator.clipboard.writeText('{{ $user->user_id }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = 'ID: {{ $user->user_id }}'; }, 1000); });"
+                                            type="button">
+                                            ID: {{ $user->user_id }}
+                                        </button>
                                             </div>
                                         </div>
                                     </td>
@@ -340,19 +355,19 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span
-                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                            {{ $user->status == 'Under Verification'
-                                                ? 'bg-yellow-100 text-yellow-800'
-                                                : ($user->status == 'Warned'
-                                                    ? 'bg-red-100 text-red-800'
-                                                    : 'bg-green-100 text-green-800') }}">
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium
+                                {{ $user->status == 'Under Verification'
+                                    ? 'bg-yellow-100 text-yellow-800'
+                                    : ($user->status == 'Warned'
+                                        ? 'bg-red-100 text-red-800'
+                                        : 'bg-green-100 text-green-800') }}">
                                             {{ $user->status }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         @if ($user->id !== 1)
                                             <a href="{{ route('detail-user', $user->user_id) }}" wire:navigate
-                                                class="inline-flex items-center text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition duration-200">
+                                                class="inline-flex items-center text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-md transition duration-200">
                                                 View Details
                                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">

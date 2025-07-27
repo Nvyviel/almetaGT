@@ -7,7 +7,7 @@
             <div class="border-b border-gray-200 px-6 py-4">
                 <div class="flex justify-between items-center">
                     <h4 class="text-xl font-semibold text-gray-800">
-                        {{ $container->id_order }}
+                        {{ $container->shippingInstructions->first()->instructions_id }}
                     </h4>
                     <a href="{{ route('shipping-instruction') }}" wire:navigate
                         class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
@@ -35,8 +35,6 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Container Number</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Seal Number</th>
@@ -51,8 +49,6 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($container->shippingInstructions as $instruction)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ $instruction->instructions_id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                         {{ $instruction->no_container }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

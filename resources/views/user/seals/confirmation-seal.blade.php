@@ -6,7 +6,7 @@
         <!-- Header -->
         <div class="text-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">
-                <i class="fas fa-shield-alt text-blue-600 mr-3"></i>
+                <i class="fas fa-lock text-blue-600 mr-3"></i></i>
                 Seal Confirmation
             </h1>
             <p class="text-gray-600">Complete your seal verification process</p>
@@ -20,7 +20,11 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <h2 class="text-2xl font-bold mb-1">Seal Information</h2>
-                            <p class="text-blue-100">ID: {{ $seal->id_seal }}</p>
+                            <button class="text-blue-100 cursor-pointer hover:text-blue-200 transition-colors duration-200"
+                                onclick="navigator.clipboard.writeText('{{ $seal->id_seal }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = 'ID: {{ $seal->id_seal }}'; }, 1000); });"
+                                type="button">
+                                ID: {{ $seal->id_seal }}
+                            </button>
                         </div>
                         <div class="text-right">
                             <div class="bg-white bg-opacity-20 rounded-lg p-3">
@@ -50,7 +54,8 @@
 
                                 <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
                                     <span class="font-medium text-gray-700 text-sm">Status:</span>
-                                    <span class="px-3 py-1 rounded-full text-xs font-bold
+                                    <span
+                                        class="px-3 py-1 rounded-full text-xs font-bold
                                         @if (($seal->status ?? '') === 'Payment Proccess') bg-amber-100 text-amber-800 border border-amber-300
                                         @elseif(($seal->status ?? '') === 'Confirmed') bg-green-100 text-green-800 border border-green-300
                                         @else bg-gray-100 text-gray-800 border border-gray-300 @endif">
@@ -65,7 +70,8 @@
 
                                 <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border">
                                     <span class="font-medium text-gray-700 text-sm">Priority:</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Normal</span>
+                                    <span
+                                        class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Normal</span>
                                 </div>
                             </div>
                         </div>
@@ -147,12 +153,19 @@
                                             class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('bank_type') border-red-500 @enderror"
                                             required>
                                             <option value="">Select Bank</option>
-                                            <option value="BCA" {{ old('bank_type') == 'BCA' ? 'selected' : '' }}>BCA</option>
-                                            <option value="BNI" {{ old('bank_type') == 'BNI' ? 'selected' : '' }}>BNI</option>
-                                            <option value="BRI" {{ old('bank_type') == 'BRI' ? 'selected' : '' }}>BRI</option>
-                                            <option value="Mandiri" {{ old('bank_type') == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                                            <option value="CIMB Niaga" {{ old('bank_type') == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
-                                            <option value="Other" {{ old('bank_type') == 'Other' ? 'selected' : '' }}>Other</option>
+                                            <option value="BCA" {{ old('bank_type') == 'BCA' ? 'selected' : '' }}>BCA
+                                            </option>
+                                            <option value="BNI" {{ old('bank_type') == 'BNI' ? 'selected' : '' }}>BNI
+                                            </option>
+                                            <option value="BRI" {{ old('bank_type') == 'BRI' ? 'selected' : '' }}>BRI
+                                            </option>
+                                            <option value="Mandiri" {{ old('bank_type') == 'Mandiri' ? 'selected' : '' }}>
+                                                Mandiri</option>
+                                            <option value="CIMB Niaga"
+                                                {{ old('bank_type') == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga
+                                            </option>
+                                            <option value="Other" {{ old('bank_type') == 'Other' ? 'selected' : '' }}>
+                                                Other</option>
                                         </select>
                                         @error('bank_type')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -175,17 +188,19 @@
 
                                     <!-- Upload Bukti Transfer -->
                                     <div>
-                                        <label for="transfer_proof" class="block text-xs font-semibold text-gray-700 mb-1">
+                                        <label for="transfer_proof"
+                                            class="block text-xs font-semibold text-gray-700 mb-1">
                                             <i class="fas fa-upload mr-1 text-blue-600"></i>Transfer Proof *
                                         </label>
-                                        <input type="file" id="transfer_proof" name="transfer_proof" accept="image/*,.pdf"
+                                        <input type="file" id="transfer_proof" name="transfer_proof"
+                                            accept="image/*,.pdf"
                                             class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('transfer_proof') border-red-500 @enderror"
                                             onchange="previewFile(this)" required>
                                         <p class="text-xs text-gray-500 mt-1">JPG, PNG, PDF (Max: 5MB)</p>
                                         @error('transfer_proof')
                                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                         @enderror
-                                        
+
                                         <!-- File Preview -->
                                         <div id="filePreview" class="mt-2 hidden">
                                             <div class="flex items-center p-2 bg-gray-50 rounded border">
@@ -214,19 +229,17 @@
                     <!-- Action Buttons -->
                     <div class="border-t border-gray-200 pt-6 mt-6">
                         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <!-- Submit Payment Info Button -->
+                            <a href="{{ route('seal') }}"
+                                class="inline-flex items-center text-gray-600 hover:text-gray-800 font-semibold">
+                                <i class="fas fa-arrow-left mr-2"></i>
+                                Back
+                            </a>
+
                             <button onclick="submitPaymentForm()" id="submitBtn"
                                 class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center min-w-[200px]">
                                 <i class="fas fa-paper-plane mr-2"></i>
                                 Submit Payment Info
                             </button>
-
-                            <!-- Back Link -->
-                            <a href="{{ route('seal') }}"
-                                class="inline-flex items-center text-gray-600 hover:text-gray-800 font-semibold transition-colors duration-200 px-6 py-2 rounded-lg hover:bg-gray-100">
-                                <i class="fas fa-arrow-left mr-2"></i>
-                                Back to Seal List
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -238,7 +251,8 @@
             <div class="flex items-center justify-center text-gray-600 text-sm">
                 <i class="fas fa-info-circle text-gray-400 mr-2"></i>
                 <span>Need help? Contact support at
-                    <a href="mailto:support@company.com" class="text-blue-600 hover:text-blue-800 font-medium">support@company.com</a>
+                    <a href="mailto:support@almetagt.com"
+                        class="text-blue-600 hover:text-blue-800 font-medium">support@almetagt.com</a>
                 </span>
             </div>
         </div>
@@ -289,7 +303,7 @@
         }
 
         /* Ensure consistent height across columns */
-        .grid > div {
+        .grid>div {
             display: flex;
             flex-direction: column;
         }
@@ -300,9 +314,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-2px); }
-            75% { transform: translateX(2px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-2px);
+            }
+
+            75% {
+                transform: translateX(2px);
+            }
         }
 
         /* Responsive adjustments */
@@ -334,12 +358,13 @@
 
                 // Submit form (uncomment the line below when you have the actual route)
                 // form.submit();
-                
+
                 // Simulate submission for now
                 setTimeout(() => {
                     alert('Payment information submitted successfully!');
                     btn.innerHTML = '<i class="fas fa-check mr-2"></i>Submitted!';
-                    btn.classList.remove('from-green-600', 'to-green-700', 'hover:from-green-700', 'hover:to-green-800');
+                    btn.classList.remove('from-green-600', 'to-green-700', 'hover:from-green-700',
+                        'hover:to-green-800');
                     btn.classList.add('from-gray-500', 'to-gray-600');
                     btn.disabled = true;
                 }, 2000);

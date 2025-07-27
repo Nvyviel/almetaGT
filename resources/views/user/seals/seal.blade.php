@@ -44,9 +44,12 @@
                             <!-- Left Section: Seal Details -->
                             <div class="col-span-1 sm:col-span-8 space-y-3">
                                 <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                                    <span class="bg-blue-50 text-blue-800 border-blue-200 px-3 py-1 text-xs font-semibold">
+                                    <button
+                                        class="bg-blue-50 text-blue-800 border-blue-200 px-3 py-1 text-xs font-semibold cursor-pointer hover:bg-blue-100 transition-colors duration-200"
+                                        onclick="navigator.clipboard.writeText('{{ $seal->id_seal }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = '{{ $seal->id_seal }}'; }, 1000); });"
+                                        type="button">
                                         {{ $seal->id_seal }}
-                                    </span>
+                                    </button>
 
                                     <span class="text-sm text-gray-500">
                                         {{ \Carbon\Carbon::parse($seal->created_at)->format('d M Y') }}

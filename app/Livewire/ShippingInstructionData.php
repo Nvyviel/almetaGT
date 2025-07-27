@@ -33,10 +33,17 @@ class ShippingInstructionData extends Component
     protected function generateInstructionId()
     {
         do {
-            // Generate 7 random alphanumeric characters
-            $randomPart = strtoupper(Str::random(7));
-            $instructionId = "SI" . $randomPart;
-        
+            // Generate 4 random uppercase letters only (A-Z)
+            $letters = '';
+            for ($i = 0; $i < 4; $i++) {
+                $letters .= chr(rand(65, 90)); // ASCII 65-90 = A-Z
+            }
+
+            // Generate 4 random numbers (0000-9999)
+            $numbers = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
+
+            $instructionId = $letters . $numbers;
+
             $exists = ShippingInstruction::where('instructions_id', $instructionId)->exists();
         } while ($exists);
 
@@ -54,8 +61,8 @@ class ShippingInstructionData extends Component
             'phone_number',
             'consignee_address'
         )
-        ->where('user_id', $this->user->id)
-        ->get();
+            ->where('user_id', $this->user->id)
+            ->get();
     }
 
     protected function loadAvailableShipments()
@@ -140,10 +147,12 @@ class ShippingInstructionData extends Component
             'consignee_id' => 'required|exists:consignees,id',
         ];
 
-        foreach (range(0, count($this->container_numbers) - 1) as $index) {
-            $rules["container_numbers.$index"] = 'required|string|max:255';
-            $rules["seal_numbers.$index"] = 'required|string|max:255';
-            $rules["container_notes.$index"] = 'nullable|string|max:255';
+        $containerCount = count($this->container_numbers);
+
+        for ($i = 0; $i < $containerCount; $i++) {
+            $rules["container_numbers.$i"] = 'required|string|max:255';
+            $rules["seal_numbers.$i"] = 'required|string|max:255';
+            $rules["container_notes.$i"] = 'nullable|string|max:255';
         }
 
         return $rules;
@@ -164,19 +173,47 @@ class ShippingInstructionData extends Component
             return;
         }
 
+        // Cek apakah sudah ada shipping instruction untuk container ini
+        $existingInstruction = ShippingInstruction::where('container_id', $this->container_id)->first();
+        if ($existingInstruction) {
+            $this->addError('container_id', 'Shipping instruction already exists for this container.');
+            return;
+        }
+
         try {
-            foreach (range(0, count($this->container_numbers) - 1) as $index) {
+            // Generate SATU instructions_id untuk seluruh container dalam order ini
+            $instructionsId = $this->generateInstructionId();
+            $createdCount = 0;
+            $quantity = $container->quantity;
+
+            for ($i = 0; $i < $quantity; $i++) {
+                // Pastikan data ada di index ini
+                if (!isset($this->container_numbers[$i]) || empty($this->container_numbers[$i])) {
+                    continue;
+                }
+
+                $containerNumber = $this->container_numbers[$i];
+                $sealNumber = $this->seal_numbers[$i] ?? '';
+                $note = $this->container_notes[$i] ?? null;
+
                 ShippingInstruction::create([
-                    'instructions_id' => $this->generateInstructionId(),
+                    'instructions_id' => $instructionsId,
                     'user_id' => $this->user->id,
                     'shipment_id' => $this->shipment_id,
                     'container_id' => $this->container_id,
                     'consignee_id' => $this->consignee_id,
-                    'no_container' => $this->container_numbers[$index],
-                    'no_seal' => $this->seal_numbers[$index],
-                    'note' => $this->container_notes[$index] ?? null,
+                    'no_container' => $containerNumber,
+                    'no_seal' => $sealNumber,
+                    'note' => $note,
                     'status' => 'Requested'
                 ]);
+
+                $createdCount++;
+            }
+
+            if ($createdCount === 0) {
+                session()->flash('error', 'No shipping instructions were created. Please fill in container numbers.');
+                return;
             }
 
             $this->loadAvailableShipments();
@@ -190,16 +227,16 @@ class ShippingInstructionData extends Component
                 'container_notes'
             ]);
 
-            session()->flash('success', 'Shipping instructions created successfully');
+            session()->flash('success', "Shipping instructions created successfully with ID: $instructionsId ($createdCount records created)");
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to create shipping instructions: ' . $e->getMessage());
         }
+
         return redirect()->route('shipping-instruction');
     }
 
     public function render()
     {
-        
         return view('livewire.shipping-instruction-data');
     }
 }
