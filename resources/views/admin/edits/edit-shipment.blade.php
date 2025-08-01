@@ -206,19 +206,19 @@
 
                             <!-- Base Rate -->
                             <div class="space-y-2">
-                                <label for="rate" class="block text-gray-800 font-semibold">Base Rate (IDR)</label>
+                                <label for="freight_20" class="block text-gray-800 font-semibold">Freight 20 (IDR)</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <span class="text-gray-500 font-medium">Rp</span>
                                     </div>
-                                    <input type="text" name="rate" id="rate"
-                                        value="{{ old('rate', $shipment->rate) }}"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white thousand-format @error('rate') border-red-500 ring-red-500 @enderror"
-                                        placeholder="Enter base rate">
-                                    <input type="hidden" name="rate_value" id="rate_value"
-                                        value="{{ old('rate', $shipment->rate) }}">
+                                    <input type="text" name="freight_20" id="freight_20"
+                                        value="{{ old('freight_20', $shipment->freight_20) }}"
+                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white thousand-format @error('freight_20') border-red-500 ring-red-500 @enderror"
+                                        placeholder="Enter rate">
+                                    <input type="hidden" name="freight_20_value" id="freight_20_value"
+                                        value="{{ old('freight_20', $shipment->freight_20) }}">
                                 </div>
-                                @error('rate')
+                                @error('freight_20')
                                     <p class="text-sm text-red-600 flex items-center mt-1">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
@@ -232,20 +232,19 @@
 
                             <!-- Rate Per Container -->
                             <div class="space-y-2">
-                                <label for="rate_per_container" class="block text-gray-800 font-semibold">Rate Per
-                                    Container (IDR)</label>
+                                <label for="freight_40" class="block text-gray-800 font-semibold">Freight 40(IDR)</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <span class="text-gray-500 font-medium">Rp</span>
                                     </div>
-                                    <input type="text" name="rate_per_container" id="rate_per_container"
-                                        value="{{ old('rate_per_container', $shipment->rate_per_container) }}"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white thousand-format @error('rate_per_container') border-red-500 ring-red-500 @enderror"
-                                        placeholder="Enter container rate">
-                                    <input type="hidden" name="rate_per_container_value" id="rate_per_container_value"
-                                        value="{{ old('rate_per_container', $shipment->rate_per_container) }}">
+                                    <input type="text" name="freight_40" id="freight_40"
+                                        value="{{ old('freight_40', $shipment->freight_40) }}"
+                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white thousand-format @error('freight_40') border-red-500 ring-red-500 @enderror"
+                                        placeholder="Enter rate">
+                                    <input type="hidden" name="freight_40_value" id="freight_40_value"
+                                        value="{{ old('freight_40', $shipment->freight_40) }}">
                                 </div>
-                                @error('rate_per_container')
+                                @error('freight_40')
                                     <p class="text-sm text-red-600 flex items-center mt-1">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
@@ -439,95 +438,92 @@
         </div>
     </div>
 
-    <!-- Enhanced Script for thousand separator formatting -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Format initial values for all thousand-format inputs
-            const thousandInputs = document.querySelectorAll('.thousand-format');
-            thousandInputs.forEach(input => {
-                formatThousand(input);
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    // Format initial values for all thousand-format inputs
+    const thousandInputs = document.querySelectorAll('.thousand-format');
+    thousandInputs.forEach(input => {
+        formatThousand(input);
+    });
 
-            // Add event listeners for input formatting
-            thousandInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    formatThousand(this);
-                });
-            });
-
-            // Handle form submission to ensure the server gets the raw numbers
-            document.getElementById('shipmentForm').addEventListener('submit', function(e) {
-                // Handle rate field
-                const rateInput = document.getElementById('rate');
-                const rateValue = document.getElementById('rate_value');
-                if (rateInput && rateValue) {
-                    rateValue.value = rateInput.value.replace(/\./g, '');
-                    rateInput.value = rateValue.value;
-                }
-
-                // Handle rate_per_container field
-                const ratePerContainerInput = document.getElementById('rate_per_container');
-                const ratePerContainerValue = document.getElementById('rate_per_container_value');
-                if (ratePerContainerInput && ratePerContainerValue) {
-                    ratePerContainerValue.value = ratePerContainerInput.value.replace(/\./g, '');
-                    ratePerContainerInput.value = ratePerContainerValue.value;
-                }
-            });
-
-            function formatThousand(input) {
-                // Save cursor position
-                const cursorPos = input.selectionStart;
-
-                // Get input value and remove all non-digits
-                const value = input.value.replace(/\./g, '');
-
-                // Store original string length for cursor position calculation
-                const originalLength = input.value.length;
-
-                if (value === '') {
-                    input.value = '';
-                    return;
-                }
-
-                // Format with thousand separator
-                let formattedValue = '';
-                for (let i = 0; i < value.length; i++) {
-                    if (i > 0 && (value.length - i) % 3 === 0) {
-                        formattedValue += '.';
-                    }
-                    formattedValue += value[i];
-                }
-
-                // Calculate new cursor position
-                const newLength = formattedValue.length;
-
-                // Set new value
-                input.value = formattedValue;
-
-                // Calculate how many separators were before the cursor
-                const beforeCursor = input.value.substring(0, cursorPos);
-                const separatorsBefore = (beforeCursor.match(/\./g) || []).length;
-
-                // The number of separators that were already in the string before we formatted it
-                const previousSeparators = (originalLength - value.length);
-
-                // New separators added specifically before our cursor position
-                const newSeparatorsBefore = separatorsBefore - (previousSeparators > 0 ? previousSeparators : 0);
-
-                // Adjust cursor position
-                const adjustedCursorPos = Math.min(
-                    cursorPos + (newSeparatorsBefore > 0 ? newSeparatorsBefore : 0),
-                    formattedValue.length
-                );
-
-                input.setSelectionRange(adjustedCursorPos, adjustedCursorPos);
-
-                // Store unformatted value in hidden field
-                const hiddenField = document.getElementById(input.id + '_value');
-                if (hiddenField) {
-                    hiddenField.value = value;
-                }
-            }
+    // Add event listeners for input formatting
+    thousandInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            formatThousand(this);
         });
-    </script>
+    });
+
+    // Handle form submission to ensure the server gets the raw numbers
+    document.getElementById('shipmentForm').addEventListener('submit', function(e) {
+        // Handle freight_20 field
+        const freight20Input = document.getElementById('freight_20');
+        if (freight20Input) {
+            // Convert formatted value to raw number
+            freight20Input.value = freight20Input.value.replace(/\./g, '');
+        }
+
+        // Handle freight_40 field  
+        const freight40Input = document.getElementById('freight_40');
+        if (freight40Input) {
+            // Convert formatted value to raw number
+            freight40Input.value = freight40Input.value.replace(/\./g, '');
+        }
+
+        // Remove hidden fields to prevent them from being submitted
+        const hiddenFields = document.querySelectorAll('input[name$="_value"]');
+        hiddenFields.forEach(field => {
+            field.remove();
+        });
+    });
+
+    function formatThousand(input) {
+        // Save cursor position
+        const cursorPos = input.selectionStart;
+
+        // Get input value and remove all non-digits
+        const value = input.value.replace(/\./g, '');
+
+        // Store original string length for cursor position calculation
+        const originalLength = input.value.length;
+
+        if (value === '') {
+            input.value = '';
+            return;
+        }
+
+        // Format with thousand separator
+        let formattedValue = '';
+        for (let i = 0; i < value.length; i++) {
+            if (i > 0 && (value.length - i) % 3 === 0) {
+                formattedValue += '.';
+            }
+            formattedValue += value[i];
+        }
+
+        // Calculate new cursor position
+        const newLength = formattedValue.length;
+
+        // Set new value
+        input.value = formattedValue;
+
+        // Calculate how many separators were before the cursor
+        const beforeCursor = input.value.substring(0, cursorPos);
+        const separatorsBefore = (beforeCursor.match(/\./g) || []).length;
+
+        // The number of separators that were already in this string
+        const previousSeparators = (originalLength - value.length);
+
+        // New separators added specifically before our cursor position
+        const newSeparatorsBefore = separatorsBefore - (previousSeparators > 0 ? previousSeparators : 0);
+
+        // Adjust cursor position
+        const adjustedCursorPos = Math.min(
+            cursorPos + (newSeparatorsBefore > 0 ? newSeparatorsBefore : 0),
+            formattedValue.length
+        );
+
+        input.setSelectionRange(adjustedCursorPos, adjustedCursorPos);
+    }
+});
+</script>
 @endsection

@@ -109,24 +109,24 @@
                         </div>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Base Rate (IDR)</label>
+                                <label class="block text-gray-700 font-medium">Freight 20 (IDR)</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <span class="text-gray-500 font-medium">Rp</span>
                                     </div>
-                                    <input type="text" wire:model.defer="rate"
+                                    <input type="text" wire:model.defer="freight_20"
                                         class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white"
                                         placeholder="Enter base rate" oninput="formatNumber(this)"
                                         onblur="formatNumber(this)">
                                 </div>
                             </div>
                             <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Rate Per Container (IDR)</label>
+                                <label class="block text-gray-700 font-medium">Freight 40 (IDR)</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <span class="text-gray-500 font-medium">Rp</span>
                                     </div>
-                                    <input type="text" wire:model.defer="rate_per_container"
+                                    <input type="text" wire:model.defer="freight_40"
                                         class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white"
                                         placeholder="Enter container rate" oninput="formatNumber(this)"
                                         onblur="formatNumber(this)">
@@ -453,14 +453,14 @@
                                 <!-- Price and Actions -->
                                 <div
                                     class="flex flex-col lg:flex-row items-center justify-between gap-6 pt-6 border-t border-gray-100">
-                                    <div class="text-center lg:text-left">
+                                    {{-- <div class="text-center lg:text-left">
                                         <p class="text-sm font-medium text-gray-600 mb-2">Container Pricing</p>
                                         <div class="flex items-baseline justify-center lg:justify-start">
                                             <span class="text-4xl font-bold text-gray-900">Rp
-                                                {{ number_format($shipment->rate_per_container, 0, ',', '.') }}</span>
+                                                {{ number_format($shipment->freight_20, 0, ',', '.') }}</span>
                                         </div>
                                         <p class="text-sm text-gray-500 mt-1">per container unit</p>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="flex gap-4 w-full lg:w-auto">
                                         <a href="{{ route('edit-shipment', $shipment->id) }}" wire:navigate

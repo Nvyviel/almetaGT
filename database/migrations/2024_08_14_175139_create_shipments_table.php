@@ -21,8 +21,8 @@ return new class extends Migration
             $table->dateTime('etb');
             $table->dateTime('etd');
             $table->dateTime('eta');
-            $table->unsignedBigInteger('rate');
-            $table->unsignedBigInteger('rate_per_container');
+            $table->unsignedBigInteger('freight_20');
+            $table->unsignedBigInteger('freight_40');
             $table->timestamps();
         });
     }

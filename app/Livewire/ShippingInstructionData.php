@@ -96,24 +96,26 @@ class ShippingInstructionData extends Component
             'container_id',
             'container_numbers',
             'seal_numbers',
-            'container_notes',
-            'containers'
+            'container_notes'
         ]);
 
-        if ($shipmentId) {
-            $this->containers = Container::where('shipment_id', $shipmentId)
+        if ($shipmentId && $this->consignee_id) {
+            // Load containers berdasarkan shipment dan consignee
+            $this->containers = Container::where('user_id', $this->consignee_id)
+                ->where('shipment_id', $shipmentId) // Langsung gunakan shipment_id
                 ->where('status', 'Approved')
                 ->whereNotIn('id', function ($query) {
                     $query->select('container_id')
-                        ->from('shipping_instructions')
-                        ->groupBy('container_id');
-                })->get();
+                        ->from('shipping_instructions');
+                })
+                ->select('id', 'id_order', 'container_type', 'quantity', 'weight') // Gunakan id_order
+                ->get();
 
             if ($this->containers->isEmpty()) {
-                $this->shipment_id = null;
-                $this->containers = [];
-                session()->flash('info', 'No available approved containers for this shipment.');
+                session()->flash('info', 'No available approved containers for this shipment and consignee.');
             }
+        } else {
+            $this->containers = collect();
         }
     }
 
