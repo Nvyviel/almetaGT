@@ -169,10 +169,27 @@
                 </div>
 
                 <!-- Search Form with floating effect -->
-                <form action="{{ route('landing-page') }}#filtering" method="GET"
+                <form action="{{ route('landing-page') }}#results" method="GET"
                     class="bg-white rounded-md sm:rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-6 sm:mb-10 lg:mb-16 border border-gray-100 transform hover:translate-y-[-2px] sm:hover:translate-y-[-5px] transition-all duration-300"
                     onsubmit="handleFormSubmit(event)">
                     @csrf
+
+                    <!-- Error Message Display -->
+                    @if (isset($error))
+                        <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-md">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-red-500 text-lg"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-red-700 font-medium">
+                                        {{ $error }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-5 lg:items-end">
                         <!-- POL Selection -->
                         <div class="lg:col-span-5">
@@ -184,11 +201,12 @@
                             </label>
                             <div class="relative group">
                                 <select name="pol" id="pol"
-                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 border-gray-200 hover:border-blue-400 rounded-md focus:ring-2 sm:focus:ring-4 focus:ring-blue-100 focus:border-blue-500 appearance-none bg-white shadow-sm transition-colors text-sm">
-                                    <option disabled selected>Select Port of Loading</option>
+                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-100' }} rounded-md focus:ring-2 sm:focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm">
+                                    <option disabled {{ !request('pol') && !isset($old_pol) ? 'selected' : '' }}>Select
+                                        Port of Loading</option>
                                     @foreach ($fromCities as $city)
                                         <option value="{{ $city }}"
-                                            {{ request('pol') == $city ? 'selected' : '' }}>
+                                            {{ request('pol') == $city || (isset($old_pol) && $old_pol == $city) ? 'selected' : '' }}>
                                             {{ strtoupper($city) }}
                                         </option>
                                     @endforeach
@@ -224,11 +242,12 @@
                             </label>
                             <div class="relative group">
                                 <select name="pod" id="pod"
-                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 border-gray-200 hover:border-red-400 rounded-md focus:ring-2 sm:focus:ring-4 focus:ring-red-100 focus:border-red-500 appearance-none bg-white shadow-sm transition-colors text-sm">
-                                    <option disabled selected>Select Port of Discharge</option>
+                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-red-400 focus:border-red-500 focus:ring-red-100' }} rounded-md focus:ring-2 sm:focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm">
+                                    <option disabled {{ !request('pod') && !isset($old_pod) ? 'selected' : '' }}>Select
+                                        Port of Discharge</option>
                                     @foreach ($fromCities as $city)
                                         <option value="{{ $city }}"
-                                            {{ request('pod') == $city ? 'selected' : '' }}>
+                                            {{ request('pod') == $city || (isset($old_pod) && $old_pod == $city) ? 'selected' : '' }}>
                                             {{ strtoupper($city) }}
                                         </option>
                                     @endforeach
@@ -241,7 +260,6 @@
                             <button id="submitButton" type="submit"
                                 class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 sm:py-4 px-4 sm:px-6 lg:px-8 rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 font-bold flex items-center justify-center text-sm sm:text-base lg:text-lg shadow-lg hover:shadow-blue-200 active:scale-95">
                                 <span id="buttonText" class="mr-2">Find Available Ships</span>
-                                <i class="fas fa-search text-xs sm:text-sm"></i>
                                 <span id="loadingSpinner" class="hidden ml-2">
                                     <i class="fas fa-spinner fa-spin"></i>
                                 </span>
@@ -252,7 +270,7 @@
 
                 <!-- Results Section -->
                 @if (request('pol') && request('pod'))
-                    <div class="space-y-4 sm:space-y-6 lg:space-y-8">
+                    <div class="space-y-4 sm:space-y-6 lg:space-y-8" id="results">
                         <div
                             class="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:justify-between mb-4 sm:mb-6 lg:mb-8">
                             <div class="text-center md:text-left">
@@ -268,7 +286,27 @@
                             </div>
                         </div>
 
-                        @if ($shipments->isEmpty())
+                        @if (isset($error))
+                            <div
+                                class="bg-white rounded-md shadow-lg p-6 sm:p-8 lg:p-16 text-center border border-gray-100">
+                                <div
+                                    class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 bg-red-100 rounded-full mb-4 sm:mb-6 animate-pulse">
+                                    <i
+                                        class="fas fa-exclamation-triangle text-xl sm:text-2xl lg:text-4xl text-red-600"></i>
+                                </div>
+                                <h3 class="text-base sm:text-lg lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
+                                    Invalid
+                                    Route</h3>
+                                <p class="text-gray-600 text-sm sm:text-base lg:text-lg max-w-md mx-auto mb-4 sm:mb-6">
+                                    The selected Port of Loading and Port of Discharge are the same. Please select
+                                    different ports.</p>
+                                <a href="#filtering"
+                                    class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-red-100 hover:bg-red-200 text-red-800 font-medium rounded-md transition-colors text-sm sm:text-base">
+                                    <i class="fas fa-search mr-1.5 sm:mr-2"></i>
+                                    Try Another Route
+                                </a>
+                            </div>
+                        @elseif ($shipments->isEmpty())
                             <div
                                 class="bg-white rounded-md shadow-lg p-6 sm:p-8 lg:p-16 text-center border border-gray-100">
                                 <div
@@ -286,129 +324,130 @@
                                     Try Another Route
                                 </a>
                             </div>
-                        @else
-                            <div class="space-y-4 sm:space-y-6 lg:space-y-8">
-                                @foreach ($shipments as $shipment)
-                                    <div
-                                        class="bg-white rounded-md shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-lg sm:hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
-                                        <!-- Shipment Card Header -->
+                            @else
+                                <div class="space-y-4 sm:space-y-6 lg:space-y-8">
+                                    @foreach ($shipments as $shipment)
                                         <div
-                                            class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 sm:p-4 lg:p-6">
+                                            class="bg-white rounded-md shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-lg sm:hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
+                                            <!-- Shipment Card Header -->
                                             <div
-                                                class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20">
+                                                class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 sm:p-4 lg:p-6">
                                                 <div
-                                                    class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] lg:right-[-35px] top-[20px] sm:top-[24px] lg:top-[28px] w-[120px] sm:w-[140px] lg:w-[170px] shadow-md text-xs">
-                                                    Available
+                                                    class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20">
+                                                    <div
+                                                        class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] lg:right-[-35px] top-[20px] sm:top-[24px] lg:top-[28px] w-[120px] sm:w-[140px] lg:w-[170px] shadow-md text-xs">
+                                                        Available
+                                                    </div>
+                                                </div>
+
+                                                <div class="pr-8 sm:pr-12 lg:pr-16">
+                                                    <h3
+                                                        class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-2 break-words">
+                                                        {{ $shipment->vessel_name }}
+                                                    </h3>
+                                                    <div
+                                                        class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
+                                                        <span
+                                                            class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+
+                                                        <!-- Mobile Route Indicator -->
+                                                        <div class="flex sm:hidden items-center justify-center my-2">
+                                                            <div class="flex flex-col items-center space-y-1">
+                                                                <span class="w-1 h-1 bg-white rounded-full"></span>
+                                                                <span class="w-0.5 h-8 bg-white"></span>
+                                                                <span class="w-1 h-1 bg-white rounded-full"></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Desktop Route Indicator -->
+                                                        <div
+                                                            class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
+                                                            <span
+                                                                class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                            <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
+                                                            <span
+                                                                class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                        </div>
+
+                                                        <span
+                                                            class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="pr-8 sm:pr-12 lg:pr-16">
-                                                <h3
-                                                    class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-2 break-words">
-                                                    {{ $shipment->vessel_name }}
-                                                </h3>
+                                            <div class="p-3 sm:p-4 lg:p-6 xl:p-8">
+                                                <!-- Timeline Section -->
                                                 <div
-                                                    class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
-                                                    <span
-                                                        class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+                                                    class="bg-gradient-to-r from-gray-50 to-white rounded-md p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-gray-200 shadow-sm">
+                                                    <h4
+                                                        class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 flex items-center">
+                                                        <i
+                                                            class="fas fa-calendar-alt text-blue-600 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
+                                                        <span class="text-sm sm:text-base lg:text-lg">Voyage
+                                                            Schedule</span>
+                                                    </h4>
 
-                                                    <!-- Mobile Route Indicator -->
-                                                    <div class="flex sm:hidden items-center justify-center my-2">
-                                                        <div class="flex flex-col items-center space-y-1">
-                                                            <span class="w-1 h-1 bg-white rounded-full"></span>
-                                                            <span class="w-0.5 h-8 bg-white"></span>
-                                                            <span class="w-1 h-1 bg-white rounded-full"></span>
+                                                    <div class="relative">
+                                                        <!-- Desktop Timeline bar -->
+                                                        <div
+                                                            class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
+                                                        </div>
+
+                                                        <!-- Mobile: Vertical Timeline -->
+                                                        <div
+                                                            class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 xl:gap-10 relative">
+                                                            @foreach (['etb', 'etd', 'eta'] as $index => $timeKey)
+                                                                <div
+                                                                    class="bg-white rounded-md p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
+                                                                    <div
+                                                                        class="flex items-center justify-between mb-2 sm:mb-3">
+                                                                        <p
+                                                                            class="text-xs sm:text-sm font-bold {{ $index == 0 ? 'text-blue-500' : ($index == 1 ? 'text-blue-600' : 'text-blue-700') }}">
+                                                                            {{ strtoupper($timeKey) }}
+                                                                        </p>
+                                                                        <div
+                                                                            class="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
+                                                                            <i
+                                                                                class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs sm:text-sm"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p
+                                                                        class="font-bold text-gray-800 text-sm sm:text-base lg:text-lg xl:text-xl">
+                                                                        {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
+                                                                    </p>
+                                                                    <p
+                                                                        class="text-xs sm:text-sm text-gray-500 mt-1 flex items-center">
+                                                                        <i class="far fa-clock mr-1"></i>
+                                                                        {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
+                                                                    </p>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+
+                                                        <!-- Mobile: Connect lines between timeline items -->
+                                                        <div
+                                                            class="sm:hidden absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2 z-0">
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    <!-- Desktop Route Indicator -->
-                                                    <div class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
-                                                        <span
-                                                            class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
-                                                        <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
-                                                        <span
-                                                            class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
-                                                    </div>
-
-                                                    <span
-                                                        class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
+                                                <!-- Book Now Button -->
+                                                <div class="flex justify-center">
+                                                    <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}"
+                                                        class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-12 lg:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group active:scale-95">
+                                                        <span class="mr-2">Book</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="p-3 sm:p-4 lg:p-6 xl:p-8">
-                                            <!-- Timeline Section -->
-                                            <div
-                                                class="bg-gradient-to-r from-gray-50 to-white rounded-md p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-gray-200 shadow-sm">
-                                                <h4
-                                                    class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 flex items-center">
-                                                    <i
-                                                        class="fas fa-calendar-alt text-blue-600 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
-                                                    <span class="text-sm sm:text-base lg:text-lg">Voyage
-                                                        Schedule</span>
-                                                </h4>
-
-                                                <div class="relative">
-                                                    <!-- Desktop Timeline bar -->
-                                                    <div
-                                                        class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
-                                                    </div>
-
-                                                    <!-- Mobile: Vertical Timeline -->
-                                                    <div
-                                                        class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 xl:gap-10 relative">
-                                                        @foreach (['etb', 'etd', 'eta'] as $index => $timeKey)
-                                                            <div
-                                                                class="bg-white rounded-md p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
-                                                                <div
-                                                                    class="flex items-center justify-between mb-2 sm:mb-3">
-                                                                    <p
-                                                                        class="text-xs sm:text-sm font-bold {{ $index == 0 ? 'text-blue-500' : ($index == 1 ? 'text-blue-600' : 'text-blue-700') }}">
-                                                                        {{ strtoupper($timeKey) }}
-                                                                    </p>
-                                                                    <div
-                                                                        class="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
-                                                                        <i
-                                                                            class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs sm:text-sm"></i>
-                                                                    </div>
-                                                                </div>
-                                                                <p
-                                                                    class="font-bold text-gray-800 text-sm sm:text-base lg:text-lg xl:text-xl">
-                                                                    {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
-                                                                </p>
-                                                                <p
-                                                                    class="text-xs sm:text-sm text-gray-500 mt-1 flex items-center">
-                                                                    <i class="far fa-clock mr-1"></i>
-                                                                    {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
-                                                                </p>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-
-                                                    <!-- Mobile: Connect lines between timeline items -->
-                                                    <div
-                                                        class="sm:hidden absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2 z-0">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Book Now Button -->
-                                            <div class="flex justify-center">
-                                                <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}"
-                                                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-12 lg:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group active:scale-95">
-                                                    <span class="mr-2">View Details & Book</span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2" d="M9 5l7 7-7 7" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                                    @endforeach
+                                </div>
                         @endif
                     </div>
                 @endif
@@ -667,7 +706,7 @@
 
         <!-- Footer with improved styling -->
         <footer class="bg-gray-100 text-black" id="contact">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-10">
                 <!-- Logo and Description -->
                 <div class="text-center mb-12 sm:mb-16 lg:mb-20">
                     <a href="#" class="inline-flex items-center justify-center mb-4 sm:mb-6">
@@ -776,25 +815,16 @@
                     <!-- Newsletter & Social -->
                     <div class="sm:col-span-2 lg:col-span-1">
                         <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-6 relative pb-2">
-                            Stay Connected
+                            Feedback
                             <span class="absolute bottom-0 left-0 w-12 h-1 bg-green-600 rounded-full"></span>
                         </h3>
 
-                        <!-- Newsletter -->
+                        <!-- Feedback -->
                         <div class="mb-8">
                             <p class="text-sm text-gray-600 mb-4 leading-relaxed">
-                                This websites under Development, your any feedback help us to improve.
+                                This website's under Development, your any feedback help us to improve.
                             </p>
-                            <form class="space-y-3">
-                                <div class="relative">
-                                    <input type="email" placeholder="Enter your email address"
-                                        class="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm placeholder-gray-400 transition-all">
-                                    <button type="submit"
-                                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md transition-colors">
-                                        <i class="fas fa-paper-plane text-sm"></i>
-                                    </button>
-                                </div>
-                            </form>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600 transition-colors hover:underline">Click here to Feedback</a>
                         </div>
 
                         <!-- Social Media -->
@@ -849,7 +879,7 @@
                                 FAQ
                             </a>
                             <span class="text-sm text-gray-400 bg-gray-200 px-2 py-1 rounded-md">
-                                V.0.1.2
+                                V.1.2.2
                             </span>
                         </div>
                     </div>

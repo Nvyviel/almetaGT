@@ -47,14 +47,15 @@ class ShipmentController extends Controller
             'etb' => 'required|date',
             'etd' => 'required|date',
             'eta' => 'required|date',
-            'rate' => 'required|numeric|min:0' // Add validation for rate
+            'freight_20' => 'required|numeric|min:0',
+            'freight_40' => 'required|numeric|min:0'
         ]);
 
         $shipment = Shipment::findOrFail($id);
         $shipment->update($request->all());
 
         return redirect()->route('create-shipment')
-        ->with('success', 'Data shipment berhasil diperbarui');
+            ->with('success', 'Data shipment berhasil diperbarui');
     }
 
     public function filtering(Request $request)
@@ -78,58 +79,85 @@ class ShipmentController extends Controller
         $pod = $request->input('pod');
         $pol = $request->input('pol');
 
+        // Get cities for dropdown
+        $fromCities = $this->getFromCities();
+
         if (empty($pod) || empty($pol)) {
-            return view('user.landings.index', ['shipments' => collect()]);
+            return view('user.landings.index', [
+                'shipments' => collect(),
+                'fromCities' => $fromCities
+            ]);
+        }
+
+        // Check if POD and POL are the same
+        if ($pod === $pol) {
+            return view('user.landings.index', [
+                'shipments' => collect(),
+                'error' => 'Port of Loading (POL) and Port of Discharge (POD) cannot be the same location. Please select different ports.',
+                'old_pod' => $pod,
+                'old_pol' => $pol,
+                'fromCities' => $fromCities
+            ]);
         }
 
         $shipments = Shipment::where('to_city', $pod)
-        ->where('from_city', $pol)
-        ->get();
+            ->where('from_city', $pol)
+            ->get();
 
-        return view('user.landings.index', compact('shipments'));
+        return view('user.landings.index', compact('shipments', 'fromCities'));
+    }
+
+    private function getFromCities()
+    {
+        return Shipment::select('from_city')
+            ->distinct()
+            ->orderBy('from_city')
+            ->pluck('from_city')
+            ->filter()
+            ->values();
     }
 
     public function approvalRo(Request $request)
-{
-    // Ambil filter dari request
-    $selectedVessel = $request->query('selectedVessel');
-    $search = $request->query('search');
-    $orderId = $request->query('order_id'); // Tambahkan filter untuk order_id
+    {
+        // Ambil filter dari request
+        $selectedVessel = $request->query('selectedVessel');
+        $search = $request->query('search');
+        $orderId = $request->query('order_id');
 
-    // Query awal
-    $name_ship = Container::with([
-        'shipment_container',
-        'user:id,company_name',
-    ]);
+        // Query awal
+        $name_ship = Container::with([
+            'shipment_container',
+            'user:id,company_name',
+        ]);
 
-    // Filter berdasarkan kapal yang dipilih
-    if ($selectedVessel) {
-        $name_ship->whereHas('shipment_container', function ($query) use ($selectedVessel) {
-            $query->where('vessel_name', $selectedVessel);
-        });
+        // Filter berdasarkan kapal yang dipilih
+        if ($selectedVessel) {
+            $name_ship->whereHas('shipment_container', function ($query) use ($selectedVessel) {
+                $query->where('vessel_name', $selectedVessel);
+            });
+        }
+
+        // Filter berdasarkan pencarian (commodity atau company_name)
+        if ($search) {
+            $name_ship->where(function ($query) use ($search) {
+                $query->where('commodity', 'LIKE', "%$search%")
+                    ->orWhereHas('user', function ($query) use ($search) {
+                        $query->where('company_name', 'LIKE', "%$search%");
+                    });
+            });
+        }
+
+        if ($orderId) {
+            $name_ship->where('id_order', 'LIKE', "%$orderId%");
+        }
+
+        // Eksekusi query
+        $name_ship = $name_ship->get();
+
+        $availableVessel = Shipment::pluck('vessel_name');
+
+        return view('admin.approvals.approval-ro', compact('name_ship', 'availableVessel'));
     }
-
-    // Filter berdasarkan pencarian (commodity atau company_name)
-    if ($search) {
-        $name_ship->where(function ($query) use ($search) {
-            $query->where('commodity', 'LIKE', "%$search%")
-                ->orWhereHas('user', function ($query) use ($search) {
-                    $query->where('company_name', 'LIKE', "%$search%");
-                });
-        });
-    }
-
-    if ($orderId) {
-        $name_ship->where('id_order', 'LIKE', "%$orderId%");
-    }
-
-    // Eksekusi query
-    $name_ship = $name_ship->get();
-
-    $availableVessel = Shipment::pluck('vessel_name');
-
-    return view('admin.approvals.approval-ro', compact('name_ship', 'availableVessel'));
-}
 
     public function uploadRoPdf(Request $request, $id)
     {
@@ -187,18 +215,16 @@ class ShipmentController extends Controller
     public function cancel($id)
     {
         $container = Container::findOrFail($id);
-        
+
         // // Check authorization
         // if (!auth()->user()->can('cancel', $container)) {
         //     abort(403);
         // }
-        
+
         $container->update([
             'status' => 'Canceled'
         ]);
-        
+
         return redirect()->back()->with('success', 'Container has been canceled successfully');
     }
-
-    
 }

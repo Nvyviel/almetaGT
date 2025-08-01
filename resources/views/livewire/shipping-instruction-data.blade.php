@@ -70,8 +70,27 @@
         @endif
 
         <form wire:submit.prevent="store" class="p-6">
+            {{-- Form Progress Indicator --}}
+            <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-blue-800">Form Guide</h3>
+                        <div class="mt-1 text-sm text-blue-700">
+                            <p>Please complete the form in order: Select Consignee → Choose Shipment → Pick Container.
+                                Fields will become available as you progress.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {{-- Consignee Dropdown --}}
+                {{-- Consignee Dropdown - Always Visible --}}
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
                     <label for="consignee_id" class="flex items-center gap-2 text-base font-medium text-gray-700 mb-3">
                         <span class="p-1.5 rounded-lg bg-blue-50 text-blue-600">
@@ -82,9 +101,10 @@
                             </svg>
                         </span>
                         Select Consignee
+                        <span class="text-red-500 text-xs">*</span>
                     </label>
                     <select wire:model="consignee_id" id="consignee_id"
-                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm">
+                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm @error('consignee_id') border-red-500 ring-red-500 @enderror">
                         <option value="">Choose a Consignee</option>
                         @foreach ($consignees as $consignee)
                             <option value="{{ $consignee->id }}">{{ $consignee->name_consignee }}</option>
@@ -95,7 +115,7 @@
                     @enderror
                 </div>
 
-                {{-- Shipment Dropdown --}}
+                {{-- Shipment Dropdown - Always Visible --}}
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
                     <label for="shipment_id" class="flex items-center gap-2 text-base font-medium text-gray-700 mb-3">
                         <span class="p-1.5 rounded-lg bg-blue-50 text-blue-600">
@@ -106,53 +126,81 @@
                             </svg>
                         </span>
                         Select Shipment
+                        <span class="text-red-500 text-xs">*</span>
                     </label>
                     <select wire:model.live="shipment_id" id="shipment_id"
-                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm">
-                        <option value="">Choose a Shipment</option>
-                        @foreach ($shipments as $shipment)
-                            <option value="{{ $shipment->id }}">{{ $shipment->vessel_name }}</option>
-                        @endforeach
+                        class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm
+                        {{ !$consignee_id ? 'bg-gray-100 cursor-not-allowed text-gray-500' : 'bg-gray-50' }}
+                        @error('shipment_id') border-red-500 ring-red-500 @enderror"
+                        {{ !$consignee_id ? 'disabled' : '' }}>
+                        <option value="">{{ !$consignee_id ? 'Select Consignee First' : 'Choose a Shipment' }}
+                        </option>
+                        @if ($consignee_id)
+                            @foreach ($shipments as $shipment)
+                                <option value="{{ $shipment->id }}">{{ $shipment->vessel_name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                     @error('shipment_id')
                         <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>
                     @enderror
                 </div>
 
-                {{-- Container Dropdown --}}
-                @if ($shipment_id)
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
-                        <label for="container_id"
-                            class="flex items-center gap-2 text-base font-medium text-gray-700 mb-3">
-                            <span class="p-1.5 rounded-lg bg-blue-50 text-blue-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                </svg>
-                            </span>
-                            Select Container
-                        </label>
-                        <select wire:model.live="container_id" id="container_id"
-                            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm">
-                            <option value="">Choose a Container</option>
+                {{-- Container Dropdown - Always Visible --}}
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
+                    <label for="container_id"
+                        class="flex items-center gap-2 text-base font-medium text-gray-700 mb-3">
+                        <span class="p-1.5 rounded-lg bg-blue-50 text-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                        </span>
+                        Select Container
+                        <span class="text-red-500 text-xs">*</span>
+                    </label>
+                    {{-- Container Dropdown --}}
+                    <select wire:model.live="container_id" id="container_id" ...>
+                        <option value="">{{ !$shipment_id ? 'Select Shipment First' : 'Choose a Container' }}
+                        </option>
+                        @if ($shipment_id && $containers->count() > 0)
                             @foreach ($containers as $container)
                                 <option value="{{ $container->id }}">
                                     {{ $container->id_order }} - {{ $container->container_type }}
-                                    ({{ $container->quantity }} Container)
+                                    ({{ $container->quantity }} Container{{ $container->quantity > 1 ? 's' : '' }})
                                 </option>
                             @endforeach
-                        </select>
-                        @error('container_id')
-                            <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-                @endif
+                        @endif
+                    </select>
+                    @error('container_id')
+                        <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             {{-- Container Details Section --}}
             @if ($container_id && count($container_numbers) > 0)
                 <div class="space-y-5 mt-7">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-green-800">Container Details Ready</h3>
+                                <div class="mt-1 text-sm text-green-700">
+                                    <p>Please fill in the container details below for each container in this shipment.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     @foreach (range(0, count($container_numbers) - 1) as $index)
                         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-5">
                             <div class="flex items-center mb-4">
@@ -160,18 +208,23 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 13l4 4L19 7" />
+                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                                     </svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-800">Container {{ $index + 1 }}</h3>
+                                <span
+                                    class="ml-auto bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-medium">
+                                    Required Fields <span class="text-red-500">*</span>
+                                </span>
                             </div>
 
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Container
-                                        Number</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Container Number <span class="text-red-500">*</span>
+                                    </label>
                                     <input type="text" wire:model="container_numbers.{{ $index }}"
-                                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 text-sm"
+                                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 text-sm @error("container_numbers.{$index}") border-red-500 ring-red-500 @enderror"
                                         placeholder="Enter container number">
                                     @error("container_numbers.{$index}")
                                         <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>
@@ -179,9 +232,11 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Seal Number</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Seal Number <span class="text-red-500">*</span>
+                                    </label>
                                     <input type="text" wire:model="seal_numbers.{{ $index }}"
-                                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 text-sm"
+                                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 text-sm @error("seal_numbers.{$index}") border-red-500 ring-red-500 @enderror"
                                         placeholder="Enter seal number">
                                     @error("seal_numbers.{$index}")
                                         <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>
@@ -189,9 +244,11 @@
                                 </div>
 
                                 <div class="lg:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Notes <span class="text-gray-400 text-xs">(Optional)</span>
+                                    </label>
                                     <textarea wire:model="container_notes.{{ $index }}" rows="3"
-                                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 text-sm"
+                                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 text-sm @error("container_notes.{$index}") border-red-500 ring-red-500 @enderror"
                                         placeholder="Add any additional notes here"></textarea>
                                     @error("container_notes.{$index}")
                                         <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>
@@ -203,6 +260,28 @@
                 </div>
             @endif
 
+            {{-- Form Status Indicator --}}
+            @if (!$container_id)
+                <div class="mt-7 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-gray-700">Waiting for Container Selection</h3>
+                            <div class="mt-1 text-sm text-gray-500">
+                                <p>Container details will appear once you select a container from the dropdown above.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             {{-- Hidden input for container parameter --}}
             @if ($container_id)
                 <input type="hidden" name="container" value="{{ $container_id }}">
@@ -211,13 +290,24 @@
             {{-- Submit Button --}}
             <div class="mt-7">
                 <button type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center text-base font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                    Create Shipping Instructions
+                    class="w-full py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center text-base font-medium
+                    {{ $container_id && count($container_numbers) > 0 ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed' }}"
+                    {{ !$container_id || count($container_numbers) == 0 ? 'disabled' : '' }}>
+                    @if ($container_id && count($container_numbers) > 0)
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                        Create Shipping Instructions
+                    @else
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m0 0v2m0-2h2m-2 0h-2m-3-2.5a4.5 4.5 0 01-.08-.83V6.25c0-1.45.2-2.67.5-3.75C8.96 1.54 10.34.75 12 .75s3.04.79 3.58 1.7c.3 1.08.5 2.3.5 3.75v7.17c0 .27-.03.55-.08.83M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Complete Form to Submit
+                    @endif
                 </button>
             </div>
         </form>

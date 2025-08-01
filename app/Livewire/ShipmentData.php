@@ -18,8 +18,8 @@ class ShipmentData extends Component
     public $etb = '';
     public $etd = '';
     public $eta = '';
-    public $rate = '';
-    public $rate_per_container = '';
+    public $freight_20 = '';
+    public $freight_40 = '';
 
     public $cities = [
         'surabaya',
@@ -46,8 +46,8 @@ class ShipmentData extends Component
         'etb' => 'required|date',
         'etd' => 'required|date|after:etb',
         'eta' => 'required|date|after:etd',
-        'rate' => 'required|numeric|min:0',
-        'rate_per_container' => 'required|numeric|min:0',
+        'freight_20' => 'required|numeric|min:0',
+        'freight_40' => 'required|numeric|min:0',
     ];
 
     protected $messages = [
@@ -60,20 +60,20 @@ class ShipmentData extends Component
         'eta.required' => 'ETA is required',
         'etd.after' => 'ETD must be after ETB',
         'eta.after' => 'ETA must be after ETD',
-        'rate.required' => 'Rate per container is required',
-        'rate.numeric' => 'Rate must be a number',
-        'rate.min' => 'Rate cannot be negative',
-        'rate_per_container.required' => 'Rate per container is required',
-        'rate_per_container.numeric' => 'Rate per container must be a number',
-        'rate_per_container.min' => 'Rate per container cannot be negative',
+        'freight_20.required' => 'Rate per container is required',
+        'freight_20.numeric' => 'Rate must be a number',
+        'freight_20.min' => 'Rate cannot be negative',
+        'freight_40.required' => 'Rate per container is required',
+        'freight_40.numeric' => 'Rate per container must be a number',
+        'freight_40.min' => 'Rate per container cannot be negative',
     ];
 
     public function addSchedule()
     {
         try {
             // Hapus titik dari 'rate' dan 'rate_per_container' agar menjadi angka murni
-            $this->rate = str_replace('.', '', $this->rate);
-            $this->rate_per_container = str_replace('.', '', $this->rate_per_container);
+            $this->freight_20 = str_replace('.', '', $this->freight_20);
+            $this->freight_40 = str_replace('.', '', $this->freight_40);
 
             $validatedData = $this->validate();
 
@@ -84,7 +84,7 @@ class ShipmentData extends Component
             Shipment::create($validatedData);
 
             // Reset form setelah sukses
-            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'rate', 'rate_per_container']);
+            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'freight_20', 'freight_40']);
 
             // Tampilkan pesan sukses
             session()->flash('success', 'Shipment schedule created successfully!');
@@ -122,8 +122,8 @@ class ShipmentData extends Component
         $this->etb = $shipment->etb;
         $this->etd = $shipment->etd;
         $this->eta = $shipment->eta;
-        $this->rate = $shipment->rate;
-        $this->rate_per_container = $shipment->rate_per_container;
+        $this->freight_20 = $shipment->freight_20;
+        $this->freight_40 = $shipment->freight_40;
     }
 
 
