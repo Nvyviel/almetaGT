@@ -22,6 +22,7 @@ class GuestMiddleware
             'login',
             'register',
             'password/*',
+            'feedback/new',
         ];
 
         // Check if the current route is a public route

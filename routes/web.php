@@ -11,11 +11,13 @@ use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ShippingInstructionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\UnauthenticatedSessionController;
 
 require __DIR__ . '/auth.php';
 
 Route::middleware('accessable')->group(function () {
     Route::get('/', [ShipmentController::class, 'guestFiltering'])->name('landing-page');
+    Route::get('/feedback/new', [UnauthenticatedSessionController::class, 'newFeedback'])->name('new-feedback');
 });
 
 Route::middleware(['session', 'status'])->group(function () {
@@ -128,6 +130,8 @@ Route::middleware(['session', 'status'])->group(function () {
 
             Route::get('/approvalseal/add-stock', [SealController::class, 'addStock'])->name('add-stock');
 
+            Route::get('/feedback/received', [UnauthenticatedSessionController::class, 'feedbackReceived'])->name('feedback-received');
+            
             Route::put('/shipping-instruction/{id}/approved', [ShippingInstructionController::class, 'approvedSi'])->name('approved-si');
             Route::put('/shipping-instruction/{id}/rejected', [ShippingInstructionController::class, 'rejectedSi'])->name('rejected-si');
         });

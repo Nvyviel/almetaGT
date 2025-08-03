@@ -216,11 +216,6 @@ class ShipmentController extends Controller
     {
         $container = Container::findOrFail($id);
 
-        // // Check authorization
-        // if (!auth()->user()->can('cancel', $container)) {
-        //     abort(403);
-        // }
-
         $container->update([
             'status' => 'Canceled'
         ]);
