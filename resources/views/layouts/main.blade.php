@@ -2,10 +2,11 @@
     @section('layout')
         <div class="min-h-screen">
             <nav
-                class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-md z-40 px-6 py-3 flex justify-between items-center">
+                class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('dashboard') }}" wire:navigate>
-                        <div class="text-2xl font-black text-red-700 tracking-tight">ALMETA</div>
+                        <img src="{{ asset('assets/img/almeta-global-trilindo.png') }}" alt="Almeta Logo"
+                            class="h-8 md:h-12 w-auto max-w-[210px] object-contain">
                     </a>
                     <div class="hidden md:block border-l border-gray-300 pl-4 text-gray-400 text-sm">
                         Logistics Management
