@@ -256,7 +256,7 @@
                                                     Container Ship
                                                 </p>
                                             </div>
-                                            <div
+                                            {{-- <div
                                                 class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
                                                 <p class="text-xs text-gray-500 mb-1">Transit Time</p>
                                                 <p class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
@@ -264,7 +264,7 @@
                                                     {{ \Carbon\Carbon::parse($shipment->etb)->diffInDays(\Carbon\Carbon::parse($shipment->eta)) }}
                                                     Days
                                                 </p>
-                                            </div>
+                                            </div> --}}
                                             <div
                                                 class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
                                                 <p class="text-xs text-gray-500 mb-1">Freetime</p>

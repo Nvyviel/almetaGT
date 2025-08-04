@@ -22,7 +22,7 @@
 
     <div class="min-h-screen bg-white relative overflow-hidden">
         <!-- Navigation -->
-        <nav class="border-b border-gray-100 bg-white fixed w-full top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
+        <nav class="border-b border-gray-100 bg-white fixed w-full top-0 z-50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16 md:h-20 relative">
                     <!-- Logo Section - Tetap di posisi kiri -->
