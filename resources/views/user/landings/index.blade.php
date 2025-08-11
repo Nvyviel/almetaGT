@@ -95,55 +95,45 @@
         </nav>
 
         <!-- Hero Section with animated background -->
-        <div class="pt-20 md:pt-24 bg-blue-600 relative">
+        <div class="pt-20 md:pt-24 relative min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center" 
+             style="background: linear-gradient(rgba(37, 99, 235, 0.6), rgba(37, 99, 235, 0.7)), url('{{ asset('assets/img/1st-birth-almeta.png') }}'); 
+                    background-size: cover; 
+                    background-position: center; 
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;">
             <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                <div class="py-10 sm:py-12 lg:py-16">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                        <!-- Left side - Text content -->
-                        <div class="text-left">
-                            <h1
-                                class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 drop-shadow-sm pb-2 mb-2 animate-fade-in">
-                                Logistics Solutions
-                            </h1>
-                            <div class="animate-fade-in animation-delay-600">
-                                <p class="text-lg sm:text-xl text-white leading-relaxed font-light mb-3 md:mb-4">
-                                    <span class="border-b-4 border-yellow-300 pb-1">Fast, Secure & Trusted</span>
-                                    <span class="hidden sm:inline"> freight forwarding services for your cargo
-                                        needs.</span>
-                                </p>
-                                <p class="sm:hidden text-white leading-relaxed font-light mb-3">
-                                    Freight forwarding services for your cargo needs.
-                                </p>
-                                <p class="text-sm sm:text-base text-blue-100 leading-relaxed max-w-lg">
-                                    Professional EMKL services connecting businesses across Indonesia with comprehensive
-                                    land & sea freight solutions. Your trusted logistics partner for efficient
-                                    cargo delivery.
-                                </p>
-                            </div>
-                            <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 animate-fade-up">
-                                <a href="#filtering"
-                                    class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 shadow-lg hover:shadow-red-200/50 transition-all duration-300 w-full sm:w-auto"
-                                    style="position: relative; z-index: 10;">
-                                    Find Routes
-                                    <i class="fas fa-route ml-2"></i>
-                                </a>
-                                <a href="{{ route('register') }}" wire:navigate
-                                    class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-blue-200/50 transition-all duration-300 w-full sm:w-auto"
-                                    style="position: relative; z-index: 10;">
-                                    Get Started
-                                    <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+                <div class="py-12 sm:py-16 lg:py-20">
+                    <!-- Centered Content -->
+                    <div class="text-center max-w-4xl mx-auto">
+                        <h1
+                            class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 drop-shadow-lg pb-2 mb-4 sm:mb-6 animate-fade-in">
+                            Logistics Solutions
+                        </h1>
+                        <div class="animate-fade-in animation-delay-600">
+                            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white leading-relaxed font-light mb-4 sm:mb-6">
+                                <span class="border-b-4 border-yellow-300 pb-1">Fast, Secure & Trusted</span>
+                                <span class="block sm:inline mt-2 sm:mt-0"> freight forwarding services for your cargo needs.</span>
+                            </p>
+                            <p class="text-base sm:text-lg md:text-xl text-blue-100 leading-relaxed max-w-3xl mx-auto mb-8 sm:mb-10">
+                                Professional EMKL services connecting businesses across Indonesia with comprehensive
+                                land & sea freight solutions. Your trusted logistics partner for efficient
+                                cargo delivery.
+                            </p>
                         </div>
-
-                        <!-- Right side - Image -->
-                        <div class="flex justify-center lg:justify-end mt-4 lg:mt-0">
-                            <div
-                                class=" relative w-4/5 sm:w-2/3 lg:w-full max-w-md aspect-square overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
-                                <img src="{{ asset('assets/img/Almeta-ship.png') }}" alt="Almeta Ship"
-                                    class="w-full h-full object-cover">
-                            </div>
+                        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center animate-fade-up max-w-lg mx-auto">
+                            <a href="#filtering"
+                                class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg lg:text-xl font-semibold rounded-lg text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 shadow-lg hover:shadow-red-200/50 transition-all duration-300 w-full sm:w-auto transform hover:scale-105"
+                                style="position: relative; z-index: 10;">
+                                Find Routes
+                                <i class="fas fa-route ml-2"></i>
+                            </a>
+                            <a href="{{ route('register') }}" wire:navigate
+                                class="inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg lg:text-xl font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-blue-200/50 transition-all duration-300 w-full sm:w-auto transform hover:scale-105"
+                                style="position: relative; z-index: 10;">
+                                Get Started
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -649,43 +639,6 @@
                                         <i class="fas fa-check text-green-600 mr-2"></i>
                                         Dedicated account management
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Customer Testimonial -->
-                <div class="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden">
-                    <div class="px-6 py-4 bg-gray-900 text-white">
-                        <h3 class="text-lg font-semibold">Customer Success Story</h3>
-                        <p class="text-sm text-gray-300 mt-1">Real feedback from our valued business partners</p>
-                    </div>
-
-                    <div class="p-8 sm:p-10">
-                        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-6">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-16 h-16 bg-blue-600 text-white rounded-md flex items-center justify-center font-bold text-xl">
-                                    PI
-                                </div>
-                            </div>
-                            <div class="flex-1 text-center lg:text-left">
-                                <div class="flex justify-center lg:justify-start space-x-1 mb-4">
-                                    {!! str_repeat('<i class="fas fa-star text-yellow-400"></i>', 5) !!}
-                                </div>
-                                <blockquote class="text-lg text-gray-700 italic mb-6">
-                                    "Almeta has significantly improved our supply chain efficiency. Their professional
-                                    approach,
-                                    reliable delivery schedules, and excellent customer service make them our preferred
-                                    logistics partner.
-                                    We've seen a 25% reduction in shipping delays since partnering with them."
-                                </blockquote>
-                                <div>
-                                    <div class="font-semibold text-gray-900">PT. Pacific Industries</div>
-                                    <div class="text-sm text-gray-600">Manufacturing Company - Jakarta, Indonesia</div>
-                                    <div class="text-xs text-gray-500 mt-1">Partnership since 2022 • 200+ successful
-                                        shipments</div>
                                 </div>
                             </div>
                         </div>
