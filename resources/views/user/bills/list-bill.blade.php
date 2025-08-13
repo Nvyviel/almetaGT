@@ -118,12 +118,13 @@
                                 <form id="payment-form">
                                     @csrf
                                     <button type="button" onclick="payBill({{ $bill->id }})"
-                                        class="inline-flex items-center px-3 py-3 sm:px-4 sm:py-4 bg-green-50 text-green-700 rounded-full hover:bg-green-100">
+                                        class="inline-flex items-center px-3 py-3 sm:px-4 sm:py-4 hover:text-green-700 text-sm">
                                         <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
                                         </svg>
+                                        Confirm Payment
                                     </button>
                                 </form>
                             @endif

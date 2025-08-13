@@ -1,8 +1,7 @@
 <x-app-layout>
     @section('layout')
         <div class="min-h-screen">
-            <nav
-                class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
+            <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('dashboard') }}" wire:navigate>
                         <img src="{{ asset('assets/img/almeta-global-trilindo.png') }}" alt="Almeta Logo"
@@ -91,6 +90,12 @@
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('list-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-scroll mr-2"></i> Bills
                         </a>
+                        <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                            <i class="fas fa-question-circle mr-2"></i> Help
+                        </a>
+                        <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                            <i class="fas fa-comment-alt mr-2"></i> Feedback
+                        </a>
 
                         @if (Auth::user() && Auth::user()->is_admin)
                             <div class="w-full border-t border-gray-200 my-2"></div>
@@ -157,6 +162,12 @@
                             <a href="{{ route('list-bill') }}" wire:navigate
                                 class="{{ $linkClass }} {{ request()->routeIs('list-bill') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-scroll mr-3"></i> Bill
+                            </a>
+                            <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                                <i class="fas fa-question-circle mr-3"></i> Help
+                            </a>
+                            <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                                <i class="fas fa-comment-alt mr-3"></i> Feedback
                             </a>
 
 

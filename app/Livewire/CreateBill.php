@@ -19,7 +19,7 @@ class CreateBill extends Component
     public $user_id;
     public $shipment_id;
     public $container_id;
-    public $shipping_instruction_id; // TAMBAH: sesuai database
+    public $shipping_instruction_id;
     public $payment_term = 'Port To Port';
     public $status = 'Unpaid';
     
@@ -403,11 +403,6 @@ class CreateBill extends Component
 
     public function createBill()
     {
-        Log::info('=== CREATE BILL PROCESS STARTED ===', [
-            'user' => 'Nvyviel',
-            'timestamp' => now()->toDateTimeString()
-        ]);
-
         // Log form data before validation
         Log::info('Form data before validation', [
             'user_id' => $this->user_id,
@@ -452,7 +447,7 @@ class CreateBill extends Component
             }
 
             // Generate unique bill_id
-            $billId = 'BILL-' . now()->format('Ymd') . '-' . str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
+            $billId = 'INV' . now()->format('Ymd') . sprintf('%04d', mt_rand(1, 9999));
             
             // Prepare data for bill creation
             $billData = [
