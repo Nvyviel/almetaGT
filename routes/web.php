@@ -21,10 +21,7 @@ Route::middleware('accessable')->group(function () {
 });
 
 Route::middleware(['session', 'status'])->group(function () {
-    Route::get('/dashboard', function () {
-        $shipments = Shipment::all();
-        return view('user.landings.dashboard', compact('shipments'));
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [ShipmentController::class, 'dashboardFiltering'])->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::prefix('/status')->group(function () {
         Route::get('/pending', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');

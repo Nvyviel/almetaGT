@@ -59,10 +59,25 @@
             </div>
 
             <!-- Search Form with floating effect -->
-            <form action="{{ route('dashboard') }}" method="GET"
+            <form action="{{ route('dashboard') }}#result" method="GET"
                 class="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 lg:p-10 mb-10 sm:mb-16 border border-gray-100 transform hover:translate-y-[-5px] transition-all duration-300"
                 onsubmit="handleFormSubmit(event)">
                 @csrf
+
+                <!-- Error Message Display -->
+                @if (isset($error))
+                    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-red-500"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">{{ $error }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-end">
                     <!-- POL Selection -->
                     <div class="lg:col-span-5">
@@ -74,10 +89,10 @@
                         </label>
                         <div class="relative group">
                             <select name="pol" id="pol"
-                                class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 border-gray-200 hover:border-blue-400 rounded-lg sm:rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
-                                <option disabled selected>Select Port of Loading</option>
+                                class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-100' }} rounded-lg sm:rounded-xl focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
+                                <option disabled {{ !request('pol') && !isset($old_pol) ? 'selected' : '' }}>Select Port of Loading</option>
                                 @foreach ($fromCities as $city)
-                                    <option value="{{ $city }}" {{ request('pol') == $city ? 'selected' : '' }}>
+                                    <option value="{{ $city }}" {{ request('pol') == $city || (isset($old_pol) && $old_pol == $city) ? 'selected' : '' }}>
                                         {{ strtoupper($city) }}
                                     </option>
                                 @endforeach
@@ -106,10 +121,10 @@
                         </label>
                         <div class="relative group">
                             <select name="pod" id="pod"
-                                class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 border-gray-200 hover:border-red-400 rounded-lg sm:rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
-                                <option disabled selected>Select Port of Discharge</option>
+                                class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-red-400 focus:border-red-500 focus:ring-red-100' }} rounded-lg sm:rounded-xl focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
+                                <option disabled {{ !request('pod') && !isset($old_pod) ? 'selected' : '' }}>Select Port of Discharge</option>
                                 @foreach ($fromCities as $city)
-                                    <option value="{{ $city }}" {{ request('pod') == $city ? 'selected' : '' }}>
+                                    <option value="{{ $city }}" {{ request('pod') == $city || (isset($old_pod) && $old_pod == $city) ? 'selected' : '' }}>
                                         {{ strtoupper($city) }}
                                     </option>
                                 @endforeach
@@ -133,7 +148,7 @@
 
             <!-- Results Section -->
             @if (request('pol') && request('pod'))
-                <div class="space-y-6 sm:space-y-8">
+                <div class="space-y-6 sm:space-y-8" id="result">
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 gap-3">
                         <div>
                             <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Available Shipments
@@ -148,7 +163,27 @@
                         </div>
                     </div>
 
-                    @if ($shipments->isEmpty())
+                    @if (isset($error))
+                        <div
+                            class="bg-white rounded-xl shadow-lg sm:shadow-xl p-6 sm:p-10 lg:p-16 text-center border border-gray-100">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-red-100 rounded-full mb-4 sm:mb-6 animate-pulse">
+                                <i class="fas fa-exclamation-triangle text-3xl sm:text-4xl lg:text-5xl text-red-600"></i>
+                            </div>
+                            <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
+                                Invalid Route
+                            </h3>
+                            <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto mb-4 sm:mb-6">
+                                The selected Port of Loading and Port of Discharge are the same. Please select different ports.
+                            </p>
+                            <a href="#"
+                                onclick="document.getElementById('pol').selectedIndex = 0; document.getElementById('pod').selectedIndex = 0;"
+                                class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-red-100 hover:bg-red-200 text-red-800 font-medium rounded-lg transition-colors">
+                                <i class="fas fa-search mr-2"></i>
+                                Try Another Route
+                            </a>
+                        </div>
+                    @elseif ($shipments->isEmpty())
                         <div
                             class="bg-white rounded-xl shadow-lg sm:shadow-xl p-6 sm:p-10 lg:p-16 text-center border border-gray-100">
                             <div

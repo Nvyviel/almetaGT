@@ -107,6 +107,39 @@ class ShipmentController extends Controller
         return view('user.landings.index', compact('shipments', 'fromCities'));
     }
 
+    public function dashboardFiltering(Request $request)
+    {
+        $pod = $request->input('pod');
+        $pol = $request->input('pol');
+
+        // Get cities for dropdown
+        $fromCities = $this->getFromCities();
+
+        if (empty($pod) || empty($pol)) {
+            return view('user.landings.dashboard', [
+                'shipments' => collect(),
+                'fromCities' => $fromCities
+            ]);
+        }
+
+        // Check if POD and POL are the same
+        if ($pod === $pol) {
+            return view('user.landings.dashboard', [
+                'shipments' => collect(),
+                'error' => 'Port of Loading (POL) and Port of Discharge (POD) cannot be the same location. Please select different ports.',
+                'old_pod' => $pod,
+                'old_pol' => $pol,
+                'fromCities' => $fromCities
+            ]);
+        }
+
+        $shipments = Shipment::where('to_city', $pod)
+            ->where('from_city', $pol)
+            ->get();
+
+        return view('user.landings.dashboard', compact('shipments', 'fromCities'));
+    }
+
     private function getFromCities()
     {
         return Shipment::select('from_city')

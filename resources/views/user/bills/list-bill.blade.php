@@ -62,7 +62,13 @@
                         {{-- Left Section: Bill Details --}}
                         <div class="sm:col-span-12 md:col-span-8 space-y-2">
                             <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
-                                <span class="bg-indigo-50 text-indigo-600 px-2 py-1 text-xs font-semibold">
+                                <span class="bg-indigo-50 text-indigo-600 px-2 py-1 text-xs font-semibold cursor-pointer hover:bg-indigo-100 transition-colors"
+                                    onclick="navigator.clipboard.writeText('{{ $bill->bill_id }}').then(() => { 
+                                        const originalText = this.innerText;
+                                        this.innerText = 'Copied!'; 
+                                        setTimeout(() => { this.innerText = originalText; }, 1000); 
+                                    });"
+                                    title="Click to copy">
                                     {{ $bill->bill_id }}
                                 </span>
                                 <span class="text-xs sm:text-sm text-gray-500">
