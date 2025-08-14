@@ -21,3 +21,10 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Ignore zip files and archives
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.tar
