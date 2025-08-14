@@ -448,18 +448,13 @@
         </div>
 
         <!-- Features Section -->
-        <div class="pt-16 sm:pt-20 lg:pt-28" id="features">
+        <div id="features">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Header Section -->
                 <div class="text-center mb-12 sm:mb-16 lg:mb-20">
-                    <div class="inline-block">
-                        <span
-                            class="inline-block px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-md mb-4 shadow-sm">
-                            Our Promise
-                        </span>
-                    </div>
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-                        Why Choose Almeta?
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center justify-center gap-4">
+                        <img src="{{ asset('../assets/img/Almeta Logo Website V-1.png') }}" alt="Almeta Logo" class="h-12 sm:h-16 lg:h-20 w-auto">
+                        Company background
                     </h2>
                     <p class="text-lg text-gray-600 max-w-3xl mx-auto">
                         Experience superior logistics services backed by proven performance metrics and comprehensive
@@ -524,123 +519,131 @@
                     <div class="text-center mb-12">
                         <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Core Service Advantages</h3>
                         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                            Three fundamental pillars that make Almeta the preferred logistics partner for businesses
+                            Three fundamental pillars that make companies the preferred logistics partner for businesses
                             nationwide
                         </p>
                     </div>
 
-                    <div class="space-y-8 lg:space-y-12">
-                        <!-- Service 1 -->
-                        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-16 h-16 bg-blue-600 text-white rounded-md flex items-center justify-center shadow-sm">
-                                    <i class="fas fa-shipping-fast text-2xl"></i>
+                    <!-- Carousel Container -->
+                    <div class="relative">
+                        <div id="services-carousel" class="relative">
+                            <!-- Service 1 -->
+                            <div class="carousel-slide absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out px-2 sm:px-4" data-slide="0">
+                                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                            <i class="fas fa-shipping-fast text-2xl sm:text-3xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 text-center lg:text-left">
+                                        <h4 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">Fast & Efficient Delivery</h4>
+                                        <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base lg:text-lg">
+                                            Advanced logistics network ensuring quick delivery times across Indonesia's most
+                                            challenging routes. Our optimized supply chain reduces transit time by up to 30% compared to traditional
+                                            methods.
+                                        </p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-green-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-green-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Express shipping options available</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-green-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-green-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Real-time tracking system</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-green-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-green-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Priority handling for urgent cargo</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-green-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-green-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Multi-modal transportation</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex-1 text-center lg:text-left">
-                                <h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Fast & Efficient Delivery
-                                </h4>
-                                <p class="text-gray-600 mb-4 leading-relaxed">
-                                    Advanced logistics network ensuring quick delivery times across Indonesia's most
-                                    challenging routes.
-                                    Our optimized supply chain reduces transit time by up to 30% compared to traditional
-                                    methods.
-                                </p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Express shipping options available
+
+                            <!-- Service 2 -->
+                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out px-2 sm:px-4" data-slide="1">
+                                <div class="flex flex-col lg:flex-row-reverse items-center lg:items-start gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-gray-600 to-gray-800 text-white rounded-xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                            <i class="fas fa-shield-alt text-2xl sm:text-3xl"></i>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Real-time tracking system
+                                    <div class="flex-1 text-center lg:text-left">
+                                        <h4 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">Comprehensive Security & Safety</h4>
+                                        <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base lg:text-lg">
+                                            End-to-end cargo protection with advanced security measures, insurance coverage, and
+                                            temperature-controlled environments for sensitive goods. Your cargo's safety is
+                                            guaranteed.
+                                        </p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-blue-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-blue-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Full cargo insurance included</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-blue-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-blue-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">GPS tracking & monitoring</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-blue-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-blue-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Secure warehouse facilities</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-blue-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-blue-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Climate-controlled storage</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Priority handling for urgent cargo
+                                </div>
+                            </div>
+
+                            <!-- Service 3 -->
+                            <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out px-2 sm:px-4" data-slide="2">
+                                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-500 to-green-700 text-white rounded-xl flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                            <i class="fas fa-cogs text-2xl sm:text-3xl"></i>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Multi-modal transportation
+                                    <div class="flex-1 text-center lg:text-left">
+                                        <h4 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">Reliable & Consistent Service</h4>
+                                        <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base lg:text-lg">
+                                            Proven track record with consistent performance across all service levels. Our
+                                            experienced team and deep local market knowledge ensure dependable logistics solutions for your
+                                            business needs.
+                                        </p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-yellow-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-yellow-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">5+ years industry experience</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-yellow-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-yellow-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Local expertise & knowledge</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-yellow-50 p-2 sm:p-3 rounded-lg">
+                                                <i class="fas fa-check text-yellow-600 mr-2 sm:mr-3 text-sm sm:text-lg"></i>
+                                                <span class="font-medium text-xs sm:text-sm">Predictable delivery schedules</span>
+                                            </div>
+                                            <div class="flex items-center justify-center lg:justify-start text-gray-700 bg-yellow-50 p-3 rounded-lg">
+                                                <i class="fas fa-check text-yellow-600 mr-3 text-lg"></i>
+                                                <span class="font-medium">Dedicated account management</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Service 2 -->
-                        <div class="flex flex-col lg:flex-row-reverse items-center lg:items-start gap-8">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-16 h-16 bg-gray-700 text-white rounded-md flex items-center justify-center shadow-sm">
-                                    <i class="fas fa-shield-alt text-2xl"></i>
-                                </div>
-                            </div>
-                            <div class="flex-1 text-center lg:text-left">
-                                <h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Comprehensive Security &
-                                    Safety</h4>
-                                <p class="text-gray-600 mb-4 leading-relaxed">
-                                    End-to-end cargo protection with advanced security measures, insurance coverage, and
-                                    temperature-controlled environments for sensitive goods. Your cargo's safety is
-                                    guaranteed.
-                                </p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Full cargo insurance included
-                                    </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        GPS tracking & monitoring
-                                    </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Secure warehouse facilities
-                                    </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Climate-controlled storage
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Service 3 -->
-                        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-16 h-16 bg-green-600 text-white rounded-md flex items-center justify-center shadow-sm">
-                                    <i class="fas fa-cogs text-2xl"></i>
-                                </div>
-                            </div>
-                            <div class="flex-1 text-center lg:text-left">
-                                <h4 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">Reliable & Consistent
-                                    Service</h4>
-                                <p class="text-gray-600 mb-4 leading-relaxed">
-                                    Proven track record with consistent performance across all service levels. Our
-                                    experienced team
-                                    and deep local market knowledge ensure dependable logistics solutions for your
-                                    business needs.
-                                </p>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        5+ years industry experience
-                                    </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Local expertise & knowledge
-                                    </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Predictable delivery schedules
-                                    </div>
-                                    <div class="flex items-center justify-center lg:justify-start text-gray-700">
-                                        <i class="fas fa-check text-green-600 mr-2"></i>
-                                        Dedicated account management
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Progress Indicators (Optional - subtle dots) -->
+                        <div class="flex justify-center space-x-2">
+                            <div id="indicator-0" class="w-3 h-3 bg-blue-600 rounded-full transition-all duration-300"></div>
+                            <div id="indicator-1" class="w-3 h-3 bg-gray-300 rounded-full transition-all duration-300"></div>
+                            <div id="indicator-2" class="w-3 h-3 bg-gray-300 rounded-full transition-all duration-300"></div>
                         </div>
                     </div>
                 </div>
@@ -649,8 +652,10 @@
                 <div class="mt-12 text-center">
                     <div
                         class="inline-flex items-center px-6 py-3 bg-blue-50 text-blue-700 rounded-md text-sm font-medium">
-                        <i class="fas fa-info-circle mr-2"></i>
-                        Ready to experience reliable logistics solutions? Contact our team for a customized quote.
+                        <a href="#contact">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Ready to experience reliable logistics solutions? Contact our team for a customized quote.
+                        </a>
                     </div>
                 </div>
             </div>
@@ -837,7 +842,7 @@
                                 FAQ
                             </a>
                             <span class="text-sm text-gray-400 bg-gray-200 px-2 py-1 rounded-md">
-                                V.1.2.2
+                                V.1.3.2
                             </span>
                         </div>
                     </div>
@@ -875,6 +880,101 @@
                             mobileMenu.classList.add('hidden');
                         }
                     });
+                }
+
+                // Auto Carousel for Core Services
+                console.log('Initializing carousel...'); // Debug log
+                const servicesCarousel = document.getElementById('services-carousel');
+                console.log('Carousel element found:', servicesCarousel); // Debug log
+                
+                const totalSlides = 3;
+                let currentSlide = 0;
+                let carouselInterval;
+
+                function updateCarousel() {
+                    if (servicesCarousel) {
+                        console.log(`Updating carousel to slide ${currentSlide}`); // Debug log
+                        
+                        // Hide all slides first
+                        const slides = servicesCarousel.querySelectorAll('.carousel-slide');
+                        slides.forEach((slide, index) => {
+                            if (index === currentSlide) {
+                                slide.classList.remove('opacity-0');
+                                slide.classList.add('opacity-100');
+                            } else {
+                                slide.classList.remove('opacity-100');
+                                slide.classList.add('opacity-0');
+                            }
+                        });
+                        
+                        // Update indicators
+                        for (let i = 0; i < totalSlides; i++) {
+                            const indicator = document.getElementById(`indicator-${i}`);
+                            if (indicator) {
+                                if (i === currentSlide) {
+                                    indicator.classList.remove('bg-gray-300');
+                                    indicator.classList.add('bg-blue-600', 'scale-125');
+                                } else {
+                                    indicator.classList.remove('bg-blue-600', 'scale-125');
+                                    indicator.classList.add('bg-gray-300');
+                                }
+                            }
+                        }
+                    }
+                }
+
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    console.log(`Moving to slide ${currentSlide}`);
+                    updateCarousel();
+                }
+
+                function startCarousel() {
+                    console.log('Starting carousel timer...');
+                    carouselInterval = setInterval(nextSlide, 3000);
+                }
+
+                function stopCarousel() {
+                    if (carouselInterval) {
+                        console.log('Stopping carousel timer...');
+                        clearInterval(carouselInterval);
+                    }
+                }
+
+                // Initialize carousel
+                if (servicesCarousel) {
+                    console.log('Carousel found, initializing...'); 
+                    updateCarousel();
+                    
+                    // Start carousel after a small delay to ensure everything is loaded
+                    setTimeout(() => {
+                        startCarousel();
+                        console.log('Carousel started with automatic rotation'); // Debug log
+                    }, 1000);
+
+                    // Pause carousel on hover
+                    servicesCarousel.addEventListener('mouseenter', function() {
+                        console.log('Mouse entered, pausing carousel'); // Debug log
+                        stopCarousel();
+                    });
+                    
+                    servicesCarousel.addEventListener('mouseleave', function() {
+                        console.log('Mouse left, resuming carousel'); // Debug log
+                        startCarousel();
+                    });
+
+                    // Pause carousel when page is not visible
+                    document.addEventListener('visibilitychange', function() {
+                        if (document.hidden) {
+                            console.log('Page hidden, pausing carousel'); // Debug log
+                            stopCarousel();
+                        } else {
+                            console.log('Page visible, resuming carousel'); // Debug log
+                            startCarousel();
+                        }
+                    });
+                } else {
+                    console.error('Carousel element not found!'); // Debug log
                 }
 
                 // Form submission handling
@@ -946,5 +1046,73 @@
                 });
             });
         </script>
+        </script>
+
+        <style>
+            /* Carousel specific styles */
+            #services-carousel {
+                min-height: 350px; /* Reduced height for mobile */
+            }
+
+            /* Responsive height adjustments */
+            @media (min-width: 640px) {
+                #services-carousel {
+                    min-height: 400px;
+                }
+            }
+
+            @media (min-width: 1024px) {
+                #services-carousel {
+                    min-height: 450px;
+                }
+            }
+
+            .carousel-slide {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                transition: opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+                visibility: visible;
+            }
+
+            .carousel-slide.opacity-0 {
+                visibility: hidden;
+            }
+
+            .carousel-slide.opacity-100 {
+                visibility: visible;
+            }
+
+            /* Smooth scale transition for indicators */
+            .transition-all {
+                transition: all 300ms ease;
+            }
+
+            /* Enhanced hover effects */
+            .transform.hover\:scale-105:hover {
+                transform: scale(1.05);
+            }
+
+            #services-carousel + div [id^="indicator-"] {
+                transition: background-color 300ms ease, transform 300ms ease;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .flex-col.lg\:flex-row,
+            .flex-col.lg\:flex-row-reverse {
+                animation: fadeInUp 0.6s ease-out;
+            }
+        </style>
     </div>
 </x-guest-layout>

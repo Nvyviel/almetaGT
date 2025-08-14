@@ -451,15 +451,15 @@ class CreateBill extends Component
             
             // Prepare data for bill creation
             $billData = [
-                'bill_id' => $billId, // TAMBAH: Generate bill_id
+                'bill_id' => $billId,
                 'user_id' => $this->user_id,
                 'shipment_id' => $this->shipment_id,
                 'container_id' => $this->container_id,
-                'shipping_instruction_id' => $this->shipping_instruction_id, // TAMBAH
+                'shipping_instruction_id' => $this->shipping_instruction_id,
                 'payment_term' => $this->payment_term,
                 'status' => $this->status,
                 'grand_total' => $this->grand_total,
-                'upload_file' => $filePath, // UBAH: dari pdf_bill ke upload_file
+                'upload_file' => $filePath,
                 'thc_lolo' => $this->thc_lolo,
                 'freight_surcharge' => $this->freight_surcharge,
                 'bl_do_fee' => $this->bl_do_fee,

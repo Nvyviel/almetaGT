@@ -3,6 +3,37 @@
 @section('title', 'Bill Detail')
 @section('component')
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        {{-- Flash Messages --}}
+        @if(session('success'))
+            <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-red-800">{{ session('error') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         {{-- Back Button --}}
         <div class="mb-6">
             <a href="{{ route('list-bill') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200">
@@ -131,6 +162,73 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Payment Confirmation Info --}}
+            @if($bill->upload_confirmation || $bill->payment_confirmed_at || $bill->paid_at)
+            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div class="border-b border-gray-200 bg-blue-50 px-6 py-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Payment Confirmation</h3>
+                </div>
+                <div class="p-6 space-y-4">
+                    @if($bill->upload_confirmation)
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Payment Proof</label>
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">Payment Confirmation File</p>
+                                <p class="text-xs text-gray-500">{{ pathinfo($bill->upload_confirmation, PATHINFO_EXTENSION) }} File</p>
+                            </div>
+                            <a href="{{ Storage::url($bill->upload_confirmation) }}" target="_blank" 
+                               class="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                View
+                            </a>
+                        </div>
+                    </div>
+                    @endif
+                    
+                    @if($bill->payment_confirmed_at)
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Payment Confirmed At</label>
+                        <p class="text-gray-900">{{ \Carbon\Carbon::parse($bill->payment_confirmed_at)->format('d M Y, H:i') }}</p>
+                    </div>
+                    @endif
+                    
+                    @if($bill->paid_at)
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Paid At</label>
+                        <p class="text-gray-900">{{ \Carbon\Carbon::parse($bill->paid_at)->format('d M Y, H:i') }}</p>
+                    </div>
+                    @endif
+                    
+                    @if($bill->status === 'Under Verification')
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">Payment Under Verification</h3>
+                                <div class="mt-2 text-sm text-blue-700">
+                                    <p>Your payment confirmation has been submitted and is currently being verified by our team.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
         </div>
 
         {{-- Fee Breakdown --}}
@@ -289,14 +387,27 @@
         {{-- Action Buttons --}}
         <div class="flex flex-col sm:flex-row gap-4 justify-end">
             @if($bill->status === 'Unpaid')
-                <button onclick="markAsPaid({{ $bill->id }})"
+                <a href="{{ route('bills.payment-confirmation', $bill->id) }}"
                     class="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Confirm Payment
-                </button>
+                    Payment Confirmation
+                </a>
             @elseif($bill->status === 'Under Verification')
+                <form action="{{ route('bills.cancel-payment-confirmation', $bill->id) }}" method="POST" class="inline-flex" onsubmit="return confirm('Are you sure you want to cancel the payment confirmation? This action cannot be undone.')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" 
+                        class="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Cancel Payment Confirmation
+                    </button>
+                </form>
+                
+                @if(Auth::user()->is_admin)
                 <button onclick="approveBill({{ $bill->id }})"
                     class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -304,6 +415,7 @@
                     </svg>
                     Approve Payment
                 </button>
+                @endif
             @endif
             
             <button onclick="printBill({{ $bill->id }})"

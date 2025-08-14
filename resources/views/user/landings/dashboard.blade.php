@@ -167,76 +167,127 @@
                             </a>
                         </div>
                     @else
-                        <div class="grid grid-cols-1 gap-6 sm:gap-8">
+                        <div class="space-y-4 sm:space-y-6 lg:space-y-8">
                             @foreach ($shipments as $shipment)
                                 <div
-                                    class="bg-white rounded-xl shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
-                                    <!-- Shipment Card Header with gradient background -->
-                                    <div class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-6">
-                                        <div class="absolute top-0 right-0 w-16 sm:w-20 h-16 sm:h-20">
+                                    class="bg-white rounded-md shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-lg sm:hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
+                                    <!-- Shipment Card Header -->
+                                    <div
+                                        class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 sm:p-4 lg:p-6">
+                                        <div
+                                            class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20">
                                             <div
-                                                class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-35px] top-[28px] sm:top-[32px] w-[170px] shadow-md text-xs sm:text-sm">
-                                                Available</div>
+                                                class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] lg:right-[-35px] top-[20px] sm:top-[24px] lg:top-[28px] w-[120px] sm:w-[140px] lg:w-[170px] shadow-md text-xs">
+                                                Available
+                                            </div>
                                         </div>
 
-                                        <div class="flex flex-col sm:flex-row justify-between items-start">
-                                            <div>
-                                                <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">
-                                                    {{ $shipment->vessel_name }}
-                                                </h3>
-                                                <div class="flex items-center text-white text-sm sm:text-base lg:text-lg">
-                                                    <span class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
-                                                    <div class="flex items-center mx-2 sm:mx-3 space-x-1">
-                                                        <span
-                                                            class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full"></span>
-                                                        <span class="w-10 sm:w-16 h-0.5 bg-white"></span>
-                                                        <span
-                                                            class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full"></span>
+                                        <div class="pr-8 sm:pr-12 lg:pr-16">
+                                            <h3
+                                                class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-2 break-words">
+                                                {{ $shipment->vessel_name }}
+                                            </h3>
+                                            <div
+                                                class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
+                                                <span
+                                                    class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+
+                                                <!-- Mobile Route Indicator -->
+                                                <div class="flex sm:hidden items-center justify-center my-2">
+                                                    <div class="flex flex-col items-center space-y-1">
                                                     </div>
-                                                    <span class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                                 </div>
+
+                                                <!-- Desktop Route Indicator -->
+                                                <div class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
+                                                    <span
+                                                        class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                    <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
+                                                    <span
+                                                        class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                </div>
+
+                                                <span
+                                                    class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="p-4 sm:p-6 lg:p-8">
-                                        <!-- Timeline with improved styling -->
+                                    <div class="p-3 sm:p-4 lg:p-6 xl:p-8">
+                                        <!-- Timeline Section -->
                                         <div
-                                            class="bg-gradient-to-r from-gray-50 to-white rounded-lg sm:rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-gray-200 shadow-sm">
+                                            class="bg-gradient-to-r from-gray-50 to-white rounded-md p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-gray-200 shadow-sm">
                                             <h4
-                                                class="text-base sm:text-lg font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
-                                                <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>
-                                                Voyage Schedule
+                                                class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 flex items-center">
+                                                <i
+                                                    class="fas fa-calendar-alt text-blue-600 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
+                                                <span class="text-sm sm:text-base lg:text-lg">Voyage
+                                                    Schedule</span>
                                             </h4>
 
                                             <div class="relative">
-                                                <!-- Timeline bar -->
+                                                <!-- Desktop Timeline bar -->
                                                 <div
-                                                    class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-16 sm:mx-20">
+                                                    class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
                                                 </div>
 
+                                                <!-- Mobile: Vertical Timeline -->
                                                 <div
-                                                    class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-10 relative">
+                                                    class="sm:hidden absolute left-6 top-16 bottom-16 w-0.5 bg-gray-200 z-0">
+                                                </div>
+
+                                                <!-- Mobile: Connect lines between timeline items -->
+                                                <div
+                                                    class="sm:hidden space-y-6 relative">
                                                     @foreach (['etb', 'etd', 'eta'] as $index => $timeKey)
                                                         <div
-                                                            class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
-                                                            <div class="flex items-center justify-between mb-2 sm:mb-3">
+                                                            class="flex items-center space-x-4 relative z-10">
+                                                            <!-- Timeline dot -->
+                                                            <div
+                                                                class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md">
+                                                                <i
+                                                                    class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                            </div>
+
+                                                            <!-- Content -->
+                                                            <div class="flex-1 bg-white rounded-lg p-3 shadow-sm border border-gray-100">
                                                                 <p
-                                                                    class="text-xs sm:text-sm font-bold {{ $index == 0 ? 'text-blue-500' : ($index == 1 ? 'text-blue-600' : 'text-blue-700') }}">
+                                                                    class="text-sm font-bold {{ $index == 0 ? 'text-blue-500' : ($index == 1 ? 'text-blue-600' : 'text-blue-700') }} mb-1">
                                                                     {{ strtoupper($timeKey) }}
                                                                 </p>
+                                                                <p class="font-bold text-gray-800 text-base">
+                                                                    {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
+                                                                </p>
+                                                                <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                                                    <i class="far fa-clock mr-1"></i>
+                                                                    {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                                <!-- Desktop Timeline -->
+                                                <div
+                                                    class="hidden sm:grid sm:grid-cols-3 gap-6 lg:gap-10 relative">
+                                                    @foreach (['etb', 'etd', 'eta'] as $index => $timeKey)
+                                                        <div
+                                                            class="bg-white rounded-lg p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg text-center">
+                                                            <div class="flex items-center justify-center mb-3">
                                                                 <div
-                                                                    class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
+                                                                    class="flex items-center justify-center w-10 h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
                                                                     <i
-                                                                        class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs sm:text-sm"></i>
+                                                                        class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
                                                                 </div>
                                                             </div>
                                                             <p
-                                                                class="font-bold text-gray-800 text-base sm:text-lg lg:text-xl">
+                                                                class="text-sm font-bold {{ $index == 0 ? 'text-blue-500' : ($index == 1 ? 'text-blue-600' : 'text-blue-700') }} mb-2">
+                                                                {{ strtoupper($timeKey) }}
+                                                            </p>
+                                                            <p class="font-bold text-gray-800 text-lg">
                                                                 {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                             </p>
-                                                            <p
-                                                                class="text-xs sm:text-sm text-gray-500 mt-1 flex items-center">
+                                                            <p class="text-sm text-gray-500 mt-1 flex items-center justify-center">
                                                                 <i class="far fa-clock mr-1"></i>
                                                                 {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
                                                             </p>
@@ -246,60 +297,13 @@
                                             </div>
                                         </div>
 
-                                        <!-- Additional shipment details with improved cards -->
-                                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                                            <div
-                                                class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                <p class="text-xs text-gray-500 mb-1">Vessel Type</p>
-                                                <p class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                    <i class="fas fa-ship text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                    Container Ship
-                                                </p>
-                                            </div>
-                                            {{-- <div
-                                                class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                <p class="text-xs text-gray-500 mb-1">Transit Time</p>
-                                                <p class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                    <i class="fas fa-clock text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                    {{ \Carbon\Carbon::parse($shipment->etb)->diffInDays(\Carbon\Carbon::parse($shipment->eta)) }}
-                                                    Days
-                                                </p>
-                                            </div> --}}
-                                            <div
-                                                class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                <p class="text-xs text-gray-500 mb-1">Freetime</p>
-                                                <p class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                    <i class="fas fa-stopwatch text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                    5-7 Days
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <!-- Price and Book Now Button -->
-                                        <div
-                                            class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 border-t border-gray-100 pt-4 sm:pt-6">
-                                            <div class="flex flex-col items-center sm:items-start">
-                                                <p class="text-xs sm:text-sm text-gray-500 mb-1">Price per
-                                                    Container</p>
-                                                <div class="flex items-center">
-                                                    <span class="text-xs sm:text-sm text-gray-500 mr-1 sm:mr-2">IDR</span>
-                                                    <span
-                                                        class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-700">
-                                                        {{ number_format($shipment->rate_per_container, 0, ',', '.') }}
-                                                    </span>
-                                                </div>
-                                                <div
-                                                    class="flex items-center mt-1 sm:mt-2 text-green-600 text-xs sm:text-sm">
-                                                    <i class="fas fa-tag mr-1"></i>
-                                                    <span>Best available rate</span>
-                                                </div>
-                                            </div>
-
+                                        <!-- Book Now Button -->
+                                        <div class="flex justify-center">
                                             <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}"
-                                                class="w-full sm:w-auto inline-flex items-center justify-center px-5 sm:px-8 py-2.5 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-lg sm:rounded-xl hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group">
-                                                Book Now
+                                                class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-12 lg:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group active:scale-95">
+                                                <span class="mr-2">Book</span>
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-4 w-4 sm:h-5 sm:w-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                                                    class="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M9 5l7 7-7 7" />

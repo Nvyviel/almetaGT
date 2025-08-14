@@ -90,6 +90,21 @@ class ShippingInstructionData extends Component
         }
     }
 
+    public function updatedConsigneeId($consigneeId)
+    {
+        $this->reset([
+            'shipment_id',
+            'container_id',
+            'container_numbers',
+            'seal_numbers',
+            'container_notes'
+        ]);
+
+        // Reload shipments when consignee changes
+        $this->loadAvailableShipments();
+        $this->containers = collect();
+    }
+
     public function updatedShipmentId($shipmentId)
     {
         $this->reset([
@@ -100,19 +115,19 @@ class ShippingInstructionData extends Component
         ]);
 
         if ($shipmentId && $this->consignee_id) {
-            // Load containers berdasarkan shipment dan consignee
-            $this->containers = Container::where('user_id', $this->consignee_id)
-                ->where('shipment_id', $shipmentId) // Langsung gunakan shipment_id
+            // Load containers berdasarkan shipment dan user_id (bukan consignee_id)
+            $this->containers = Container::where('user_id', $this->user->id)
+                ->where('shipment_id', $shipmentId)
                 ->where('status', 'Approved')
                 ->whereNotIn('id', function ($query) {
                     $query->select('container_id')
                         ->from('shipping_instructions');
                 })
-                ->select('id', 'id_order', 'container_type', 'quantity', 'weight') // Gunakan id_order
+                ->select('id', 'id_order', 'container_type', 'quantity', 'weight')
                 ->get();
 
             if ($this->containers->isEmpty()) {
-                session()->flash('info', 'No available approved containers for this shipment and consignee.');
+                session()->flash('info', 'No available approved containers for this shipment.');
             }
         } else {
             $this->containers = collect();

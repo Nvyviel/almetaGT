@@ -93,7 +93,7 @@
                         <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
                             <i class="fas fa-question-circle mr-2"></i> Help
                         </a>
-                        <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                        <a href="{{ route('new-feedback') }}" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
                             <i class="fas fa-comment-alt mr-2"></i> Feedback
                         </a>
 
@@ -122,6 +122,10 @@
                             <a href="{{ route('create-bill') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('create-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                                 <i class="fa-solid fa-file-invoice mr-2"></i> Create Bills
+                            </a>
+                            <a href="{{ route('admin.bills.list') }}" wire:navigate
+                                class="{{ $mobileLinkClass }} {{ request()->routeIs('admin.bills.list') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                                <i class="fa-solid fa-check-circle mr-2"></i> Confirmation
                             </a>
                             <a href="{{ route('feedback-received') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('feedback-received') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
@@ -166,7 +170,7 @@
                             <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
                                 <i class="fas fa-question-circle mr-3"></i> Help
                             </a>
-                            <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                            <a href="{{ route('new-feedback') }}" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
                                 <i class="fas fa-comment-alt mr-3"></i> Feedback
                             </a>
 
@@ -197,6 +201,10 @@
                                 <a href="{{ route('create-bill') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('create-bill') ? $activeLinkClass : $inactiveLinkClass }}">
                                     <i class="fa-solid fa-file-invoice mr-3"></i> Create Bills
+                                </a>
+                                <a href="{{ route('admin.bills.list') }}" wire:navigate
+                                    class="{{ $linkClass }} {{ request()->routeIs('admin.bills.list') ? $activeLinkClass : $inactiveLinkClass }}">
+                                    <i class="fa-solid fa-check-circle mr-3"></i> Confirmation
                                 </a>
                                 <a href="{{ route('feedback-received') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('feedback-received') ? $activeLinkClass : $inactiveLinkClass }}">

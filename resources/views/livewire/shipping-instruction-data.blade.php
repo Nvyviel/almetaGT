@@ -103,7 +103,7 @@
                         Select Consignee
                         <span class="text-red-500 text-xs">*</span>
                     </label>
-                    <select wire:model="consignee_id" id="consignee_id"
+                    <select wire:model.live="consignee_id" id="consignee_id"
                         class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm @error('consignee_id') border-red-500 ring-red-500 @enderror">
                         <option value="">Choose a Consignee</option>
                         @foreach ($consignees as $consignee)
@@ -161,7 +161,11 @@
                         <span class="text-red-500 text-xs">*</span>
                     </label>
                     {{-- Container Dropdown --}}
-                    <select wire:model.live="container_id" id="container_id" ...>
+                    <select wire:model.live="container_id" id="container_id"
+                        class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-sm
+                        {{ !$shipment_id ? 'bg-gray-100 cursor-not-allowed text-gray-500' : 'bg-gray-50' }}
+                        @error('container_id') border-red-500 ring-red-500 @enderror"
+                        {{ !$shipment_id ? 'disabled' : '' }}>
                         <option value="">{{ !$shipment_id ? 'Select Shipment First' : 'Choose a Container' }}
                         </option>
                         @if ($shipment_id && $containers->count() > 0)
@@ -171,6 +175,8 @@
                                     ({{ $container->quantity }} Container{{ $container->quantity > 1 ? 's' : '' }})
                                 </option>
                             @endforeach
+                        @elseif ($shipment_id && $containers->count() == 0)
+                            <option value="" disabled>No containers available for this shipment</option>
                         @endif
                     </select>
                     @error('container_id')
@@ -178,6 +184,25 @@
                     @enderror
                 </div>
             </div>
+
+            {{-- Info message for no containers --}}
+            @if ($shipment_id && $containers->count() == 0)
+                <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-yellow-800">No Containers Available</h3>
+                            <div class="mt-1 text-sm text-yellow-700">
+                                <p>No approved containers are available for the selected shipment. Please contact admin or try a different shipment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             {{-- Container Details Section --}}
             @if ($container_id && count($container_numbers) > 0)
@@ -343,6 +368,24 @@
                     </div>
                     <div>
                         <p class="text-base font-medium text-red-800">{{ session('error') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        {{-- Info Message --}}
+        @if (session('info'))
+            <div class="mx-6 mb-6 bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-base font-medium text-blue-800">{{ session('info') }}</p>
                     </div>
                 </div>
             </div>

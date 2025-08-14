@@ -142,6 +142,17 @@
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                         <!-- Status Filter Buttons -->
                         <div class="flex flex-wrap gap-3">
+                            <a href="{{ route('admin.bills.list') }}" wire:navigate
+                                class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Bills Management
+                                <span class="ml-2 px-2.5 py-1 bg-white bg-opacity-30 text-xs font-bold rounded-md">
+                                    {{ App\Models\Bill::where('status', 'Under Verification')->count() }}
+                                </span>
+                            </a>
+
                             <a href="{{ route('dashboard-admin', ['status' => 'Under Verification']) }}" wire:navigate
                                 class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-lg hover:from-yellow-500 hover:to-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

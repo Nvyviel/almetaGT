@@ -68,6 +68,12 @@ Route::middleware(['session', 'status'])->group(function () {
         Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
     });
 
+    Route::prefix('/bills')->group(function () {
+        Route::get('/{bill}/payment-confirmation', [BillController::class, 'showPaymentConfirmation'])->name('bills.payment-confirmation');
+        Route::post('/{bill}/confirm-payment', [BillController::class, 'confirmPayment'])->name('bills.confirm-payment');
+        Route::delete('/{bill}/cancel-payment-confirmation', [BillController::class, 'cancelPaymentConfirmation'])->name('bills.cancel-payment-confirmation');
+    });
+
     Route::prefix('/book')->group(function () {
         Route::get('/new', [ContainerController::class, 'booking'])->name('booking');
         Route::post('/new', [ContainerController::class, 'createdata'])->name('bookingprocess');
@@ -134,6 +140,13 @@ Route::middleware(['session', 'status'])->group(function () {
             
             Route::put('/shipping-instruction/{id}/approved', [ShippingInstructionController::class, 'approvedSi'])->name('approved-si');
             Route::put('/shipping-instruction/{id}/rejected', [ShippingInstructionController::class, 'rejectedSi'])->name('rejected-si');
+
+            // Admin Bills Management Routes
+            Route::prefix('/bills')->group(function () {
+                Route::get('/list', [BillController::class, 'adminListBill'])->name('admin.bills.list');
+                Route::post('/{bill}/mark-paid', [BillController::class, 'markAsPaid'])->name('admin.bills.mark-paid');
+                Route::post('/{bill}/mark-unpaid', [BillController::class, 'markAsUnpaid'])->name('admin.bills.mark-unpaid');
+            });
         });
     });
 });

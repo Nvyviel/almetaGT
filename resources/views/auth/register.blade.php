@@ -525,7 +525,8 @@
                                                         <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
                                                     </div>
                                                     <input id="ktp" type="file" name="ktp"
-                                                        accept="image/*" class="hidden" />
+                                                        accept="image/*" class="hidden" 
+                                                        onchange="console.log('KTP file selected immediately:', this.files[0]?.name)" />
                                                 </label>
                                             </div>
 
@@ -595,7 +596,8 @@
                                                         <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
                                                     </div>
                                                     <input id="npwp" type="file" name="npwp"
-                                                        accept="image/*" class="hidden" />
+                                                        accept="image/*" class="hidden" 
+                                                        onchange="console.log('NPWP file selected immediately:', this.files[0]?.name)" />
                                                 </label>
                                             </div>
 
@@ -664,7 +666,8 @@
                                                         <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
                                                     </div>
                                                     <input id="nib" type="file" name="nib"
-                                                        accept="image/*" class="hidden" />
+                                                        accept="image/*" class="hidden" 
+                                                        onchange="console.log('NIB file selected immediately:', this.files[0]?.name)" />
                                                 </label>
                                             </div>
 
@@ -776,6 +779,12 @@
                             'hover:border-gray-300');
                     }
                 });
+
+                // Initialize file upload when Documents section is shown
+                if (sectionId === 'documents') {
+                    setupEnhancedFileUpload();
+                    initializeAdvancedFeatures();
+                }
             }
 
             // Password Toggle Functionality for Register Form
@@ -866,24 +875,49 @@
                 });
             }
 
-            // Enhanced File Upload with Success State
+            // Enhanced File Upload with Success State - Updated for immediate responsiveness
             function setupEnhancedFileUpload() {
                 const fileInputs = ['ktp', 'npwp', 'nib'];
 
                 fileInputs.forEach(inputId => {
                     const input = document.getElementById(inputId);
                     if (input) {
-                        input.addEventListener('change', function() {
+                        // Remove existing listener to prevent duplicates
+                        if (input.hasAttribute('data-listener-attached')) {
+                            input.removeAttribute('data-listener-attached');
+                        }
+                        
+                        // Create new event handler
+                        const handleFileChange = function() {
+                            console.log(`File change detected for ${inputId}:`, this.files[0]?.name);
                             const file = this.files[0];
                             if (file) {
-                                handleFileUploadSuccess(inputId, file);
+                                if (validateFile(file)) {
+                                    handleFileUploadSuccess(inputId, file);
+                                } else {
+                                    // Reset input if validation fails
+                                    this.value = '';
+                                }
                             }
-                        });
+                        };
+                        
+                        // Attach the event listener
+                        input.addEventListener('change', handleFileChange);
+                        
+                        // Also attach it as a direct property for immediate execution
+                        input.onchange = handleFileChange;
+                        
+                        // Mark as having listener attached
+                        input.setAttribute('data-listener-attached', 'true');
+                        
+                        console.log(`Event listeners attached for ${inputId}`);
                     }
                 });
             }
 
             function handleFileUploadSuccess(inputId, file) {
+                console.log(`File upload detected for ${inputId}:`, file.name); // Debug log
+                
                 const uploadArea = document.getElementById(`${inputId}-upload-area`);
                 const successArea = document.getElementById(`${inputId}-success-area`);
                 const filenameElement = document.getElementById(`${inputId}-filename`);
@@ -900,15 +934,20 @@
                     filesizeElement.textContent = fileSize;
                 }
 
-                // Hide upload area and show success area
+                // Hide upload area and show success area with immediate effect
                 if (uploadArea && successArea) {
                     uploadArea.classList.add('hidden');
                     successArea.classList.remove('hidden');
 
-                    // Add success animation
+                    // Add success animation with immediate visible effect
                     successArea.style.opacity = '0';
                     successArea.style.transform = 'scale(0.95)';
+                    successArea.style.display = 'block'; // Ensure it's visible
+                    
+                    // Force immediate update
+                    successArea.offsetHeight; // Trigger reflow
 
+                    // Apply animation
                     requestAnimationFrame(() => {
                         successArea.style.transition = 'all 0.3s ease-out';
                         successArea.style.opacity = '1';
@@ -916,12 +955,20 @@
                     });
                 }
 
-                // Update container styling
+                // Update container styling with immediate visual feedback
                 const container = document.getElementById(`${inputId}-container`);
                 if (container) {
                     container.classList.remove('bg-gray-50', 'border-gray-200');
                     container.classList.add('bg-green-50', 'border-green-200');
+                    
+                    // Add a subtle pulse effect to show success
+                    container.style.animation = 'pulse 0.6s ease-in-out';
+                    setTimeout(() => {
+                        container.style.animation = '';
+                    }, 600);
                 }
+
+                console.log(`File upload UI updated successfully for ${inputId}`); // Debug log
             }
 
             function retriggerUpload(inputId) {
@@ -1124,7 +1171,7 @@
                 const fileContainers = ['ktp', 'npwp', 'nib'];
                 fileContainers.forEach(containerId => {
                     const container = document.getElementById(`${containerId}-upload-area`);
-                    if (container) {
+                    if (container && !container.hasAttribute('data-drag-listener-attached')) {
                         container.addEventListener('dragover', function(e) {
                             e.preventDefault();
                             container.classList.add('border-blue-400', 'bg-blue-50');
@@ -1151,6 +1198,8 @@
                                 }
                             }
                         });
+                        // Mark as having drag listeners attached
+                        container.setAttribute('data-drag-listener-attached', 'true');
                     }
                 });
             }
@@ -1463,6 +1512,20 @@
 
             50% {
                 box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            }
+        }
+
+        /* Pulse animation for file upload success */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+            }
+            100% {
+                transform: scale(1);
             }
         }
 

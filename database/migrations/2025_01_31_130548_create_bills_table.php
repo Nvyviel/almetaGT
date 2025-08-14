@@ -33,6 +33,9 @@ return new class extends Migration
             $table->unsignedBigInteger('others');
             $table->enum('status', ['Under Verification','Paid','Unpaid','Error'])->default('Unpaid');
             $table->string('upload_file');
+            $table->timestamp('payment_confirmed_at')->nullable();
+            $table->string('upload_confirmation')->nullable();
+            $table->date('paid_at')->nullable();
             $table->timestamps();
         });
     }
