@@ -21,6 +21,26 @@ class ShipmentData extends Component
     public $freight_20 = '';
     public $freight_40 = '';
 
+    // Add listeners for Livewire events
+    protected $listeners = ['freightUpdated' => 'handleFreightUpdate'];
+
+    public function hydrate()
+    {
+        // Ensure freight values are properly formatted for display when component is hydrated
+        if (is_numeric($this->freight_20) && !empty($this->freight_20)) {
+            $this->freight_20 = number_format($this->freight_20, 0, ',', '.');
+        }
+        if (is_numeric($this->freight_40) && !empty($this->freight_40)) {
+            $this->freight_40 = number_format($this->freight_40, 0, ',', '.');
+        }
+    }
+
+    public function handleFreightUpdate()
+    {
+        // Re-emit to update frontend formatting
+        $this->emit('freightFormatted');
+    }
+
     public $cities = [
         'surabaya',
         'pontianak',
@@ -71,22 +91,22 @@ class ShipmentData extends Component
     public function addSchedule()
     {
         try {
-            // Hapus titik dari 'rate' dan 'rate_per_container' agar menjadi angka murni
-            $this->freight_20 = str_replace('.', '', $this->freight_20);
-            $this->freight_40 = str_replace('.', '', $this->freight_40);
+            // Clean dots from freight values to get pure numbers
+            $this->freight_20 = $this->cleanNumber($this->freight_20);
+            $this->freight_40 = $this->cleanNumber($this->freight_40);
 
             $validatedData = $this->validate();
 
             // Convert vessel name to uppercase
             $validatedData['vessel_name'] = strtoupper($validatedData['vessel_name']);
 
-            // Buat shipment baru
+            // Create new shipment
             Shipment::create($validatedData);
 
-            // Reset form setelah sukses
+            // Reset form after success
             $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'freight_20', 'freight_40']);
 
-            // Tampilkan pesan sukses
+            // Show success message
             session()->flash('success', 'Shipment schedule created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating shipment: ' . $e->getMessage());
@@ -122,19 +142,44 @@ class ShipmentData extends Component
         $this->etb = $shipment->etb;
         $this->etd = $shipment->etd;
         $this->eta = $shipment->eta;
-        $this->freight_20 = $shipment->freight_20;
-        $this->freight_40 = $shipment->freight_40;
+        // Format freight values with thousand separators for display
+        $this->freight_20 = $shipment->freight_20 ? number_format($shipment->freight_20, 0, ',', '.') : '';
+        $this->freight_40 = $shipment->freight_40 ? number_format($shipment->freight_40, 0, ',', '.') : '';
+    }
+
+    // Method to format numbers for display
+    public function formatForDisplay($value)
+    {
+        return $value ? number_format($value, 0, ',', '.') : '';
+    }
+
+    // Method to clean numbers for processing
+    public function cleanNumber($value)
+    {
+        return str_replace('.', '', $value);
     }
 
 
     public function update()
     {
-        $validatedData = $this->validate();
+        try {
+            // Clean dots from freight values to get pure numbers
+            $this->freight_20 = $this->cleanNumber($this->freight_20);
+            $this->freight_40 = $this->cleanNumber($this->freight_40);
 
-        $this->shipment->update($validatedData);
+            $validatedData = $this->validate();
 
-        session()->flash('success', 'Shipment updated successfully');
-        return redirect()->route('dashboard-admin');
+            // Convert vessel name to uppercase
+            $validatedData['vessel_name'] = strtoupper($validatedData['vessel_name']);
+
+            $this->shipment->update($validatedData);
+
+            session()->flash('success', 'Shipment updated successfully');
+            return redirect()->route('dashboard-admin');
+        } catch (\Exception $e) {
+            Log::error('Error updating shipment: ' . $e->getMessage());
+            session()->flash('error', 'Failed to update shipment. Please try again.');
+        }
     }
 
     public function render()

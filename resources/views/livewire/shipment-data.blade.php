@@ -115,9 +115,10 @@
                                         <span class="text-gray-500 font-medium">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_20"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white"
-                                        placeholder="Enter base rate" oninput="formatNumber(this)"
-                                        onblur="formatNumber(this)">
+                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white freight-input"
+                                        placeholder="Enter base rate" 
+                                        data-format="currency"
+                                        onfocus="this.select()">
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -127,9 +128,10 @@
                                         <span class="text-gray-500 font-medium">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_40"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white"
-                                        placeholder="Enter container rate" oninput="formatNumber(this)"
-                                        onblur="formatNumber(this)">
+                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white freight-input"
+                                        placeholder="Enter container rate" 
+                                        data-format="currency"
+                                        onfocus="this.select()">
                                 </div>
                             </div>
                         </div>
@@ -237,13 +239,6 @@
                                             <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
                                         @endforeach
                                     </select>
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -263,13 +258,6 @@
                                             <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
                                         @endforeach
                                     </select>
-                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -517,29 +505,111 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        window.formatNumber = function(input) {
-            let cursorPos = input.selectionStart;
-            let value = input.value.replace(/\D/g, '');
-            let originalLength = input.value.length;
-
-            let formattedValue = '';
-            while (value.length > 3) {
-                formattedValue = '.' + value.substr(value.length - 3) + formattedValue;
-                value = value.substr(0, value.length - 3);
-            }
-            formattedValue = value + formattedValue;
-
-            let newLength = formattedValue.length;
-            let lengthDiff = newLength - originalLength;
-            let newCursorPos = cursorPos + lengthDiff;
-
+    // Define formatCurrency function globally, before DOMContentLoaded
+    window.formatCurrency = function(input) {
+        if (!input) return;
+        
+        // Get current cursor position
+        let cursorPos = input.selectionStart;
+        let oldValue = input.value;
+        
+        // Remove all non-numeric characters
+        let rawValue = input.value.replace(/[^\d]/g, '');
+        
+        // Format with thousand separators (dots)
+        let formattedValue = '';
+        if (rawValue) {
+            // Add thousand separators
+            formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+        
+        // Only update if value actually changed
+        if (formattedValue !== oldValue) {
+            // Calculate new cursor position
+            let dotsAdded = (formattedValue.match(/\./g) || []).length - (oldValue.match(/\./g) || []).length;
+            let newCursorPos = cursorPos + dotsAdded;
+            
+            // Ensure cursor doesn't go beyond the end
+            newCursorPos = Math.min(newCursorPos, formattedValue.length);
+            
+            // Update input value
             input.value = formattedValue;
-
-            if (cursorPos <= originalLength) {
-                input.setSelectionRange(newCursorPos, newCursorPos);
+            
+            // Restore cursor position
+            if (input === document.activeElement) {
+                setTimeout(() => {
+                    input.setSelectionRange(newCursorPos, newCursorPos);
+                }, 0);
             }
-        };
+        }
+    };
+
+    // Legacy function for backward compatibility
+    window.formatNumber = function(input) {
+        window.formatCurrency(input);
+    };
+
+    // Function to initialize freight formatting
+    function initializeFreightFormatting() {
+        console.log('Initializing freight formatting...');
+        
+        // Use both selectors for maximum compatibility
+        const freightInputs = document.querySelectorAll('.freight-input, input[wire\\:model\\.defer="freight_20"], input[wire\\:model\\.defer="freight_40"]');
+        console.log('Found freight inputs:', freightInputs.length);
+        
+        freightInputs.forEach((input, index) => {
+            console.log(`Processing input ${index + 1}:`, input.value);
+            
+            // Skip if already processed
+            if (input.dataset.formatted === 'true') {
+                return;
+            }
+            
+            // Mark as processed
+            input.dataset.formatted = 'true';
+            
+            // Add fresh event listeners using addEventListener (more reliable)
+            input.addEventListener('input', function(e) { 
+                window.formatCurrency(e.target); 
+            }, { passive: true });
+            
+            input.addEventListener('blur', function(e) { 
+                window.formatCurrency(e.target); 
+            }, { passive: true });
+            
+            input.addEventListener('keyup', function(e) { 
+                // Only format on certain keys to avoid conflicts
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
+                    window.formatCurrency(e.target);
+                }
+            }, { passive: true });
+            
+            // Format existing value if it's a raw number
+            if (input.value && /^\d+$/.test(input.value)) {
+                console.log('Formatting existing value:', input.value);
+                window.formatCurrency(input);
+            }
+        });
+    }
+
+    // Initialize immediately when script loads
+    initializeFreightFormatting();
+
+    // Multiple initialization strategies for maximum compatibility
+    setTimeout(function() {
+        console.log('Delayed initialization (100ms)');
+        initializeFreightFormatting();
+    }, 100);
+
+    setTimeout(function() {
+        console.log('Delayed initialization (500ms)');
+        initializeFreightFormatting();
+    }, 500);
+
+    // Also initialize on DOMContentLoaded as backup
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOMContentLoaded fired');
+        setTimeout(initializeFreightFormatting, 50);
 
         // Auto-remove notifications after 5 seconds
         const notifications = document.querySelectorAll('[class*="fixed top-4"]');
@@ -550,5 +620,71 @@
                 setTimeout(() => notification.remove(), 300);
             }, 5000);
         });
+    });
+
+    // Initialize for Livewire events
+    document.addEventListener('livewire:load', function() {
+        console.log('Livewire loaded');
+        setTimeout(initializeFreightFormatting, 100);
+    });
+
+    document.addEventListener('livewire:update', function() {
+        console.log('Livewire updated');
+        setTimeout(initializeFreightFormatting, 100);
+    });
+
+    // For older Livewire versions
+    document.addEventListener('livewire:component:loaded', function() {
+        console.log('Livewire component loaded');
+        setTimeout(initializeFreightFormatting, 100);
+    });
+
+    // Use MutationObserver as final fallback
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                const addedNodes = Array.from(mutation.addedNodes);
+                const hasFreightInputs = addedNodes.some(node => {
+                    if (node.nodeType === 1) { // Element node
+                        return node.querySelector && (
+                            node.querySelector('.freight-input') ||
+                            node.querySelector('input[wire\\:model\\.defer="freight_20"]') ||
+                            node.querySelector('input[wire\\:model\\.defer="freight_40"]') ||
+                            (node.classList && node.classList.contains('freight-input'))
+                        );
+                    }
+                    return false;
+                });
+                
+                if (hasFreightInputs) {
+                    console.log('Freight inputs detected via MutationObserver');
+                    setTimeout(initializeFreightFormatting, 50);
+                }
+            }
+        });
+    });
+
+    // Start observing
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Final fallback - check if window is fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initializeFreightFormatting, 100);
+        });
+    } else if (document.readyState === 'interactive') {
+        setTimeout(initializeFreightFormatting, 50);
+    } else {
+        // Document is already complete
+        initializeFreightFormatting();
+    }
+
+    // Window load event as ultimate fallback
+    window.addEventListener('load', function() {
+        console.log('Window fully loaded');
+        setTimeout(initializeFreightFormatting, 100);
     });
 </script>
