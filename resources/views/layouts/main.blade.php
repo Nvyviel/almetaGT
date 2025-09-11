@@ -78,10 +78,9 @@
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('release-order') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-shipping-fast mr-2"></i> Release Order
                         </a>
-                        <a href="{{ route('seal') }}" wire:navigate
-                            class="{{ $mobileLinkClass }} {{ request()->routeIs('seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                        <div class="{{ $mobileLinkClass }} opacity-50 cursor-not-allowed bg-gray-100 text-gray-400">
                             <i class="fas fa-lock mr-2"></i> Seal
-                        </a>
+                        </div>
                         <a href="{{ route('shipping-instruction') }}" wire:navigate
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('shipping-instruction') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-file-alt mr-2"></i> Shipping Instruction
@@ -155,10 +154,9 @@
                                 class="{{ $linkClass }} {{ request()->routeIs('release-order') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-shipping-fast mr-3"></i> Release Order
                             </a>
-                            <a href="{{ route('seal') }}" wire:navigate
-                                class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
+                            <div class="{{ $linkClass }} opacity-50 cursor-not-allowed bg-gray-100 text-gray-400 pointer-events-none">
                                 <i class="fas fa-lock mr-3"></i> Seal
-                            </a>
+                            </div>
                             <a href="{{ route('shipping-instruction') }}" wire:navigate
                                 class="{{ $linkClass }} {{ request()->routeIs('shipping-instruction') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-file-alt mr-3"></i> Shipping Instruction

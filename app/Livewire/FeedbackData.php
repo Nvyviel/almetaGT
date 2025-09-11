@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class FeedbackData extends Component
 {
@@ -36,6 +37,19 @@ class FeedbackData extends Component
         'message.min' => 'Message must be at least 10 characters.',
         'message.max' => 'Message may not be greater than 3,000 characters.',
     ];
+
+    public function mount()
+    {
+        // Automatically fill name and email if user is authenticated
+        if (Auth::check()) {
+            if (Auth::user()->name) {
+                $this->name = Auth::user()->name;
+            }
+            if (Auth::user()->email) {
+                $this->email = Auth::user()->email;
+            }
+        }
+    }
 
     // Computed property untuk character count
     public function getMessageLengthProperty()

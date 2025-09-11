@@ -5,7 +5,7 @@
     <div class="mb-4">
         <div class="text-center">
             <h2 class="text-xl font-semibold text-gray-900">Send Feedback</h2>
-            <p class="text-sm text-gray-600 mt-1">Share your thoughts with us</p>
+            <p class="text-sm text-gray-600 mt-1">Any feedback is important for us!</p>
         </div>
     </div>
 
@@ -84,7 +84,34 @@
     }" class="bg-white border border-gray-200 rounded-lg p-4">
 
         <form wire:submit="submit" class="space-y-3">
-            {{-- Name Field --}}
+            {{-- User Status Indicator --}}
+            @auth
+                <div class="bg-green-50 border border-green-200 rounded-md p-3 mb-4">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-green-800">Logged in as {{ auth()->user()->name }}</p>
+                            <p class="text-xs text-green-600">Your name and email will be auto-filled</p>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user-plus text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-blue-800">Guest</p>
+                            <p class="text-xs text-blue-600">As a guest, please fill name & email correctly</p>
+                        </div>
+                    </div>
+                </div>
+            @endauth
+            
+            {{-- Back Button --}}
             <div class="flex items-center justify-between mb-2">
                 <a href="{{ route('landing-page') }}"
                     class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors">
@@ -94,10 +121,21 @@
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
                     Name <span class="text-red-500">*</span>
+                    @auth
+                        <span class="text-xs text-green-600 font-normal">(Auto-filled from your account)</span>
+                    @endauth
                 </label>
                 <input type="text" id="name" wire:model.blur="name"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('name') border-red-500 @enderror"
-                    placeholder="Your full name">
+                    class="w-full px-3 py-2 text-sm border rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors
+                    @error('name') border-red-500 @else border-gray-300 @enderror
+                    @auth bg-green-50 @endauth"
+                    placeholder="@guest Your full name @endguest">
+                @auth
+                    <p class="mt-1 text-xs text-green-600">
+                        <i class="fas fa-check-circle mr-1"></i>
+                        Using your account name. You can edit if needed.
+                    </p>
+                @endauth
                 @error('name')
                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -107,10 +145,21 @@
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
                     Email <span class="text-red-500">*</span>
+                    @auth
+                        <span class="text-xs text-green-600 font-normal">(Auto-filled from your account)</span>
+                    @endauth
                 </label>
                 <input type="email" id="email" wire:model.blur="email"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors @error('email') border-red-500 @enderror"
-                    placeholder="your@email.com">
+                    class="w-full px-3 py-2 text-sm border rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors
+                    @error('email') border-red-500 @else border-gray-300 @enderror
+                    @auth bg-green-50 @endauth"
+                    placeholder="@guest your@email.com @endguest">
+                @auth
+                    <p class="mt-1 text-xs text-green-600">
+                        <i class="fas fa-check-circle mr-1"></i>
+                        Using your account email. You can edit if needed.
+                    </p>
+                @endauth
                 @error('email')
                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
