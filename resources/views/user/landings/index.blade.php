@@ -17,6 +17,23 @@
             'bitung',
             'gorontalo',
             'ambon',
+            'makassar',
+            'morowali',
+            'kendari',
+            'pomala',
+            'ternate',
+            'jayapura',
+            'kupang',
+            'sorong',
+            'manokwari',
+            'merauke',
+            'bau-bau',
+            'maumere',
+            'tual',
+            'fak-fak',
+            'bintuni',
+            'nabire',
+            'serui',
         ];
     @endphp
 
@@ -198,7 +215,10 @@
                                     class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-100' }} rounded-md focus:ring-2 sm:focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm">
                                     <option disabled {{ !request('pol') && !isset($old_pol) ? 'selected' : '' }}>Select
                                         Port of Loading</option>
-                                    @foreach ($fromCities as $city)
+                                    @php
+                                        $sortedFromCities = collect($fromCities)->sort()->values();
+                                    @endphp
+                                    @foreach ($sortedFromCities as $city)
                                         <option value="{{ $city }}"
                                             {{ request('pol') == $city || (isset($old_pol) && $old_pol == $city) ? 'selected' : '' }}>
                                             {{ strtoupper($city) }}
@@ -239,7 +259,10 @@
                                     class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-red-400 focus:border-red-500 focus:ring-red-100' }} rounded-md focus:ring-2 sm:focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm">
                                     <option disabled {{ !request('pod') && !isset($old_pod) ? 'selected' : '' }}>Select
                                         Port of Discharge</option>
-                                    @foreach ($fromCities as $city)
+                                    @php
+                                        $sortedToCities = collect($fromCities)->sort()->values();
+                                    @endphp
+                                    @foreach ($sortedToCities as $city)
                                         <option value="{{ $city }}"
                                             {{ request('pod') == $city || (isset($old_pod) && $old_pod == $city) ? 'selected' : '' }}>
                                             {{ strtoupper($city) }}
@@ -389,7 +412,7 @@
                                                     <!-- Mobile: Vertical Timeline -->
                                                     <div
                                                         class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 xl:gap-10 relative">
-                                                        @foreach (['etb', 'etd', 'eta'] as $index => $timeKey)
+                                                        @foreach (['open stack', 'etd', 'eta'] as $index => $timeKey)
                                                             <div
                                                                 class="bg-white rounded-md p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
                                                                 <div
@@ -820,29 +843,26 @@
                 </div>
 
                 <!-- Divider -->
-                <div class="border-t border-gray-300 pt-8 sm:pt-10">
+                <div class="border-t border-gray-300 pt-8">
                     <!-- Bottom Footer -->
-                    <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-                        <div class="text-center sm:text-left">
-                            <p class="text-sm text-gray-500">
+                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                        <div class="text-center md:text-left">
+                            <p class="text-gray-500">
                                 &copy; {{ date('Y') }} PT. ALMETA GLOBAL TRILINDO. All rights reserved.
                             </p>
                         </div>
-                        <div class="flex flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-6">
-                            <a href="#"
-                                class="text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">
+                        <div class="flex flex-wrap justify-center md:justify-end items-center gap-6">
+                            <a href="#" class="text-gray-500 hover:text-red-600 transition-colors hover:underline">
                                 Privacy Policy
                             </a>
-                            <a href="#"
-                                class="text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">
+                            <a href="#" class="text-gray-500 hover:text-red-600 transition-colors hover:underline">
                                 Terms of Service
                             </a>
-                            <a href="#"
-                                class="text-sm text-gray-500 hover:text-red-600 transition-colors hover:underline">
+                            <a href="#" class="text-gray-500 hover:text-red-600 transition-colors hover:underline">
                                 FAQ
                             </a>
-                            <span class="text-sm text-gray-400 bg-gray-200 px-2 py-1 rounded-md">
-                                V.1.3.2
+                            <span class="text-gray-400 bg-gray-200 px-3 py-1 rounded-lg text-sm">
+                                V.1.4.2
                             </span>
                         </div>
                     </div>

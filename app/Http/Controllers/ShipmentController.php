@@ -44,7 +44,7 @@ class ShipmentController extends Controller
             'to_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,bandung,jakarta',
             'vessel_name' => 'required|string',
             'closing_cargo' => 'required|date',
-            'etb' => 'required|date',
+            'open_stack' => 'required|date',
             'etd' => 'required|date',
             'eta' => 'required|date',
             'freight_20' => 'required|numeric|min:0',

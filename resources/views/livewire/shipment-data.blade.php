@@ -116,9 +116,7 @@
                                     </div>
                                     <input type="text" wire:model.defer="freight_20"
                                         class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white freight-input"
-                                        placeholder="Enter base rate" 
-                                        data-format="currency"
-                                        onfocus="this.select()">
+                                        placeholder="Enter base rate" data-format="currency" onfocus="this.select()">
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -129,8 +127,7 @@
                                     </div>
                                     <input type="text" wire:model.defer="freight_40"
                                         class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white freight-input"
-                                        placeholder="Enter container rate" 
-                                        data-format="currency"
+                                        placeholder="Enter container rate" data-format="currency"
                                         onfocus="this.select()">
                                 </div>
                             </div>
@@ -151,6 +148,20 @@
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div class="space-y-2">
+                                <label class="block text-gray-700 font-medium">Open Stack</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <input type="datetime-local" wire:model.defer="open_stack"
+                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
                                 <label class="block text-gray-700 font-medium">Closing Cargo</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -161,20 +172,6 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="closing_cargo"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">ETB</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <input type="datetime-local" wire:model.defer="etb"
                                         class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
@@ -235,7 +232,10 @@
                                     <select wire:model.defer="from_city"
                                         class="w-full pl-12 pr-12 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-orange-500 focus:ring-opacity-20 focus:border-orange-500 transition-all duration-300 bg-gray-50 focus:bg-white appearance-none">
                                         <option value="">Select Port of Loading</option>
-                                        @foreach ($cities as $city)
+                                        @php
+                                            $sortedCitiesPOL = collect($cities)->sort()->values();
+                                        @endphp
+                                        @foreach ($sortedCitiesPOL as $city)
                                             <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
                                         @endforeach
                                     </select>
@@ -254,7 +254,10 @@
                                     <select wire:model.defer="to_city"
                                         class="w-full pl-12 pr-12 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-orange-500 focus:ring-opacity-20 focus:border-orange-500 transition-all duration-300 bg-gray-50 focus:bg-white appearance-none">
                                         <option value="">Select Port of Discharge</option>
-                                        @foreach ($cities as $city)
+                                        @php
+                                            $sortedCitiesPOD = collect($cities)->sort()->values();
+                                        @endphp
+                                        @foreach ($sortedCitiesPOD as $city)
                                             <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
                                         @endforeach
                                     </select>
@@ -363,7 +366,7 @@
                             <!-- Timeline Section - Without Progress Bar -->
                             <div class="p-6">
                                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                                    <!-- ETB -->
+                                    <!-- Open Stack -->
                                     <div class="text-center">
                                         <div
                                             class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
@@ -373,13 +376,14 @@
                                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
                                         </div>
-                                        <p class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">ETB
+                                        <p class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Open
+                                            Stack
                                         </p>
                                         <p class="text-lg font-bold text-gray-900">
-                                            {{ \Carbon\Carbon::parse($shipment->etb)->format('d M Y') }}</p>
+                                            {{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y') }}</p>
                                         <p
                                             class="text-sm text-gray-500 bg-gray-100 rounded-full px-3 py-1 inline-block mt-1">
-                                            {{ \Carbon\Carbon::parse($shipment->etb)->format('H:i') }}</p>
+                                            {{ \Carbon\Carbon::parse($shipment->open_stack)->format('H:i') }}</p>
                                     </div>
 
                                     <!-- ETD -->
@@ -508,33 +512,33 @@
     // Define formatCurrency function globally, before DOMContentLoaded
     window.formatCurrency = function(input) {
         if (!input) return;
-        
+
         // Get current cursor position
         let cursorPos = input.selectionStart;
         let oldValue = input.value;
-        
+
         // Remove all non-numeric characters
         let rawValue = input.value.replace(/[^\d]/g, '');
-        
+
         // Format with thousand separators (dots)
         let formattedValue = '';
         if (rawValue) {
             // Add thousand separators
             formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
-        
+
         // Only update if value actually changed
         if (formattedValue !== oldValue) {
             // Calculate new cursor position
             let dotsAdded = (formattedValue.match(/\./g) || []).length - (oldValue.match(/\./g) || []).length;
             let newCursorPos = cursorPos + dotsAdded;
-            
+
             // Ensure cursor doesn't go beyond the end
             newCursorPos = Math.min(newCursorPos, formattedValue.length);
-            
+
             // Update input value
             input.value = formattedValue;
-            
+
             // Restore cursor position
             if (input === document.activeElement) {
                 setTimeout(() => {
@@ -552,38 +556,46 @@
     // Function to initialize freight formatting
     function initializeFreightFormatting() {
         console.log('Initializing freight formatting...');
-        
+
         // Use both selectors for maximum compatibility
-        const freightInputs = document.querySelectorAll('.freight-input, input[wire\\:model\\.defer="freight_20"], input[wire\\:model\\.defer="freight_40"]');
+        const freightInputs = document.querySelectorAll(
+            '.freight-input, input[wire\\:model\\.defer="freight_20"], input[wire\\:model\\.defer="freight_40"]');
         console.log('Found freight inputs:', freightInputs.length);
-        
+
         freightInputs.forEach((input, index) => {
             console.log(`Processing input ${index + 1}:`, input.value);
-            
+
             // Skip if already processed
             if (input.dataset.formatted === 'true') {
                 return;
             }
-            
+
             // Mark as processed
             input.dataset.formatted = 'true';
-            
+
             // Add fresh event listeners using addEventListener (more reliable)
-            input.addEventListener('input', function(e) { 
-                window.formatCurrency(e.target); 
-            }, { passive: true });
-            
-            input.addEventListener('blur', function(e) { 
-                window.formatCurrency(e.target); 
-            }, { passive: true });
-            
-            input.addEventListener('keyup', function(e) { 
+            input.addEventListener('input', function(e) {
+                window.formatCurrency(e.target);
+            }, {
+                passive: true
+            });
+
+            input.addEventListener('blur', function(e) {
+                window.formatCurrency(e.target);
+            }, {
+                passive: true
+            });
+
+            input.addEventListener('keyup', function(e) {
                 // Only format on certain keys to avoid conflicts
-                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !==
+                    'ArrowDown') {
                     window.formatCurrency(e.target);
                 }
-            }, { passive: true });
-            
+            }, {
+                passive: true
+            });
+
             // Format existing value if it's a raw number
             if (input.value && /^\d+$/.test(input.value)) {
                 console.log('Formatting existing value:', input.value);
@@ -648,14 +660,16 @@
                     if (node.nodeType === 1) { // Element node
                         return node.querySelector && (
                             node.querySelector('.freight-input') ||
-                            node.querySelector('input[wire\\:model\\.defer="freight_20"]') ||
-                            node.querySelector('input[wire\\:model\\.defer="freight_40"]') ||
+                            node.querySelector(
+                                'input[wire\\:model\\.defer="freight_20"]') ||
+                            node.querySelector(
+                                'input[wire\\:model\\.defer="freight_40"]') ||
                             (node.classList && node.classList.contains('freight-input'))
                         );
                     }
                     return false;
                 });
-                
+
                 if (hasFreightInputs) {
                     console.log('Freight inputs detected via MutationObserver');
                     setTimeout(initializeFreightFormatting, 50);

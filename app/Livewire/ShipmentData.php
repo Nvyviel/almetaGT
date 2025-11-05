@@ -15,7 +15,7 @@ class ShipmentData extends Component
     public $to_city = '';
     public $vessel_name = '';
     public $closing_cargo = '';
-    public $etb = '';
+    public $open_stack = '';
     public $etd = '';
     public $eta = '';
     public $freight_20 = '';
@@ -55,7 +55,24 @@ class ShipmentData extends Component
         'palu',
         'bitung',
         'gorontalo',
-        'ambon'
+        'ambon',
+        'makassar',
+        'morowali',
+        'kendari',
+        'pomala',
+        'ternate',
+        'jayapura',
+        'kupang',
+        'sorong',
+        'manokwari',
+        'merauke',
+        'bau-bau',
+        'maumere',
+        'tual',
+        'fak-fak',
+        'bintuni',
+        'nabire',
+        'serui',
     ];
 
     protected $rules = [
@@ -63,8 +80,8 @@ class ShipmentData extends Component
         'to_city' => 'required|string',
         'vessel_name' => 'required|string|max:255',
         'closing_cargo' => 'required|date',
-        'etb' => 'required|date',
-        'etd' => 'required|date|after:etb',
+        'open_stack' => 'required|date',
+        'etd' => 'required|date|after:open_stack',
         'eta' => 'required|date|after:etd',
         'freight_20' => 'required|numeric|min:0',
         'freight_40' => 'required|numeric|min:0',
@@ -75,10 +92,10 @@ class ShipmentData extends Component
         'to_city.required' => 'Port of Discharge is required',
         'vessel_name.required' => 'Vessel name is required',
         'closing_cargo.required' => 'Closing cargo date is required',
-        'etb.required' => 'ETB is required',
+        'open_stack.required' => 'Open stack date is required',
         'etd.required' => 'ETD is required',
         'eta.required' => 'ETA is required',
-        'etd.after' => 'ETD must be after ETB',
+        'etd.after' => 'ETD must be after Open Stack',
         'eta.after' => 'ETA must be after ETD',
         'freight_20.required' => 'Rate per container is required',
         'freight_20.numeric' => 'Rate must be a number',
@@ -104,7 +121,7 @@ class ShipmentData extends Component
             Shipment::create($validatedData);
 
             // Reset form after success
-            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'freight_20', 'freight_40']);
+            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'open_stack', 'etd', 'eta', 'freight_20', 'freight_40']);
 
             // Show success message
             session()->flash('success', 'Shipment schedule created successfully!');
@@ -139,7 +156,7 @@ class ShipmentData extends Component
         $this->from_city = $shipment->from_city;
         $this->to_city = $shipment->to_city;
         $this->closing_cargo = $shipment->closing_cargo;
-        $this->etb = $shipment->etb;
+        $this->open_stack = $shipment->open_stack;
         $this->etd = $shipment->etd;
         $this->eta = $shipment->eta;
         // Format freight values with thousand separators for display

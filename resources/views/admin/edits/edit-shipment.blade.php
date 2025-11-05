@@ -302,9 +302,9 @@
                                 @enderror
                             </div>
 
-                            <!-- ETB -->
+                            <!-- Open Stack -->
                             <div class="space-y-2">
-                                <label for="etb" class="block text-gray-800 font-semibold">ETB</label>
+                                <label for="open_stack" class="block text-gray-800 font-semibold">Open Stack</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
@@ -313,11 +313,11 @@
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
-                                    <input type="datetime-local" name="etb" id="etb"
-                                        value="{{ old('etb', date('Y-m-d\TH:i', strtotime($shipment->etb))) }}"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white @error('etb') border-red-500 ring-red-500 @enderror">
+                                    <input type="datetime-local" name="open_stack" id="open_stack"
+                                        value="{{ old('open_stack', date('Y-m-d\TH:i', strtotime($shipment->open_stack))) }}"
+                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white @error('open_stack') border-red-500 ring-red-500 @enderror">
                                 </div>
-                                @error('etb')
+                                @error('open_stack')
                                     <p class="text-sm text-red-600 flex items-center mt-1">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"
