@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            // $table->string('shipment_id');
+            $table->string('shipment_id')->nullable()->unique();
             $table->enum('from_city', ['Surabaya','Pontianak','Semarang','Banjarmasin','Sampit','Jakarta','Kumai','Samarinda','Balikpapan','Berau','Palu','Bitung','Gorontalo','Ambon','Makassar','Morowali','Kendari','Pomala','Ternate','Jayapura','Kupang','Sorong','Manokwari','Merauke','Bau-Bau','Maumere','Tual','Fak-Fak','Bintuni','Nabire','Serui',]);
             $table->enum('to_city', ['Surabaya','Pontianak','Semarang','Banjarmasin','Sampit','Jakarta','Kumai','Samarinda','Balikpapan','Berau','Palu','Bitung','Gorontalo','Ambon','Makassar','Morowali','Kendari','Pomala','Ternate','Jayapura','Kupang','Sorong','Manokwari','Merauke','Bau-Bau','Maumere','Tual','Fak-Fak','Bintuni','Nabire','Serui',]);
             $table->string('vessel_name');

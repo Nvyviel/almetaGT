@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Shipment;
 use App\Models\Container;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class ShipmentController extends Controller
@@ -22,40 +23,90 @@ class ShipmentController extends Controller
 
     // app/Http/Controllers/ShipmentController.php
 
-    public function edit($id)
+    public function edit(Shipment $shipment)
     {
-        $shipment = Shipment::findOrFail($id);
         $cities = [
             'surabaya' => 'Surabaya',
             'pontianak' => 'Pontianak',
             'semarang' => 'Semarang',
             'banjarmasin' => 'Banjarmasin',
-            'bandung' => 'Bandung',
-            'jakarta' => 'Jakarta'
+            'sampit' => 'Sampit',
+            'jakarta' => 'Jakarta',
+            'kumai' => 'Kumai',
+            'samarinda' => 'Samarinda',
+            'balikpapan' => 'Balikpapan',
+            'berau' => 'Berau',
+            'palu' => 'Palu',
+            'bitung' => 'Bitung',
+            'gorontalo' => 'Gorontalo',
+            'ambon' => 'Ambon',
+            'makassar' => 'Makassar',
+            'morowali' => 'Morowali',
+            'kendari' => 'Kendari',
+            'pomala' => 'Pomala',
+            'ternate' => 'Ternate',
+            'jayapura' => 'Jayapura',
+            'kupang' => 'Kupang',
+            'sorong' => 'Sorong',
+            'manokwari' => 'Manokwari',
+            'merauke' => 'Merauke',
+            'bau-bau' => 'Bau-Bau',
+            'maumere' => 'Maumere',
+            'tual' => 'Tual',
+            'fak-fak' => 'Fak-Fak',
+            'bintuni' => 'Bintuni',
+            'nabire' => 'Nabire',
+            'serui' => 'Serui'
         ];
 
         return view('admin.edits.edit-shipment', compact('shipment', 'cities'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Shipment $shipment)
     {
-        $request->validate([
-            'from_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,bandung,jakarta',
-            'to_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,bandung,jakarta',
-            'vessel_name' => 'required|string',
-            'closing_cargo' => 'required|date',
-            'open_stack' => 'required|date',
-            'etd' => 'required|date',
-            'eta' => 'required|date',
-            'freight_20' => 'required|numeric|min:0',
-            'freight_40' => 'required|numeric|min:0'
-        ]);
+        try {
+            $request->validate([
+                'from_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
+                'to_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
+                'vessel_name' => 'required|string',
+                'closing_cargo' => 'required|date',
+                'open_stack' => 'required|date',
+                'etd' => 'required|date',
+                'eta' => 'required|date',
+                'freight_20' => 'required|numeric|min:0',
+                'freight_40' => 'required|numeric|min:0'
+            ]);
+            
+            // Get validated data and ensure we only use the correct field names
+            $updateData = [
+                'from_city' => $request->input('from_city'),
+                'to_city' => $request->input('to_city'),
+                'vessel_name' => strtoupper($request->input('vessel_name')),
+                'closing_cargo' => $request->input('closing_cargo'),
+                'open_stack' => $request->input('open_stack'),
+                'etd' => $request->input('etd'),
+                'eta' => $request->input('eta'),
+                'freight_20' => (int) str_replace('.', '', $request->input('freight_20')), // Remove thousand separators
+                'freight_40' => (int) str_replace('.', '', $request->input('freight_40')), // Remove thousand separators
+            ];
+            
+            // Update using specific data array instead of request to avoid extra fields
+            $shipment->update($updateData);
 
-        $shipment = Shipment::findOrFail($id);
-        $shipment->update($request->all());
-
-        return redirect()->route('create-shipment')
-            ->with('success', 'Data shipment berhasil diperbarui');
+            return redirect()->route('create-shipment')
+                ->with('success', 'Data shipment berhasil diperbarui');
+                
+        } catch (\Illuminate\Database\QueryException $e) {
+            Log::error('Database error updating shipment: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan database. Silakan coba lagi.')
+                ->withInput();
+        } catch (\Exception $e) {
+            Log::error('Error updating shipment: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan. Silakan coba lagi.')
+                ->withInput();
+        }
     }
 
     public function filtering(Request $request)

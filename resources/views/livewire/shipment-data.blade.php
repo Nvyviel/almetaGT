@@ -1,9 +1,8 @@
-<div class="min-h-screen py-6 sm:py-12">
-    <!-- Notifications - Modern design -->
+<div class="min-h-screen py-4 sm:py-6">
+    <!-- Notifications -->
     @if (session()->has('success'))
         <div class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md">
-            <div
-                class="bg-gradient-to-r from-green-400 to-green-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center backdrop-blur-sm">
+            <div class="bg-blue-800 text-white px-6 py-4 rounded-lg shadow-lg flex ite                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">s-center">
                 <div class="flex-shrink-0">
                     <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
@@ -17,7 +16,7 @@
                     <p class="text-sm sm:text-base font-semibold">{{ session('success') }}</p>
                 </div>
                 <button onclick="this.parentElement.parentElement.remove()"
-                    class="ml-4 text-white hover:text-gray-200 transition-colors">
+                    class="ml-4 text-white hover:text-gray-200">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -29,8 +28,7 @@
 
     @if (session()->has('error'))
         <div class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md">
-            <div
-                class="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center backdrop-blur-sm">
+            <div class="bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
@@ -44,7 +42,7 @@
                     <p class="text-sm sm:text-base font-semibold">{{ session('error') }}</p>
                 </div>
                 <button onclick="this.parentElement.parentElement.remove()"
-                    class="ml-4 text-white hover:text-gray-200 transition-colors">
+                    class="ml-4 text-white hover:text-gray-200">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -56,29 +54,27 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Create Shipment Form Section -->
-        <div class="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200 mb-8">
-            <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 p-6 sm:p-8">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 mb-6">
+            <div class="bg-blue-800 p-4 sm:p-5">
                 <div class="text-center">
-                    <div
-                        class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                     </div>
-                    <h1 class="text-3xl font-bold text-white">Create Shipment Schedule</h1>
-                    <p class="text-blue-100 mt-2">Fill in the details to create a new shipment schedule</p>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-white">Create Shipment Schedule</h1>
+                    <p class="text-white text-opacity-80 mt-1 text-sm sm:text-base">Fill in the details to create a new shipment schedule</p>
                 </div>
             </div>
 
-            <div class="p-6 sm:p-8">
-                <form wire:submit.prevent="addSchedule" class="space-y-8">
+            <div class="p-4 sm:p-6">
+                <form wire:submit.prevent="addSchedule" class="space-y-6">
                     <!-- Vessel Name -->
                     <div class="space-y-2">
-                        <label for="vessel_name" class="flex items-center text-gray-800 font-semibold text-lg">
-                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                        <label for="vessel_name" class="flex items-center text-gray-800 font-semibold">
+                            <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                <svg class="w-4 h-4 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
                                 </svg>
@@ -86,151 +82,142 @@
                             Vessel Information
                         </label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-ship text-gray-400"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-ship text-gray-400 text-sm"></i>
                             </div>
                             <input type="text" wire:model.defer="vessel_name" id="vessel_name"
-                                class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-500 focus:ring-opacity-20 focus:border-blue-500 transition-all duration-300 bg-gray-50 focus:bg-white"
+                                class="w-full pl-10 pr-3 py-3 text-base border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white"
                                 placeholder="Enter vessel name" style="text-transform: uppercase;">
                         </div>
                     </div>
 
                     <!-- Rates Section -->
-                    <div class="space-y-6">
-                        <div class="flex items-center text-gray-800 font-semibold text-lg">
-                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                    <div class="space-y-4">
+                        <div class="flex items-center text-gray-800 font-semibold">
+                            <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                <svg class="w-4 h-4 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
                             Pricing Information
                         </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Freight 20 (IDR)</label>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">Freight 20 (IDR)</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 font-medium">Rp</span>
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 font-medium text-sm">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_20"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white freight-input"
+                                        class="w-full pl-10 pr-3 py-3 text-base border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
                                         placeholder="Enter base rate" data-format="currency" onfocus="this.select()">
                                 </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Freight 40 (IDR)</label>
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">Freight 40 (IDR)</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 font-medium">Rp</span>
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 font-medium text-sm">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_40"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 focus:border-green-500 transition-all duration-300 bg-gray-50 focus:bg-white freight-input"
-                                        placeholder="Enter container rate" data-format="currency"
-                                        onfocus="this.select()">
+                                        class="w-full pl-10 pr-3 py-3 text-base border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
+                                        placeholder="Enter container rate" data-format="currency" onfocus="this.select()">
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Schedule Section -->
-                    <div class="space-y-6">
-                        <div class="flex items-center text-gray-800 font-semibold text-lg">
-                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                    <div class="space-y-4">
+                        <div class="flex items-center text-gray-800 font-semibold">
+                            <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                <svg class="w-4 h-4 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
                             Schedule Information
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Open Stack</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">Open Stack</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="open_stack"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Closing Cargo</label>
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">Closing Cargo</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="closing_cargo"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">ETD</label>
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">ETD</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="etd"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">ETA</label>
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">ETA</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="eta"
-                                        class="w-full pl-12 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:border-purple-500 transition-all duration-300 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Port Information -->
-                    <div class="space-y-6">
-                        <div class="flex items-center text-gray-800 font-semibold text-lg">
-                            <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
-                                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
+                    <div class="space-y-4">
+                        <div class="flex items-center text-gray-800 font-semibold">
+                            <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                <svg class="w-4 h-4 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                 </svg>
                             </div>
                             Port Information
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Port of Loading (POL)</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">Port of Loading (POL)</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                         </svg>
                                     </div>
                                     <select wire:model.defer="from_city"
-                                        class="w-full pl-12 pr-12 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-orange-500 focus:ring-opacity-20 focus:border-orange-500 transition-all duration-300 bg-gray-50 focus:bg-white appearance-none">
+                                        class="w-full pl-10 pr-8 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
                                         <option value="">Select Port of Loading</option>
                                         @php
                                             $sortedCitiesPOL = collect($cities)->sort()->values();
@@ -241,18 +228,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="block text-gray-700 font-medium">Port of Discharge (POD)</label>
+                            <div class="space-y-1">
+                                <label class="block text-gray-700 font-medium text-sm">Port of Discharge (POD)</label>
                                 <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                         </svg>
                                     </div>
                                     <select wire:model.defer="to_city"
-                                        class="w-full pl-12 pr-12 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-orange-500 focus:ring-opacity-20 focus:border-orange-500 transition-all duration-300 bg-gray-50 focus:bg-white appearance-none">
+                                        class="w-full pl-10 pr-8 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
                                         <option value="">Select Port of Discharge</option>
                                         @php
                                             $sortedCitiesPOD = collect($cities)->sort()->values();
@@ -269,7 +255,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-center pt-6">
                         <button type="submit"
-                            class="w-full sm:w-auto px-12 py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300">
+                            class="w-full sm:w-auto px-12 py-4 bg-blue-800 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-800">
                             <span wire:loading.remove class="flex items-center justify-center">
                                 <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -293,188 +279,165 @@
             </div>
         </div>
 
-        <!-- Shipments List Section -->
-        <div class="space-y-6">
+        <!-- Active Shipments Section -->
+        <div class="space-y-4 sm:space-y-6 lg:space-y-8">
             <!-- Header -->
-            <div class="text-center">
-                <div
-                    class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-md mb-4">
-                    <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 gap-3">
+                <div>
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Active Shipments</h2>
+                    <p class="text-gray-500 mt-1">Manage and monitor your current shipment schedules</p>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Active Shipments</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Manage and monitor your current shipment schedules</p>
+                <div
+                    class="px-4 py-2 sm:px-5 sm:py-3 bg-blue-800 text-white rounded-full font-medium flex items-center shadow-sm text-sm sm:text-base">
+                    <i class="fas fa-ship mr-2"></i>
+                    <span>{{ $shipments->count() }} active shipments</span>
+                </div>
             </div>
 
             @if ($shipments->count() > 0)
-                <div class="grid gap-6">
+                <div class="space-y-4 sm:space-y-6">
                     @foreach ($shipments as $shipment)
                         <div
-                            class="bg-white rounded-md shadow-xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                            <!-- Header Section -->
-                            <div class="bg-gradient-to-r from-slate-50 to-blue-50 p-6 border-b border-gray-100">
-                                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                                    <div class="flex-1">
-                                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
-                                            <h3 class="text-2xl lg:text-3xl font-bold text-gray-900 flex items-center">
-                                                <div
-                                                    class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mr-3">
-                                                    <i class="fa-solid fa-ship text-blue-600 text-lg"></i>
-                                                </div>
-                                                {{ $shipment->vessel_name }}
-                                            </h3>
-                                            <div
-                                                class="flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl px-4 py-2 shadow-sm">
-                                                <span
-                                                    class="font-bold text-sm">{{ strtoupper($shipment->from_city) }}</span>
-                                                <div class="mx-3 flex items-center">
-                                                    <div class="w-2 h-0.5 bg-white rounded-full"></div>
-                                                    <div class="w-1 h-0.5 bg-white rounded-full mx-1"></div>
-                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd"
-                                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-                                                </div>
-                                                <span
-                                                    class="font-bold text-sm">{{ strtoupper($shipment->to_city) }}</span>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="flex items-center text-red-600 bg-red-50 rounded-lg px-3 py-2 w-fit">
-                                            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow">
+                            <!-- Shipment Card Header -->
+                            <div class="relative bg-blue-800 text-white p-3 sm:p-4 lg:p-5">
+                                <div class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16">
+                                    <div
+                                        class="absolute transform rotate-45 bg-green-600 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] top-[20px] sm:top-[24px] w-[120px] sm:w-[140px] shadow-md text-xs">
+                                        Available
+                                    </div>
+                                </div>
+
+                                <div class="pr-8 sm:pr-12">
+                                    <div class="flex flex-wrap items-baseline gap-3 mb-2">
+                                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold break-words">
+                                            {{ $shipment->vessel_name }}
+                                        </h3>
+                                        <div class="flex items-center text-white text-xs bg-red-600 px-3 py-2 rounded-full">
+                                            <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            <span class="text-sm font-semibold">Closing:
-                                                {{ \Carbon\Carbon::parse($shipment->closing_cargo)->format('d M Y - H:i') }}</span>
+                                            <span class="font-medium">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-center lg:justify-end">
-                                        <span
-                                            class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-400 to-green-500 text-white text-sm font-semibold rounded-2xl shadow-sm">
-                                            <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
-                                            Available
-                                        </span>
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
+                                        <span class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+
+                                        <!-- Mobile Route Indicator -->
+                                        <div class="flex sm:hidden items-center justify-center my-2">
+                                            <div class="flex flex-col items-center space-y-1">
+                                            </div>
+                                        </div>
+
+                                        <!-- Desktop Route Indicator -->
+                                        <div class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
+                                            <span class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                            <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
+                                            <span class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                        </div>
+
+                                        <span class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Timeline Section - Without Progress Bar -->
-                            <div class="p-6">
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                                    <!-- Open Stack -->
-                                    <div class="text-center">
-                                        <div
-                                            class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Open
-                                            Stack
-                                        </p>
-                                        <p class="text-lg font-bold text-gray-900">
-                                            {{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y') }}</p>
-                                        <p
-                                            class="text-sm text-gray-500 bg-gray-100 rounded-full px-3 py-1 inline-block mt-1">
-                                            {{ \Carbon\Carbon::parse($shipment->open_stack)->format('H:i') }}</p>
-                                    </div>
-
-                                    <!-- ETD -->
-                                    <div class="text-center">
-                                        <div
-                                            class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">ETD
-                                        </p>
-                                        <p class="text-lg font-bold text-gray-900">
-                                            {{ \Carbon\Carbon::parse($shipment->etd)->format('d M Y') }}</p>
-                                        <p
-                                            class="text-sm text-gray-500 bg-gray-100 rounded-full px-3 py-1 inline-block mt-1">
-                                            {{ \Carbon\Carbon::parse($shipment->etd)->format('H:i') }}</p>
-                                    </div>
-
-                                    <!-- ETA -->
-                                    <div class="text-center">
-                                        <div
-                                            class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-xs font-bold text-purple-600 uppercase tracking-wider mb-1">ETA
-                                        </p>
-                                        <p class="text-lg font-bold text-gray-900">
-                                            {{ \Carbon\Carbon::parse($shipment->eta)->format('d M Y') }}</p>
-                                        <p
-                                            class="text-sm text-gray-500 bg-gray-100 rounded-full px-3 py-1 inline-block mt-1">
-                                            {{ \Carbon\Carbon::parse($shipment->eta)->format('H:i') }}</p>
-                                    </div>
-
-                                    <!-- Destination Icon -->
-                                    <div class="text-center">
-                                        <div
-                                            class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                                            <i class="fa-solid fa-anchor text-white text-2xl"></i>
-                                        </div>
-                                        <p class="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">
-                                            Destination</p>
-                                        <p class="text-lg font-bold text-gray-900">
-                                            {{ strtoupper($shipment->to_city) }}</p>
-                                        <p
-                                            class="text-sm text-gray-500 bg-gray-100 rounded-full px-3 py-1 inline-block mt-1">
-                                            Port</p>
-                                    </div>
-                                </div>
-
-                                <!-- Price and Actions -->
+                                <div class="p-3 sm:p-4 lg:p-5">
+                                <!-- Timeline Section -->
                                 <div
-                                    class="flex flex-col lg:flex-row items-center justify-between gap-6 pt-6 border-t border-gray-100">
-                                    {{-- <div class="text-center lg:text-left">
-                                        <p class="text-sm font-medium text-gray-600 mb-2">Container Pricing</p>
-                                        <div class="flex items-baseline justify-center lg:justify-start">
-                                            <span class="text-4xl font-bold text-gray-900">Rp
-                                                {{ number_format($shipment->freight_20, 0, ',', '.') }}</span>
-                                        </div>
-                                        <p class="text-sm text-gray-500 mt-1">per container unit</p>
-                                    </div> --}}
+                                    class="bg-gray-50 rounded-lg p-3 sm:p-4 lg:p-5 mb-4 sm:mb-5 border border-gray-200">
+                                    <h4
+                                        class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
+                                        <i
+                                            class="fas fa-calendar-alt text-blue-800 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
+                                        <span class="text-sm sm:text-base lg:text-lg">Voyage Schedule</span>
+                                    </h4>
 
-                                    <div class="flex gap-4 w-full lg:w-auto">
-                                        <a href="{{ route('edit-shipment', $shipment->id) }}" wire:navigate
-                                            class="flex-1 lg:flex-none inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-2xl hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                            </svg>
-                                            Edit Schedule
-                                        </a>
-                                        <button wire:click="deleteShipment({{ $shipment->id }})"
-                                            wire:confirm="Are you sure you want to delete this shipment?"
-                                            class="flex-1 lg:flex-none inline-flex items-center justify-center px-6 py-3 bg-white text-red-600 border-2 border-red-200 font-semibold rounded-2xl hover:bg-red-50 hover:border-red-300 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                            Delete
-                                        </button>
+                                    <div class="relative">
+                                        <!-- Desktop Timeline bar -->
+                                        <div
+                                            class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
+                                        </div>
+
+                                        <!-- Mobile: Vertical Timeline -->
+                                        <div
+                                            class="sm:hidden absolute left-6 top-16 bottom-16 w-0.5 bg-gray-200 z-0">
+                                        </div>
+
+                                        <!-- Mobile: Connect lines between timeline items -->
+                                        <div class="sm:hidden space-y-6 relative">
+                                            @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
+                                                <div class="flex items-center space-x-4 relative z-10">
+                                                    <!-- Timeline dot -->
+                                                    <div
+                                                        class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                        <i
+                                                            class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                    </div>
+
+                                                    <!-- Content -->
+                                                    <div
+                                                        class="flex-1 bg-white rounded-lg p-3 shadow-sm border border-gray-200">
+                                                        <p class="text-sm font-bold text-blue-800 mb-1">
+                                                            {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
+                                                        </p>
+                                                        <p class="font-bold text-gray-800 text-base">
+                                                            {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
+                                                        </p>
+                                                        <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                                            <i class="far fa-clock mr-1"></i>
+                                                            {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+
+                                        <!-- Desktop Timeline -->
+                                        <div class="hidden sm:grid sm:grid-cols-3 gap-6 lg:gap-10 relative">
+                                            @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
+                                                <div class="bg-white rounded-lg p-4 shadow-md border border-gray-200 relative z-10 text-center">
+                                                    <div class="flex items-center justify-center mb-3">
+                                                        <div
+                                                            class="flex items-center justify-center w-10 h-10 rounded-full shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                            <i
+                                                                class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-sm font-bold text-blue-800 mb-2">
+                                                        {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
+                                                    </p>
+                                                    <p class="font-bold text-gray-800 text-lg">
+                                                        {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
+                                                    </p>
+                                                    <p class="text-sm text-gray-500 mt-1 flex items-center justify-center">
+                                                        <i class="far fa-clock mr-1"></i>
+                                                        {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
+                                                    </p>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
+                                </div>                                <!-- Admin Actions Section -->
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <a href="{{ route('edit-shipment', $shipment) }}" wire:navigate
+                                        class="flex-1 sm:flex-none inline-flex items-center justify-center px-4 py-2 bg-blue-800 hover:bg-blue-700 text-white font-bold text-sm rounded-lg shadow-lg">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+                                        <span>Edit</span>
+                                    </a>
+                                    <button wire:click="deleteShipment({{ $shipment->id }})"
+                                        wire:confirm="Are you sure you want to delete this shipment?"
+                                        class="flex-1 sm:flex-none inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-lg shadow-lg">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        <span>Delete</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -482,24 +445,16 @@
                 </div>
             @else
                 <!-- Empty State -->
-                <div class="bg-white rounded-3xl shadow-xl p-12 text-center border border-gray-200">
+                <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
                     <div
-                        class="w-24 h-24 mx-auto bg-gradient-to-r from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center mb-6">
-                        <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                        </svg>
+                        class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-full mb-4 sm:mb-6">
+                        <i class="fas fa-ship text-3xl sm:text-4xl text-blue-900"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">No Shipments Available</h3>
-                    <p class="text-gray-600 max-w-md mx-auto mb-8">There are no active shipments at the moment. Create
-                        your first shipment schedule to get started with managing your cargo operations.</p>
+                    <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">No Shipments Available</h3>
+                    <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto mb-4 sm:mb-6">There are no active shipments at the moment. Create your first shipment schedule to get started with managing your cargo operations.</p>
                     <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white font-semibold rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
-                        <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4v16m8-8H4" />
-                        </svg>
+                        class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-800 hover:bg-blue-700 text-white font-medium rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>
                         Create Your First Shipment
                     </button>
                 </div>

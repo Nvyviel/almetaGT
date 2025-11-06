@@ -33,7 +33,7 @@ class ContainerData extends Component
         'weight' => 'required|numeric',
         'notes' => 'nullable|string',
         'is_danger' => 'in:Yes,No',
-        'shipment_id' => 'required|exists:shipments,id',
+                    'shipment_id' => 'required|exists:shipments,shipment_id',
         'user_id' => 'required|exists:users,id',
     ];
 
@@ -90,7 +90,7 @@ class ContainerData extends Component
             'weight' => 'required|numeric',
             'notes' => 'nullable|string',
             'is_danger' => 'in:Yes,No',
-            'shipment_id' => 'required|exists:shipments,id',
+            'shipment_id' => 'required|exists:shipments,shipment_id',
             'user_id' => 'required|exists:users,id',
         ], [
             'stuffing.required' => 'The stuffing field is required.',
@@ -111,6 +111,16 @@ class ContainerData extends Component
         ]);
         
         try {
+            // Find the shipment by shipment_id and get its primary key
+            $shipment = \App\Models\Shipment::where('shipment_id', $this->shipment_id)->first();
+            if (!$shipment) {
+                session()->flash('error', 'Invalid shipment selected.');
+                return;
+            }
+
+            // Replace the shipment_id with the actual primary key for the foreign key
+            $validated['shipment_id'] = $shipment->id;
+            
             // Generate unique id_order
             $validated['id_order'] = $this->generateUniqueOrderId();
             $validated['status'] = 'Requested';

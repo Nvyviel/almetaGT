@@ -239,10 +239,18 @@
                                         </div>
 
                                         <div class="pr-8 sm:pr-12">
-                                            <h3
-                                                class="text-lg sm:text-xl lg:text-2xl font-bold mb-2 break-words">
-                                                {{ $shipment->vessel_name }}
-                                            </h3>
+                                            <div class="flex flex-wrap items-baseline gap-3 mb-2">
+                                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold break-words">
+                                                    {{ $shipment->vessel_name }}
+                                                </h3>
+                                                <div class="flex items-center text-white text-xs bg-red-600 px-3 py-2 rounded-full">
+                                                    <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <span class="font-medium">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
+                                                </div>
+                                            </div>
                                             <div
                                                 class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
                                                 <span
@@ -295,7 +303,7 @@
                                                 <!-- Mobile: Connect lines between timeline items -->
                                                 <div
                                                     class="sm:hidden space-y-6 relative">
-                                                    @foreach (['open stack', 'etd', 'eta'] as $index => $timeKey)
+                                                    @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
                                                         <div
                                                             class="flex items-center space-x-4 relative z-10">
                                                             <!-- Timeline dot -->
@@ -309,7 +317,7 @@
                                                             <div class="flex-1 bg-white rounded-lg p-3 shadow-sm border border-gray-200">
                                                                 <p
                                                                     class="text-sm font-bold text-blue-800 mb-1">
-                                                                    {{ strtoupper($timeKey) }}
+                                                                    {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                                 </p>
                                                                 <p class="font-bold text-gray-800 text-base">
                                                                     {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
@@ -326,7 +334,7 @@
                                                 <!-- Desktop Timeline -->
                                                 <div
                                                     class="hidden sm:grid sm:grid-cols-3 gap-6 lg:gap-10 relative">
-                                                    @foreach (['open stack', 'etd', 'eta'] as $index => $timeKey)
+                                                    @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
                                                         <div
                                                             class="bg-white rounded-lg p-4 shadow-md border border-gray-200 relative z-10 hover:border-blue-800 transition-colors text-center">
                                                             <div class="flex items-center justify-center mb-3">
@@ -338,7 +346,7 @@
                                                             </div>
                                                             <p
                                                                 class="text-sm font-bold text-blue-800 mb-2">
-                                                                {{ strtoupper($timeKey) }}
+                                                                {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                             </p>
                                                             <p class="font-bold text-gray-800 text-lg">
                                                                 {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
@@ -355,7 +363,7 @@
 
                                         <!-- Book Now Button -->
                                         <div class="flex justify-center">
-                                            <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}"
+                                            <a href="{{ route('booking', ['shipment_id' => $shipment->shipment_id]) }}"
                                                 class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-10 lg:py-3 bg-blue-800 text-white font-bold text-sm sm:text-base lg:text-lg rounded-lg hover:bg-blue-700 transition-colors shadow-lg">
                                                 <span class="mr-2">Book</span>
                                                 <svg xmlns="http://www.w3.org/2000/svg"

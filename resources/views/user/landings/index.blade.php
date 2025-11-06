@@ -179,9 +179,9 @@
                         shipments</p>
                 </div>
 
-                <!-- Search Form with floating effect -->
+                <!-- Search Form -->
                 <form action="{{ route('landing-page') }}#results" method="GET"
-                    class="bg-white rounded-md sm:rounded-lg shadow-lg p-3 sm:p-4 lg:p-10 mb-6 sm:mb-10 lg:mb-16 border border-gray-100 transform hover:translate-y-[-2px] sm:hover:translate-y-[-5px] transition-all duration-300"
+                    class="bg-white rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-8 sm:mb-12 border border-gray-200"
                     onsubmit="handleFormSubmit(event)">
                     @csrf
 
@@ -212,7 +212,7 @@
                             </label>
                             <div class="relative group">
                                 <select name="pol" id="pol"
-                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-blue-400 focus:border-blue-500 focus:ring-blue-100' }} rounded-md focus:ring-2 sm:focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm">
+                                    class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 {{ isset($error) ? 'border-red-500 focus:border-red-600' : 'border-gray-300 hover:border-blue-800 focus:border-blue-800' }} rounded-lg appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
                                     <option disabled {{ !request('pol') && !isset($old_pol) ? 'selected' : '' }}>Select
                                         Port of Loading</option>
                                     @php
@@ -256,7 +256,7 @@
                             </label>
                             <div class="relative group">
                                 <select name="pod" id="pod"
-                                    class="block w-full pl-3 pr-8 sm:pl-4 sm:pr-10 py-2.5 sm:py-3 lg:py-4 border-2 {{ isset($error) ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : 'border-gray-200 hover:border-red-400 focus:border-red-500 focus:ring-red-100' }} rounded-md focus:ring-2 sm:focus:ring-4 appearance-none bg-white shadow-sm transition-colors text-sm">
+                                    class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 {{ isset($error) ? 'border-red-500 focus:border-red-600' : 'border-gray-300 hover:border-red-600 focus:border-red-600' }} rounded-lg appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
                                     <option disabled {{ !request('pod') && !isset($old_pod) ? 'selected' : '' }}>Select
                                         Port of Discharge</option>
                                     @php
@@ -273,10 +273,11 @@
                         </div>
 
                         <!-- Search Button -->
-                        <div class="lg:col-span-12 pt-3 sm:pt-4" id="filtering">
+                        <div class="lg:col-span-12 pt-2 sm:pt-4">
                             <button id="submitButton" type="submit"
-                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 sm:py-4 px-4 sm:px-6 lg:px-8 rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 font-bold flex items-center justify-center text-sm sm:text-base lg:text-lg shadow-lg hover:shadow-blue-200 active:scale-95">
+                                class="w-full bg-blue-800 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg hover:bg-blue-700 transition-colors font-bold flex items-center justify-center text-base sm:text-lg shadow-lg">
                                 <span id="buttonText" class="mr-2">Find Available Ships</span>
+                                <i class="fas fa-search"></i>
                                 <span id="loadingSpinner" class="hidden ml-2">
                                     <i class="fas fa-spinner fa-spin"></i>
                                 </span>
@@ -288,86 +289,90 @@
                 <!-- Results Section -->
                 @if (request('pol') && request('pod'))
                     <div class="space-y-4 sm:space-y-6 lg:space-y-8" id="results">
-                        <div
-                            class="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:justify-between mb-4 sm:mb-6 lg:mb-8">
-                            <div class="text-center md:text-left">
-                                <h2 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">
-                                    Available Shipments</h2>
-                                <p class="text-gray-500 mt-1 text-sm sm:text-base">From
-                                    {{ strtoupper(request('pol')) }} to {{ strtoupper(request('pod')) }}</p>
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 gap-3">
+                            <div>
+                                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Available Shipments
+                                </h2>
+                                <p class="text-gray-500 mt-1">From {{ strtoupper(request('pol')) }} to
+                                    {{ strtoupper(request('pod')) }}</p>
                             </div>
                             <div
-                                class="px-3 py-2 sm:px-4 sm:py-2 lg:px-5 lg:py-3 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-800 rounded-md font-medium flex items-center justify-center shadow-sm text-xs sm:text-sm lg:text-base">
-                                <i class="fas fa-route mr-1.5 sm:mr-2 text-xs sm:text-sm"></i>
+                                class="px-4 py-2 sm:px-5 sm:py-3 bg-blue-800 text-white rounded-full font-medium flex items-center shadow-sm text-sm sm:text-base">
+                                <i class="fas fa-route mr-2"></i>
                                 <span>{{ $shipments->count() }} routes found</span>
                             </div>
                         </div>
 
                         @if (isset($error))
                             <div
-                                class="bg-white rounded-md shadow-lg p-6 sm:p-8 lg:p-16 text-center border border-gray-100">
+                                class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
                                 <div
-                                    class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 bg-red-100 rounded-full mb-4 sm:mb-6 animate-pulse">
-                                    <i
-                                        class="fas fa-exclamation-triangle text-xl sm:text-2xl lg:text-4xl text-red-600"></i>
+                                    class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-red-100 rounded-full mb-4 sm:mb-6">
+                                    <i class="fas fa-exclamation-triangle text-3xl sm:text-4xl text-red-600"></i>
                                 </div>
-                                <h3 class="text-base sm:text-lg lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
-                                    Invalid
-                                    Route</h3>
-                                <p class="text-gray-600 text-sm sm:text-base lg:text-lg max-w-md mx-auto mb-4 sm:mb-6">
-                                    The selected Port of Loading and Port of Discharge are the same. Please select
-                                    different ports.</p>
-                                <a href="#filtering"
-                                    class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-red-100 hover:bg-red-200 text-red-800 font-medium rounded-md transition-colors text-sm sm:text-base">
-                                    <i class="fas fa-search mr-1.5 sm:mr-2"></i>
+                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
+                                    Invalid Route
+                                </h3>
+                                <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto mb-4 sm:mb-6">
+                                    The selected Port of Loading and Port of Discharge are the same. Please select different ports.
+                                </p>
+                                <a href="#"
+                                    onclick="document.getElementById('pol').selectedIndex = 0; document.getElementById('pod').selectedIndex = 0;"
+                                    class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors">
+                                    <i class="fas fa-search mr-2"></i>
                                     Try Another Route
                                 </a>
                             </div>
                         @elseif ($shipments->isEmpty())
                             <div
-                                class="bg-white rounded-md shadow-lg p-6 sm:p-8 lg:p-16 text-center border border-gray-100">
+                                class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
                                 <div
-                                    class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 bg-blue-50 rounded-full mb-4 sm:mb-6 animate-pulse">
-                                    <i class="fas fa-ship text-xl sm:text-2xl lg:text-4xl text-blue-300"></i>
+                                    class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-full mb-4 sm:mb-6">
+                                    <i class="fas fa-ship text-3xl sm:text-4xl text-blue-900"></i>
                                 </div>
-                                <h3 class="text-base sm:text-lg lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">No
+                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">No
                                     Routes Available</h3>
-                                <p class="text-gray-600 text-sm sm:text-base lg:text-lg max-w-md mx-auto mb-4 sm:mb-6">
-                                    We couldn't find any shipments for the selected route. Please try different ports or
-                                    check back later.</p>
+                                <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto mb-4 sm:mb-6">We couldn't
+                                    find any shipments for the selected route. Please try different ports or check back later.</p>
                                 <a href="#filtering"
-                                    class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium rounded-md transition-colors text-sm sm:text-base">
-                                    <i class="fas fa-search mr-1.5 sm:mr-2"></i>
+                                    class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-800 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                    <i class="fas fa-search mr-2"></i>
                                     Try Another Route
                                 </a>
                             </div>
                         @else
-                            <div class="space-y-4 sm:space-y-6 lg:space-y-8">
+                            <div class="space-y-4 sm:space-y-6">
                                 @foreach ($shipments as $shipment)
                                     <div
-                                        class="bg-white rounded-md shadow-md sm:shadow-lg overflow-hidden border border-gray-100 hover:shadow-lg sm:hover:shadow-xl transition-all duration-300 transform hover:scale-[1.01] group">
+                                        class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
                                         <!-- Shipment Card Header -->
                                         <div
-                                            class="relative bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 sm:p-4 lg:p-6">
+                                            class="relative bg-blue-800 text-white p-3 sm:p-4 lg:p-5">
                                             <div
-                                                class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20">
+                                                class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16">
                                                 <div
-                                                    class="absolute transform rotate-45 bg-gradient-to-r from-green-500 to-green-400 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] lg:right-[-35px] top-[20px] sm:top-[24px] lg:top-[28px] w-[120px] sm:w-[140px] lg:w-[170px] shadow-md text-xs">
+                                                    class="absolute transform rotate-45 bg-green-600 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] top-[20px] sm:top-[24px] w-[120px] sm:w-[140px] shadow-md text-xs">
                                                     Available
                                                 </div>
                                             </div>
 
-                                            <div class="pr-8 sm:pr-12 lg:pr-16">
-                                                <h3
-                                                    class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-2 break-words">
+                                        <div class="pr-8 sm:pr-12">
+                                            <div class="flex flex-wrap items-baseline gap-3 mb-2">
+                                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold break-words">
                                                     {{ $shipment->vessel_name }}
                                                 </h3>
-                                                <div
-                                                    class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
-                                                    <span
-                                                        class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
-
-                                                    <!-- Mobile Route Indicator -->
+                                                <div class="flex items-center text-white text-xs bg-red-600 px-3 py-2 rounded-full">
+                                                    <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <span class="font-medium">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
+                                                <span
+                                                    class="font-medium">{{ strtoupper($shipment->from_city) }}</span>                                                    <!-- Mobile Route Indicator -->
                                                     <div class="flex sm:hidden items-center justify-center my-2">
                                                         <div class="flex flex-col items-center space-y-1">
                                                             <span class="w-1 h-1 bg-white rounded-full"></span>
@@ -391,14 +396,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="p-3 sm:p-4 lg:p-6 xl:p-8">
+                                        <div class="p-3 sm:p-4 lg:p-5">
                                             <!-- Timeline Section -->
                                             <div
-                                                class="bg-gradient-to-r from-gray-50 to-white rounded-md p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-gray-200 shadow-sm">
+                                                class="bg-gray-50 rounded-lg p-3 sm:p-4 lg:p-5 mb-4 sm:mb-5 border border-gray-200">
                                                 <h4
-                                                    class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 flex items-center">
+                                                    class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
                                                     <i
-                                                        class="fas fa-calendar-alt text-blue-600 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
+                                                        class="fas fa-calendar-alt text-blue-800 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
                                                     <span class="text-sm sm:text-base lg:text-lg">Voyage
                                                         Schedule</span>
                                                 </h4>
@@ -411,49 +416,77 @@
 
                                                     <!-- Mobile: Vertical Timeline -->
                                                     <div
-                                                        class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 xl:gap-10 relative">
-                                                        @foreach (['open stack', 'etd', 'eta'] as $index => $timeKey)
+                                                        class="sm:hidden absolute left-6 top-16 bottom-16 w-0.5 bg-gray-200 z-0">
+                                                    </div>
+
+                                                    <!-- Mobile: Connect lines between timeline items -->
+                                                    <div
+                                                        class="sm:hidden space-y-6 relative">
+                                                        @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
                                                             <div
-                                                                class="bg-white rounded-md p-3 sm:p-4 shadow-md border border-gray-100 relative z-10 group hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
+                                                                class="flex items-center space-x-4 relative z-10">
+                                                                <!-- Timeline dot -->
                                                                 <div
-                                                                    class="flex items-center justify-between mb-2 sm:mb-3">
+                                                                    class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                                    <i
+                                                                        class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                                </div>
+
+                                                                <!-- Content -->
+                                                                <div class="flex-1 bg-white rounded-lg p-3 shadow-sm border border-gray-200">
                                                                     <p
-                                                                        class="text-xs sm:text-sm font-bold {{ $index == 0 ? 'text-blue-500' : ($index == 1 ? 'text-blue-600' : 'text-blue-700') }}">
-                                                                        {{ strtoupper($timeKey) }}
+                                                                        class="text-sm font-bold text-blue-800 mb-1">
+                                                                        {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                                     </p>
+                                                                    <p class="font-bold text-gray-800 text-base">
+                                                                        {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
+                                                                    </p>
+                                                                    <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                                                        <i class="far fa-clock mr-1"></i>
+                                                                        {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+
+                                                    <!-- Desktop Timeline -->
+                                                    <div
+                                                        class="hidden sm:grid sm:grid-cols-3 gap-6 lg:gap-10 relative">
+                                                        @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
+                                                            <div
+                                                                class="bg-white rounded-lg p-4 shadow-md border border-gray-200 relative z-10 text-center">
+                                                                <div class="flex items-center justify-center mb-3">
                                                                     <div
-                                                                        class="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full {{ $index == 0 ? 'bg-blue-100 text-blue-500' : ($index == 1 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white') }} shadow-md group-hover:scale-110 transition-transform duration-300">
+                                                                        class="flex items-center justify-center w-10 h-10 rounded-full shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
                                                                         <i
-                                                                            class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs sm:text-sm"></i>
+                                                                            class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
                                                                     </div>
                                                                 </div>
                                                                 <p
-                                                                    class="font-bold text-gray-800 text-sm sm:text-base lg:text-lg xl:text-xl">
+                                                                    class="text-sm font-bold text-blue-800 mb-2">
+                                                                    {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
+                                                                </p>
+                                                                <p class="font-bold text-gray-800 text-lg">
                                                                     {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                                 </p>
-                                                                <p
-                                                                    class="text-xs sm:text-sm text-gray-500 mt-1 flex items-center">
+                                                                <p class="text-sm text-gray-500 mt-1 flex items-center justify-center">
                                                                     <i class="far fa-clock mr-1"></i>
                                                                     {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
                                                                 </p>
                                                             </div>
                                                         @endforeach
                                                     </div>
-
-                                                    <!-- Mobile: Connect lines between timeline items -->
-                                                    <div
-                                                        class="sm:hidden absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2 z-0">
-                                                    </div>
                                                 </div>
                                             </div>
 
                                             <!-- Book Now Button -->
                                             <div class="flex justify-center">
-                                                <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}"
-                                                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-12 lg:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-sm sm:text-base lg:text-lg rounded-md hover:from-blue-500 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-200 group active:scale-95">
+                                                <a href="{{ route('booking', ['shipment_id' => $shipment->shipment_id]) }}"
+                                                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-10 lg:py-3 bg-blue-800 text-white font-bold text-sm sm:text-base lg:text-lg rounded-lg hover:bg-blue-700 transition-colors shadow-lg">
                                                     <span class="mr-2">Book</span>
                                                     <svg xmlns="http://www.w3.org/2000/svg"
-                                                        class="h-4 w-4 sm:h-5 sm:w-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                                                        class="h-4 w-4 sm:h-5 sm:w-5"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2" d="M9 5l7 7-7 7" />
@@ -862,7 +895,7 @@
                                 FAQ
                             </a>
                             <span class="text-gray-400 bg-gray-200 px-3 py-1 rounded-lg text-sm">
-                                V.1.4.2
+                                V.1.4.3
                             </span>
                         </div>
                     </div>
