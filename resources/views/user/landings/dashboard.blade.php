@@ -106,27 +106,39 @@
                         </label>
                         <div class="relative">
                             <select name="pol" id="pol"
-                                class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 {{ isset($error) ? 'border-red-500 focus:border-red-600' : 'border-gray-300 hover:border-blue-800 focus:border-blue-800' }} rounded-lg appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
-                                <option disabled {{ !request('pol') && !isset($old_pol) ? 'selected' : '' }}>Select Port of Loading</option>
+                                class="block w-full pl-3 pr-8 py-2 border-2 {{ isset($error) ? 'border-red-500 focus:border-red-600' : 'border-gray-300 hover:border-blue-800 focus:border-blue-800' }} rounded-md appearance-none bg-white shadow-sm transition-colors text-sm">
+                                <option disabled {{ !request('pol') && !isset($old_pol) ? 'selected' : '' }}>Select Port of
+                                    Loading</option>
                                 @php
                                     $sortedFromCities = collect($fromCities)->sort()->values();
                                 @endphp
                                 @foreach ($sortedFromCities as $city)
-                                    <option value="{{ $city }}" {{ request('pol') == $city || (isset($old_pol) && $old_pol == $city) ? 'selected' : '' }}>
+                                    <option value="{{ $city }}"
+                                        {{ request('pol') == $city || (isset($old_pol) && $old_pol == $city) ? 'selected' : '' }}>
                                         {{ strtoupper($city) }}
                                     </option>
                                 @endforeach
                             </select>
-                            
+
                         </div>
                     </div>
 
-                    <!-- Direction Icon -->
+                    <!-- Route Swap Button - Hidden on mobile, visible on large screens -->
                     <div class="hidden lg:flex lg:col-span-2 justify-center items-center">
-                        <div
-                            class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-800 rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fa-solid fa-ship text-white text-lg"></i>
-                        </div>
+                        <button type="button" id="swapRouteBtn" onclick="swapPorts()"
+                            class="group w-12 h-12 lg:w-14 lg:h-14 bg-blue-800 hover:bg-red-600 rounded-full flex items-center justify-center shadow-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                            <i
+                                class="fas fa-exchange-alt text-white text-sm lg:text-base group-hover:rotate-180 transition-transform duration-300"></i>
+                        </button>
+                    </div>
+
+                    <!-- Mobile Route Swap Button - Only visible on mobile -->
+                    <div class="flex lg:hidden justify-center py-2 lg:col-span-12">
+                        <button type="button" onclick="swapPorts()"
+                            class="group w-10 h-10 bg-blue-800 hover:bg-red-600 rounded-full flex items-center justify-center shadow-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                            <i
+                                class="fas fa-exchange-alt text-white text-sm group-hover:rotate-180 transition-transform duration-300"></i>
+                        </button>
                     </div>
 
                     <!-- POD Selection -->
@@ -139,13 +151,15 @@
                         </label>
                         <div class="relative">
                             <select name="pod" id="pod"
-                                class="block w-full pl-3 sm:pl-4 pr-10 sm:pr-12 py-3 sm:py-4 border-2 {{ isset($error) ? 'border-red-500 focus:border-red-600' : 'border-gray-300 hover:border-red-600 focus:border-red-600' }} rounded-lg appearance-none bg-white shadow-sm transition-colors text-sm sm:text-base">
-                                <option disabled {{ !request('pod') && !isset($old_pod) ? 'selected' : '' }}>Select Port of Discharge</option>
+                                class="block w-full pl-3 pr-8 py-2 border-2 {{ isset($error) ? 'border-red-500 focus:border-red-600' : 'border-gray-300 hover:border-red-600 focus:border-red-600' }} rounded-md appearance-none bg-white shadow-sm transition-colors text-sm">
+                                <option disabled {{ !request('pod') && !isset($old_pod) ? 'selected' : '' }}>Select Port of
+                                    Discharge</option>
                                 @php
                                     $sortedToCities = collect($fromCities)->sort()->values();
                                 @endphp
                                 @foreach ($sortedToCities as $city)
-                                    <option value="{{ $city }}" {{ request('pod') == $city || (isset($old_pod) && $old_pod == $city) ? 'selected' : '' }}>
+                                    <option value="{{ $city }}"
+                                        {{ request('pod') == $city || (isset($old_pod) && $old_pod == $city) ? 'selected' : '' }}>
                                         {{ strtoupper($city) }}
                                     </option>
                                 @endforeach
@@ -156,9 +170,8 @@
                     <!-- Search Button -->
                     <div class="lg:col-span-12 pt-2 sm:pt-4">
                         <button id="submitButton" type="submit"
-                            class="w-full bg-blue-800 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg hover:bg-blue-700 transition-colors font-bold flex items-center justify-center text-base sm:text-lg shadow-lg">
-                            <span id="buttonText" class="mr-2">Find Available Ships</span>
-                            <i class="fas fa-search"></i>
+                            class="w-full bg-blue-800 text-white py-2.5 px-6 rounded-md hover:bg-blue-700 transition-colors font-semibold flex items-center justify-center text-sm shadow-md">
+                            <span id="buttonText">Find Available Ships</span>
                             <span id="loadingSpinner" class="hidden ml-2">
                                 <i class="fas fa-spinner fa-spin"></i>
                             </span>
@@ -185,8 +198,7 @@
                     </div>
 
                     @if (isset($error))
-                        <div
-                            class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
+                        <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
                             <div
                                 class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-red-100 rounded-full mb-4 sm:mb-6">
                                 <i class="fas fa-exclamation-triangle text-3xl sm:text-4xl text-red-600"></i>
@@ -195,18 +207,17 @@
                                 Invalid Route
                             </h3>
                             <p class="text-gray-600 text-base sm:text-lg max-w-md mx-auto mb-4 sm:mb-6">
-                                The selected Port of Loading and Port of Discharge are the same. Please select different ports.
+                                The selected Port of Loading and Port of Discharge are the same. Please select different
+                                ports.
                             </p>
                             <a href="#"
                                 onclick="document.getElementById('pol').selectedIndex = 0; document.getElementById('pod').selectedIndex = 0;"
                                 class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors">
-                                <i class="fas fa-search mr-2"></i>
                                 Try Another Route
                             </a>
                         </div>
                     @elseif ($shipments->isEmpty())
-                        <div
-                            class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
+                        <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 lg:p-10 text-center border border-gray-200">
                             <div
                                 class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-full mb-4 sm:mb-6">
                                 <i class="fas fa-ship text-3xl sm:text-4xl text-blue-900"></i>
@@ -218,7 +229,6 @@
                                 for the selected route. Please try different ports or check back later.</p>
                             <a href="#filtering"
                                 class="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-800 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
-                                <i class="fas fa-search mr-2"></i>
                                 Try Another Route
                             </a>
                         </div>
@@ -228,101 +238,99 @@
                                 <div
                                     class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow">
                                     <!-- Shipment Card Header -->
-                                    <div
-                                        class="relative bg-blue-800 text-white p-3 sm:p-4 lg:p-5">
-                                        <div
-                                            class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16">
+                                    <div class="relative bg-blue-800 text-white p-3 sm:p-4">
+                                        <div class="absolute top-0 right-0 w-10 h-10 sm:w-12 sm:h-12">
                                             <div
-                                                class="absolute transform rotate-45 bg-green-600 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] top-[20px] sm:top-[24px] w-[120px] sm:w-[140px] shadow-md text-xs">
+                                                class="absolute transform rotate-45 bg-green-600 text-center text-white font-semibold py-0.5 right-[-20px] sm:right-[-25px] top-[16px] sm:top-[20px] w-[100px] sm:w-[120px] shadow-md text-xs">
                                                 Available
                                             </div>
                                         </div>
 
-                                        <div class="pr-8 sm:pr-12">
-                                            <div class="flex flex-wrap items-baseline gap-3 mb-2">
-                                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold break-words">
+                                        <div class="pr-6 sm:pr-8">
+                                            <div class="flex flex-wrap items-baseline gap-2 mb-1.5">
+                                                <h3 class="text-base sm:text-lg lg:text-xl font-bold break-words">
                                                     {{ $shipment->vessel_name }}
                                                 </h3>
-                                                <div class="flex items-center text-white text-xs bg-red-600 px-3 py-2 rounded-full">
-                                                    <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                <div
+                                                    class="flex items-center text-white text-xs bg-red-600 px-2.5 py-1.5 rounded-full">
+                                                    <svg class="h-2.5 w-2.5 mr-1" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
                                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
-                                                    <span class="font-medium">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
+                                                    <span
+                                                        class="font-medium text-xs">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
                                                 </div>
                                             </div>
                                             <div
-                                                class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
-                                                <span
-                                                    class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+                                                class="flex flex-col sm:flex-row sm:items-center text-white text-sm">
+                                                <span class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
 
                                                 <!-- Mobile Route Indicator -->
-                                                <div class="flex sm:hidden items-center justify-center my-2">
-                                                    <div class="flex flex-col items-center space-y-1">
+                                                <div class="flex sm:hidden items-center justify-center my-1.5">
+                                                    <div class="flex flex-col items-center space-y-0.5">
+                                                        <span class="w-1 h-1 bg-white rounded-full"></span>
+                                                        <span class="w-0.5 h-6 bg-white"></span>
+                                                        <span class="w-1 h-1 bg-white rounded-full"></span>
                                                     </div>
                                                 </div>
 
                                                 <!-- Desktop Route Indicator -->
-                                                <div class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
-                                                    <span
-                                                        class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
-                                                    <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
-                                                    <span
-                                                        class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                                <div class="hidden sm:flex items-center mx-2 space-x-1">
+                                                    <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+                                                    <span class="w-6 lg:w-8 h-0.5 bg-white"></span>
+                                                    <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
                                                 </div>
 
-                                                <span
-                                                    class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
+                                                <span class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="p-3 sm:p-4 lg:p-5">
+                                    <div class="p-3 sm:p-4">
                                         <!-- Timeline Section -->
                                         <div
-                                            class="bg-gray-50 rounded-lg p-3 sm:p-4 lg:p-5 mb-4 sm:mb-5 border border-gray-200">
+                                            class="bg-gray-50 rounded-lg p-3 mb-3 border border-gray-200">
                                             <h4
-                                                class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
+                                                class="text-sm font-bold text-gray-900 mb-2.5 flex items-center">
                                                 <i
-                                                    class="fas fa-calendar-alt text-blue-800 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
-                                                <span class="text-sm sm:text-base lg:text-lg">Voyage
-                                                    Schedule</span>
+                                                    class="fas fa-calendar-alt text-blue-800 mr-1.5 text-xs"></i>
+                                                <span class="text-sm">Voyage Schedule</span>
                                             </h4>
 
                                             <div class="relative">
                                                 <!-- Desktop Timeline bar -->
                                                 <div
-                                                    class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
+                                                    class="hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 transform -translate-y-1/2 z-0 mx-8 lg:mx-12">
                                                 </div>
 
                                                 <!-- Mobile: Vertical Timeline -->
                                                 <div
-                                                    class="sm:hidden absolute left-6 top-16 bottom-16 w-0.5 bg-gray-200 z-0">
+                                                    class="sm:hidden absolute left-5 top-12 bottom-12 w-0.5 bg-gray-200 z-0">
                                                 </div>
 
                                                 <!-- Mobile: Connect lines between timeline items -->
-                                                <div
-                                                    class="sm:hidden space-y-6 relative">
+                                                <div class="sm:hidden space-y-4 relative">
                                                     @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
-                                                        <div
-                                                            class="flex items-center space-x-4 relative z-10">
+                                                        <div class="flex items-center space-x-3 relative z-10">
                                                             <!-- Timeline dot -->
                                                             <div
-                                                                class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                                class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
                                                                 <i
-                                                                    class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                                    class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                             </div>
 
                                                             <!-- Content -->
-                                                            <div class="flex-1 bg-white rounded-lg p-3 shadow-sm border border-gray-200">
-                                                                <p
-                                                                    class="text-sm font-bold text-blue-800 mb-1">
+                                                            <div
+                                                                class="flex-1 bg-white rounded-lg p-2.5 shadow-sm border border-gray-200">
+                                                                <p class="text-xs font-bold text-blue-800 mb-0.5">
                                                                     {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                                 </p>
-                                                                <p class="font-bold text-gray-800 text-base">
+                                                                <p class="font-bold text-gray-800 text-sm">
                                                                     {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                                 </p>
-                                                                <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                                                <p class="text-xs text-gray-500 mt-0.5 flex items-center">
                                                                     <i class="far fa-clock mr-1"></i>
                                                                     {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
                                                                 </p>
@@ -332,26 +340,25 @@
                                                 </div>
 
                                                 <!-- Desktop Timeline -->
-                                                <div
-                                                    class="hidden sm:grid sm:grid-cols-3 gap-6 lg:gap-10 relative">
+                                                <div class="hidden sm:grid sm:grid-cols-3 gap-4 lg:gap-6 relative">
                                                     @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
                                                         <div
-                                                            class="bg-white rounded-lg p-4 shadow-md border border-gray-200 relative z-10 hover:border-blue-800 transition-colors text-center">
-                                                            <div class="flex items-center justify-center mb-3">
+                                                            class="bg-white rounded-lg p-3 shadow-sm border border-gray-200 relative z-10 hover:border-blue-800 transition-colors text-center">
+                                                            <div class="flex items-center justify-center mb-2">
                                                                 <div
-                                                                    class="flex items-center justify-center w-10 h-10 rounded-full shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                                    class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
                                                                     <i
-                                                                        class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                                        class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                                 </div>
                                                             </div>
-                                                            <p
-                                                                class="text-sm font-bold text-blue-800 mb-2">
+                                                            <p class="text-xs font-bold text-blue-800 mb-1">
                                                                 {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                             </p>
-                                                            <p class="font-bold text-gray-800 text-lg">
+                                                            <p class="font-bold text-gray-800 text-sm">
                                                                 {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                             </p>
-                                                            <p class="text-sm text-gray-500 mt-1 flex items-center justify-center">
+                                                            <p
+                                                                class="text-xs text-gray-500 mt-0.5 flex items-center justify-center">
                                                                 <i class="far fa-clock mr-1"></i>
                                                                 {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
                                                             </p>
@@ -364,10 +371,9 @@
                                         <!-- Book Now Button -->
                                         <div class="flex justify-center">
                                             <a href="{{ route('booking', ['shipment_id' => $shipment->shipment_id]) }}"
-                                                class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3 lg:px-10 lg:py-3 bg-blue-800 text-white font-bold text-sm sm:text-base lg:text-lg rounded-lg hover:bg-blue-700 transition-colors shadow-lg">
+                                                class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-blue-800 text-white font-semibold text-sm rounded-md hover:bg-blue-700 transition-colors shadow-md">
                                                 <span class="mr-2">Book</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-4 w-4 sm:h-5 sm:w-5"
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M9 5l7 7-7 7" />
@@ -400,15 +406,289 @@
     </div>
 
     <script>
+        // Function to save POL/POD values to localStorage
+        function savePortSelections() {
+            const polSelect = document.getElementById('pol');
+            const podSelect = document.getElementById('pod');
+
+            if (polSelect && podSelect) {
+                const searchData = {
+                    pol: polSelect.value,
+                    pod: podSelect.value,
+                    timestamp: new Date().getTime(),
+                    url: window.location.href
+                };
+
+                // Save to localStorage
+                localStorage.setItem('almetagt_search_data', JSON.stringify(searchData));
+                console.log('Search data saved:', searchData);
+            }
+        }
+
+        // Function to restore POL/POD values from localStorage and server session
+        function restorePortSelections() {
+            try {
+                const polSelect = document.getElementById('pol');
+                const podSelect = document.getElementById('pod');
+
+                if (!polSelect || !podSelect) return;
+
+                let shouldAutoSearch = false;
+                let restoredPol = '';
+                let restoredPod = '';
+
+                // First, try to get data from server session (higher priority)
+                @if (isset($savedSearchData) && !empty($savedSearchData))
+                    const serverData = @json($savedSearchData);
+                    if (serverData && serverData.pol && serverData.pod) {
+                        // Server data exists, use it
+                        if (serverData.pol !== 'Select Port of Loading' && serverData.pol !== '') {
+                            polSelect.value = serverData.pol;
+                            restoredPol = serverData.pol;
+                        }
+                        if (serverData.pod !== 'Select Port of Discharge' && serverData.pod !== '') {
+                            podSelect.value = serverData.pod;
+                            restoredPod = serverData.pod;
+                        }
+
+                        if (restoredPol && restoredPod) {
+                            shouldAutoSearch = true;
+                        }
+
+                        console.log('Search data restored from server:', serverData);
+
+                        // Update localStorage with server data
+                        const searchData = {
+                            pol: serverData.pol,
+                            pod: serverData.pod,
+                            timestamp: serverData.timestamp || new Date().getTime(),
+                            source: 'server'
+                        };
+                        localStorage.setItem('almetagt_search_data', JSON.stringify(searchData));
+                    }
+                @endif
+
+                // Fallback to localStorage if no server data and no search performed yet
+                if (!shouldAutoSearch) {
+                    const savedData = localStorage.getItem('almetagt_search_data');
+                    if (savedData) {
+                        const searchData = JSON.parse(savedData);
+
+                        if (searchData.pol && searchData.pod) {
+                            // Check if the saved data is not older than 24 hours
+                            const hoursDiff = (new Date().getTime() - searchData.timestamp) / (1000 * 60 * 60);
+
+                            if (hoursDiff < 24) {
+                                if (searchData.pol !== 'Select Port of Loading' && searchData.pol !== '') {
+                                    polSelect.value = searchData.pol;
+                                    restoredPol = searchData.pol;
+                                }
+                                if (searchData.pod !== 'Select Port of Discharge' && searchData.pod !== '') {
+                                    podSelect.value = searchData.pod;
+                                    restoredPod = searchData.pod;
+                                }
+
+                                if (restoredPol && restoredPod) {
+                                    shouldAutoSearch = true;
+                                }
+
+                                console.log('Search data restored from localStorage:', searchData);
+                            } else {
+                                // Clear old data
+                                localStorage.removeItem('almetagt_search_data');
+                            }
+                        }
+                    }
+                }
+
+                // Auto-submit form if we have both POL and POD restored
+                // But only if no search results are currently displayed (to prevent infinite loops)
+                const hasCurrentResults = document.getElementById('result') ||
+                    document.querySelector('.space-y-4.sm\\:space-y-6') ||
+                    window.location.search.includes('pol=') ||
+                    window.location.search.includes('pod=');
+
+                if (shouldAutoSearch && restoredPol && restoredPod && restoredPol !== restoredPod && !hasCurrentResults) {
+                    // Show loading indicator
+                    const submitButton = document.getElementById('submitButton');
+                    const buttonText = document.getElementById('buttonText');
+                    const loadingSpinner = document.getElementById('loadingSpinner');
+
+                    if (submitButton && buttonText && loadingSpinner) {
+                        submitButton.disabled = true;
+                        buttonText.textContent = 'Loading Previous Search...';
+                        loadingSpinner.classList.remove('hidden');
+                    }
+
+                    setTimeout(() => {
+                        console.log('Auto-submitting search form with restored data:', {
+                            pol: restoredPol,
+                            pod: restoredPod
+                        });
+
+                        // Create and submit form with restored data
+                        const currentUrl = new URL(window.location.href);
+                        currentUrl.searchParams.set('pol', restoredPol);
+                        currentUrl.searchParams.set('pod', restoredPod);
+                        currentUrl.hash = 'result';
+
+                        // Redirect to show results
+                        window.location.href = currentUrl.toString();
+                    }, 800); // Small delay to ensure DOM is ready
+                }
+            } catch (error) {
+                console.log('Error restoring search data:', error);
+            }
+        }
+
+        // Function to send search data to server (for logged-in users)
+        function sendSearchDataToServer() {
+            const savedData = localStorage.getItem('almetagt_search_data');
+            if (savedData) {
+                const searchData = JSON.parse(savedData);
+
+                // Send to server via fetch API
+                fetch('{{ route('save-search-data') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute(
+                                'content') || '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            pol: searchData.pol,
+                            pod: searchData.pod,
+                            timestamp: searchData.timestamp
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Search data saved to server successfully');
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error saving search data to server:', error);
+                    });
+            }
+        }
+
+        // Function to swap POL and POD values
+        window.swapPorts = function() {
+            const polSelect = document.getElementById('pol');
+            const podSelect = document.getElementById('pod');
+
+            if (polSelect && podSelect) {
+                // Get current values (store them before swapping)
+                const polValue = polSelect.value;
+                const podValue = podSelect.value;
+
+                // Simply swap the values - no validation needed
+                // This allows swapping even with empty/default values
+                polSelect.value = podValue;
+                podSelect.value = polValue;
+
+                // Save the swapped values
+                savePortSelections();
+
+                // Add visual feedback - temporary animation
+                const swapBtn = document.getElementById('swapRouteBtn') || event.target.closest('button');
+                if (swapBtn) {
+                    // Rotate animation
+                    swapBtn.style.transform = 'rotate(180deg)';
+                    setTimeout(() => {
+                        swapBtn.style.transform = 'rotate(0deg)';
+                    }, 300);
+                }
+
+                // Log the swap action for debugging
+                console.log('Ports swapped successfully:', {
+                    'POL': polValue + ' → ' + podValue,
+                    'POD': podValue + ' → ' + polValue
+                });
+            }
+        };
+
+        // Initialize port selections restoration and save listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Restore saved port selections on page load
+            setTimeout(restorePortSelections, 100);
+
+            // Add change listeners to save data when user selects ports
+            const polSelect = document.getElementById('pol');
+            const podSelect = document.getElementById('pod');
+
+            if (polSelect) {
+                polSelect.addEventListener('change', function() {
+                    savePortSelections();
+                });
+            }
+
+            if (podSelect) {
+                podSelect.addEventListener('change', function() {
+                    savePortSelections();
+                });
+            }
+
+            // For logged-in users, send existing localStorage data to server on page load
+            setTimeout(function() {
+                const savedData = localStorage.getItem('almetagt_search_data');
+                if (savedData) {
+                    try {
+                        const searchData = JSON.parse(savedData);
+                        // Send to server if data exists and is recent
+                        const hoursDiff = (new Date().getTime() - searchData.timestamp) / (1000 * 60 * 60);
+                        if (hoursDiff < 24 && searchData.pol && searchData.pod) {
+                            sendSearchDataToServer();
+                        }
+                    } catch (error) {
+                        console.log('Error processing stored search data:', error);
+                    }
+                }
+            }, 500);
+        });
+
         function handleFormSubmit(event) {
             event.preventDefault();
+
+            // Save current search data before form submission
+            savePortSelections();
+
             const submitButton = document.getElementById('submitButton');
             const buttonText = document.getElementById('buttonText');
             const loadingSpinner = document.getElementById('loadingSpinner');
             submitButton.disabled = true;
             buttonText.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
-            event.target.submit();
+
+            setTimeout(() => {
+                event.target.submit();
+            }, 300);
         }
     </script>
+
+    <style>
+        /* Route Swap Button Styles */
+        #swapRouteBtn,
+        button[onclick="swapPorts()"] {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        #swapRouteBtn:hover,
+        button[onclick="swapPorts()"]:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        #swapRouteBtn:active,
+        button[onclick="swapPorts()"]:active {
+            transform: scale(0.95);
+        }
+
+        #swapRouteBtn:focus,
+        button[onclick="swapPorts()"]:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+    </style>
 @endsection

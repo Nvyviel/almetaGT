@@ -25,14 +25,16 @@ class ContainerController extends Controller
     }
 
 
-    public function showDetail($id)
+    public function showDetail($id_order)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if ($user->is_admin) {
-            $container = Container::findOrFail($id);
+            $container = Container::where('id_order', $id_order)->firstOrFail();
         } else {
-            $container = $user->container()->where('id', $id)->firstOrFail();
+            $container = Container::where('user_id', $user->id)
+                                 ->where('id_order', $id_order)
+                                 ->firstOrFail();
         }
 
         return view('user.shipments.show-release-order', compact('container'));
@@ -41,14 +43,36 @@ class ContainerController extends Controller
 
     public function releaseOrder(Request $request)
     {
-        $query = auth()->user()->container()->with('shipment_container')->orderBy('created_at', 'desc');
+        $user = Auth::user();
         
+        // Get all containers for statistics (no filter applied)
+        $allContainers = Container::where('user_id', $user->id)->get();
+        
+        // Calculate statistics from all data
+        $totalOrders = $allContainers->count();
+        $approvedCount = $allContainers->where('status', 'Approved')->count();
+        $pendingCount = $allContainers->where('status', 'Requested')->count();
+        $canceledCount = $allContainers->where('status', 'Canceled')->count();
+        
+        // Build query for filtered results
+        $query = Container::where('user_id', $user->id)
+                         ->with('shipment_container')
+                         ->orderBy('created_at', 'desc');
+        
+        // Apply filter for display if specified
         if ($request->has('filter') && $request->filter !== 'all') {
             $query->where('status', $request->filter);
         }
 
         $container = $query->get();
-        return view('user.shipments.release-order', compact('container'));
+        
+        return view('user.shipments.release-order', compact(
+            'container', 
+            'totalOrders', 
+            'approvedCount', 
+            'pendingCount', 
+            'canceledCount'
+        ));
     }
 
 

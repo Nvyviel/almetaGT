@@ -4,70 +4,59 @@
     {{-- Notification Section --}}
     @if ($errors->any())
         <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
-            <div
-                class="mx-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg animate-fade-in">
+            <div class="mx-4 bg-red-50 border border-red-600 text-red-700 px-4 py-3 rounded shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <span class="mt-2 list-disc list-inside">
+                        <span class="text-sm">
                             @foreach ($errors->all() as $error)
                                 {{ $error }}
                             @endforeach
                         </span>
                     </div>
                     <button onclick="this.parentElement.parentElement.remove()"
-                        class="text-red-700 hover:text-red-900 focus:outline-none">
-                        <span class="text-2xl">&times;</span>
+                        class="text-red-600 hover:text-red-700 focus:outline-none">
+                        <span class="text-xl">&times;</span>
                     </button>
                 </div>
             </div>
         </div>
     @endif
 
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <!-- Decorative elements -->
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-b from-blue-500/10 to-purple-500/5 -z-10"></div>
-        <div class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-t from-blue-500/5 to-transparent -z-10"></div>
-        <div class="absolute top-20 left-20 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
-        <div class="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl -z-10"></div>
-
-        <!-- Grid pattern background -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-[0.015] -z-10"></div>
-
+    <div class="min-h-screen bg-white">
         <!-- Content Container -->
-        <div class="relative min-h-screen flex items-center justify-center p-4">
-            <div class="w-full max-w-6xl grid md:grid-cols-5 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div class="min-h-screen flex items-center justify-center p-3">
+            <div
+                class="w-full max-w-5xl grid md:grid-cols-5 bg-white rounded border border-gray-300 shadow overflow-hidden">
 
                 <!-- Left Column - Decorative Side with Background Image -->
-                <div class="md:col-span-2 bg-cover bg-center bg-blue-600 bg-no-repeat p-8 relative hidden md:block overflow-hidden"
-                    style="background-image: url('{{ asset('assets/img/Almeta-ship.png') }}');">
+                <div class="md:col-span-2 bg-center bg-blue-800 bg-no-repeat p-6 relative hidden md:block overflow-hidden"
+                    style="background-image: url('{{ asset('assets/img/Almeta-ship.png') }}'); background-size: 120%; background-position: center;">
 
                     <!-- Dark overlay for better text readability -->
-                    <div class="absolute inset-0 bg-black/40"></div>
+                    <div class="absolute inset-0 bg-black/50"></div>
 
                     <!-- Content -->
                     <div class="relative h-full flex flex-col justify-between text-white z-10">
                         <div>
-                            <h2 class="text-2xl font-bold mb-2">ALMETA GLOBAL</h2>
-                            <div class="w-12 h-1 bg-white/50 mb-6"></div>
+                            <h2 class="text-xl font-bold mb-2">ALMETA GLOBAL</h2>
+                            <div class="w-12 h-1 bg-white/50 mb-4"></div>
                         </div>
 
-                        <div class="space-y-6">
-                            <h3 class="text-3xl font-bold leading-tight">Join Our Network of Trusted Partners</h3>
-                            <p class="text-white/90">Create your account today and gain access to our comprehensive
+                        <div class="space-y-4">
+                            <h3 class="text-2xl font-bold leading-tight">Join Our Network of Trusted Partners</h3>
+                            <p class="text-white/90 text-sm">Create your account today and gain access to our
+                                comprehensive
                                 logistics platform. Streamline your shipping operations with Almeta.</p>
 
-                            <!-- Testimonial -->
-                            <div class="bg-white/10 p-4 rounded-lg backdrop-blur-sm mt-8">
-                                <p class="italic text-white/80 text-sm mb-3">"Since partnering with Almeta, our shipping
-                                    process has become significantly more efficient, reliable and cost-effective."</p>
-                                <div class="flex items-center">
-                                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3">
-                                        <span class="text-xs font-bold">CT</span>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">Cargo Trust</p>
-                                        <p class="text-xs text-white/70">Client since 2021</p>
-                                    </div>
+                            <!-- Stats -->
+                            <div class="grid grid-cols-2 gap-3 mt-4">
+                                <div class="bg-white/10 p-3 rounded text-center">
+                                    <div class="text-lg font-bold">1000+</div>
+                                    <div class="text-xs text-white/80">Shipments</div>
+                                </div>
+                                <div class="bg-white/10 p-3 rounded text-center">
+                                    <div class="text-lg font-bold">50+</div>
+                                    <div class="text-xs text-white/80">Countries</div>
                                 </div>
                             </div>
                         </div>
@@ -79,22 +68,22 @@
                 </div>
 
                 <!-- Right Column - Form Side -->
-                <div class="md:col-span-3 p-6 md:p-10 flex flex-col justify-center">
+                <div class="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
                     <div class="w-full mx-auto">
-                        <div class="text-center mb-6">
-                            <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Create Account</h1>
-                            <p class="text-gray-600 mt-2">Register to access our shipping services</p>
+                        <div class="text-center mb-4">
+                            <h1 class="text-xl md:text-2xl font-bold text-black">Create Account</h1>
+                            <p class="text-gray-600 mt-1 text-sm">Register to access our shipping services</p>
                         </div>
 
                         <!-- Improved Sections Tabs -->
-                        <div class="mb-6 border-b border-gray-200">
-                            <ul class="flex space-x-1 text-sm md:text-base font-medium text-center overflow-hidden">
+                        <div class="mb-4 border-b border-gray-300">
+                            <ul class="flex text-sm font-medium text-center">
                                 <li class="flex-1">
                                     <a href="#personal"
-                                        class="inline-block w-full py-3 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active transition-colors"
+                                        class="inline-block w-full py-2 text-blue-800 border-b-2 border-blue-800"
                                         onclick="showSection('personal'); return false;">
                                         <div class="flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -105,10 +94,10 @@
                                 </li>
                                 <li class="flex-1">
                                     <a href="#business"
-                                        class="inline-block w-full py-3 text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 rounded-t-lg transition-colors"
+                                        class="inline-block w-full py-2 text-gray-500 hover:text-blue-800 border-b-2 border-transparent"
                                         onclick="showSection('business'); return false;">
                                         <div class="flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -119,10 +108,10 @@
                                 </li>
                                 <li class="flex-1">
                                     <a href="#documents"
-                                        class="inline-block w-full py-3 text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 rounded-t-lg transition-colors"
+                                        class="inline-block w-full py-2 text-gray-500 hover:text-blue-800 border-b-2 border-transparent"
                                         onclick="showSection('documents'); return false;">
                                         <div class="flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -140,18 +129,17 @@
 
                             {{-- Personal Information Section --}}
                             <div id="personal-section" class="section-content">
-                                <div class="space-y-5">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {{-- Email --}}
                                         <div class="group">
-                                            <label for="email"
-                                                class="block font-medium text-gray-700 text-sm mb-2 ml-1 group-focus-within:text-blue-600 transition-colors">
+                                            <label for="email" class="block font-medium text-black text-sm mb-1">
                                                 Email Address
                                             </label>
                                             <div class="relative">
                                                 <span
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 group-focus-within:text-blue-500 transition-colors">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
                                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-width="2"
@@ -160,13 +148,11 @@
                                                 </span>
                                                 <input id="email" type="email" name="email"
                                                     value="{{ old('email') }}"
-                                                    class="block w-full pl-10 h-12 p-2 border border-gray-300 rounded-lg shadow-sm
-                                                        @error('email') border-red-500 @enderror 
-                                                        focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-200"
+                                                    class="block w-full pl-10 h-10 px-3 py-2 border @error('email') border-red-600 @else border-gray-300 @enderror rounded focus:border-blue-800 focus:ring-1 focus:ring-blue-800 focus:outline-none text-sm"
                                                     required placeholder="example@gmail.com">
                                             </div>
                                             @error('email')
-                                                <p class="text-red-600 text-sm mt-2 ml-1">{{ $message }}</p>
+                                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                             @enderror
                                         </div>
 
@@ -322,14 +308,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex justify-end mt-8">
+                                    <div class="flex justify-end mt-6">
                                         <button type="button"
-                                            class="px-8 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg shadow-md
-                                            hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
-                                            transition-all duration-300 flex items-center"
+                                            class="px-6 py-2 bg-blue-800 text-white text-sm font-medium rounded hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-800 flex items-center"
                                             onclick="showSection('business')">
                                             <span>Next: Business Details</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M9 5l7 7-7 7" />
@@ -458,13 +442,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex justify-between mt-8">
+                                    <div class="flex justify-between mt-6">
                                         <button type="button"
-                                            class="px-8 py-3 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg shadow-md
-                                            hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 
-                                            transition-all duration-300 flex items-center"
+                                            class="px-6 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 flex items-center"
                                             onclick="showSection('personal')">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15 19l-7-7 7-7" />
@@ -472,12 +454,10 @@
                                             <span>Back: Personal Info</span>
                                         </button>
                                         <button type="button"
-                                            class="px-8 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg shadow-md
-                                            hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
-                                            transition-all duration-300 flex items-center"
+                                            class="px-6 py-2 bg-blue-800 text-white text-sm font-medium rounded hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-800 flex items-center"
                                             onclick="showSection('documents')">
                                             <span>Next: Documents</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M9 5l7 7-7 7" />
@@ -493,12 +473,10 @@
                                 <div class="space-y-6">
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                                         <!-- KTP Upload -->
-                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm"
-                                            id="ktp-container">
-                                            <label
-                                                class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <div class="bg-gray-50 rounded p-3 border border-gray-300" id="ktp-container">
+                                            <label class="text-sm font-medium text-black mb-2 flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-5 w-5 mr-2 text-blue-600" fill="none"
+                                                    class="h-4 w-4 mr-2 text-blue-800" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
@@ -525,7 +503,7 @@
                                                         <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
                                                     </div>
                                                     <input id="ktp" type="file" name="ktp"
-                                                        accept="image/*" class="hidden" 
+                                                        accept="image/*" class="hidden"
                                                         onchange="console.log('KTP file selected immediately:', this.files[0]?.name)" />
                                                 </label>
                                             </div>
@@ -545,14 +523,14 @@
                                                     </div>
                                                     <!-- File Info -->
                                                     <div class="text-center mb-3">
-                                                        <p class="text-sm font-medium text-green-800"
+                                                        <p class="text-sm font-medium text-green-800 filename-display"
                                                             id="ktp-filename">Document uploaded</p>
                                                         <p class="text-xs text-green-600" id="ktp-filesize">0 KB</p>
                                                     </div>
                                                     <!-- Upload Button -->
                                                     <button type="button" onclick="retriggerUpload('ktp')"
-                                                        class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-                                                        Upload File
+                                                        class="px-4 py-2 text-xs font-medium text-blue-800 bg-white border border-blue-800 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-800">
+                                                        Reupload File
                                                     </button>
                                                 </div>
                                             </div>
@@ -563,12 +541,11 @@
                                         </div>
 
                                         <!-- NPWP Upload -->
-                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm"
+                                        <div class="bg-gray-50 rounded p-3 border border-gray-300"
                                             id="npwp-container">
-                                            <label
-                                                class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                            <label class="text-sm font-medium text-black mb-2 flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-5 w-5 mr-2 text-blue-600" fill="none"
+                                                    class="h-4 w-4 mr-2 text-blue-800" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
@@ -596,7 +573,7 @@
                                                         <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
                                                     </div>
                                                     <input id="npwp" type="file" name="npwp"
-                                                        accept="image/*" class="hidden" 
+                                                        accept="image/*" class="hidden"
                                                         onchange="console.log('NPWP file selected immediately:', this.files[0]?.name)" />
                                                 </label>
                                             </div>
@@ -616,14 +593,14 @@
                                                     </div>
                                                     <!-- File Info -->
                                                     <div class="text-center mb-3">
-                                                        <p class="text-sm font-medium text-green-800"
+                                                        <p class="text-sm font-medium text-green-800 filename-display"
                                                             id="npwp-filename">Document uploaded</p>
                                                         <p class="text-xs text-green-600" id="npwp-filesize">0 KB</p>
                                                     </div>
                                                     <!-- Upload Button -->
                                                     <button type="button" onclick="retriggerUpload('npwp')"
-                                                        class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-                                                        Upload File
+                                                        class="px-4 py-2 text-xs font-medium text-blue-800 bg-white border border-blue-800 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-800">
+                                                        Repload File
                                                     </button>
                                                 </div>
                                             </div>
@@ -634,12 +611,10 @@
                                         </div>
 
                                         <!-- NIB Upload -->
-                                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 shadow-sm"
-                                            id="nib-container">
-                                            <label
-                                                class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <div class="bg-gray-50 rounded p-3 border border-gray-300" id="nib-container">
+                                            <label class="text-sm font-medium text-black mb-2 flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="h-5 w-5 mr-2 text-blue-600" fill="none"
+                                                    class="h-4 w-4 mr-2 text-blue-800" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
@@ -666,7 +641,7 @@
                                                         <p class="text-xs text-gray-500">PNG, JPG (Max. 2MB)</p>
                                                     </div>
                                                     <input id="nib" type="file" name="nib"
-                                                        accept="image/*" class="hidden" 
+                                                        accept="image/*" class="hidden"
                                                         onchange="console.log('NIB file selected immediately:', this.files[0]?.name)" />
                                                 </label>
                                             </div>
@@ -686,14 +661,14 @@
                                                     </div>
                                                     <!-- File Info -->
                                                     <div class="text-center mb-3">
-                                                        <p class="text-sm font-medium text-green-800"
+                                                        <p class="text-sm font-medium text-green-800 filename-display"
                                                             id="nib-filename">Document uploaded</p>
                                                         <p class="text-xs text-green-600" id="nib-filesize">0 KB</p>
                                                     </div>
                                                     <!-- Upload Button -->
                                                     <button type="button" onclick="retriggerUpload('nib')"
-                                                        class="px-4 py-2 text-xs font-medium text-blue-600 bg-white border border-blue-200 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
-                                                        Upload File
+                                                        class="px-4 py-2 text-xs font-medium text-blue-800 bg-white border border-blue-800 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-800">
+                                                        Reupload File
                                                     </button>
                                                 </div>
                                             </div>
@@ -704,13 +679,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex justify-between mt-8">
+                                    <div class="flex justify-between mt-6">
                                         <button type="button"
-                                            class="px-8 py-3 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg shadow-md
-                                            hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 
-                                            transition-all duration-300 flex items-center"
+                                            class="px-6 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 flex items-center"
                                             onclick="showSection('business')">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15 19l-7-7 7-7" />
@@ -718,11 +691,9 @@
                                             <span>Back: Business Info</span>
                                         </button>
                                         <button type="submit"
-                                            class="px-8 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg shadow-md
-                                            hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
-                                            transition-all duration-300 flex items-center">
+                                            class="px-6 py-2 bg-blue-800 text-white text-sm font-medium rounded hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-800 flex items-center">
                                             <span>Create Account</span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2"
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M5 13l4 4L19 7" />
@@ -734,9 +705,9 @@
                         </form>
 
                         {{-- Login Link --}}
-                        <div class="mt-6 text-center">
+                        <div class="mt-4 text-center">
                             <a href="{{ route('login') }}" wire:navigate
-                                class="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 inline-flex items-center">
+                                class="text-sm text-gray-600 hover:text-blue-800 inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -747,7 +718,7 @@
                         </div>
 
                         <!-- Mobile-only footer -->
-                        <div class="md:hidden text-center text-xs text-gray-500 mt-10">
+                        <div class="md:hidden text-center text-xs text-gray-500 mt-6">
                             &copy; {{ date('Y') }} Almeta Global Trilindo. All rights reserved.
                         </div>
                     </div>
@@ -770,13 +741,11 @@
                 // Update active tab
                 document.querySelectorAll('a[href^="#"]').forEach(tab => {
                     if (tab.getAttribute('href') === '#' + sectionId) {
-                        tab.classList.add('text-blue-600', 'border-blue-600');
-                        tab.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700',
-                            'hover:border-gray-300');
+                        tab.classList.add('text-blue-800', 'border-blue-800');
+                        tab.classList.remove('text-gray-500', 'border-transparent', 'hover:text-blue-800');
                     } else {
-                        tab.classList.remove('text-blue-600', 'border-blue-600');
-                        tab.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700',
-                            'hover:border-gray-300');
+                        tab.classList.remove('text-blue-800', 'border-blue-800');
+                        tab.classList.add('text-gray-500', 'border-transparent', 'hover:text-blue-800');
                     }
                 });
 
@@ -886,7 +855,7 @@
                         if (input.hasAttribute('data-listener-attached')) {
                             input.removeAttribute('data-listener-attached');
                         }
-                        
+
                         // Create new event handler
                         const handleFileChange = function() {
                             console.log(`File change detected for ${inputId}:`, this.files[0]?.name);
@@ -900,16 +869,16 @@
                                 }
                             }
                         };
-                        
+
                         // Attach the event listener
                         input.addEventListener('change', handleFileChange);
-                        
+
                         // Also attach it as a direct property for immediate execution
                         input.onchange = handleFileChange;
-                        
+
                         // Mark as having listener attached
                         input.setAttribute('data-listener-attached', 'true');
-                        
+
                         console.log(`Event listeners attached for ${inputId}`);
                     }
                 });
@@ -917,7 +886,7 @@
 
             function handleFileUploadSuccess(inputId, file) {
                 console.log(`File upload detected for ${inputId}:`, file.name); // Debug log
-                
+
                 const uploadArea = document.getElementById(`${inputId}-upload-area`);
                 const successArea = document.getElementById(`${inputId}-success-area`);
                 const filenameElement = document.getElementById(`${inputId}-filename`);
@@ -926,9 +895,14 @@
                 // Format file size
                 const fileSize = formatFileSize(file.size);
 
+                // Truncate filename if too long and add file extension
+                const truncatedFilename = truncateFilename(file.name, 25);
+
                 // Update success area content
                 if (filenameElement) {
-                    filenameElement.textContent = file.name;
+                    filenameElement.textContent = truncatedFilename;
+                    filenameElement.setAttribute('title', file.name); // Show full filename on hover
+                    filenameElement.classList.add('filename-display');
                 }
                 if (filesizeElement) {
                     filesizeElement.textContent = fileSize;
@@ -936,14 +910,18 @@
 
                 // Hide upload area and show success area with immediate effect
                 if (uploadArea && successArea) {
+                    // Ensure upload area is completely hidden
+                    uploadArea.style.display = 'none';
                     uploadArea.classList.add('hidden');
+
+                    // Show success area
+                    successArea.style.display = 'block';
                     successArea.classList.remove('hidden');
 
                     // Add success animation with immediate visible effect
                     successArea.style.opacity = '0';
                     successArea.style.transform = 'scale(0.95)';
-                    successArea.style.display = 'block'; // Ensure it's visible
-                    
+
                     // Force immediate update
                     successArea.offsetHeight; // Trigger reflow
 
@@ -960,7 +938,7 @@
                 if (container) {
                     container.classList.remove('bg-gray-50', 'border-gray-200');
                     container.classList.add('bg-green-50', 'border-green-200');
-                    
+
                     // Add a subtle pulse effect to show success
                     container.style.animation = 'pulse 0.6s ease-in-out';
                     setTimeout(() => {
@@ -972,28 +950,70 @@
             }
 
             function retriggerUpload(inputId) {
+                console.log(`Retriggering upload for ${inputId}`); // Debug log
+
                 const input = document.getElementById(inputId);
                 const uploadArea = document.getElementById(`${inputId}-upload-area`);
                 const successArea = document.getElementById(`${inputId}-success-area`);
                 const container = document.getElementById(`${inputId}-container`);
+                const filenameElement = document.getElementById(`${inputId}-filename`);
+                const filesizeElement = document.getElementById(`${inputId}-filesize`);
 
                 // Reset file input
                 if (input) {
                     input.value = '';
-                    input.click();
+                    console.log(`File input reset for ${inputId}`);
                 }
 
-                // Show upload area and hide success area
+                // Reset success area content to default
+                if (filenameElement) {
+                    filenameElement.textContent = 'Document uploaded';
+                    filenameElement.removeAttribute('title');
+                    filenameElement.classList.remove('filename-display');
+                    console.log(`Filename element reset for ${inputId}`);
+                }
+                if (filesizeElement) {
+                    filesizeElement.textContent = '0 KB';
+                }
+
+                // Show upload area and hide success area with smooth transition
                 if (uploadArea && successArea) {
-                    successArea.classList.add('hidden');
-                    uploadArea.classList.remove('hidden');
+                    console.log(`Transitioning UI for ${inputId}: hiding success, showing upload`);
+
+                    // Add transition effect
+                    successArea.style.transition = 'opacity 0.2s ease-out';
+                    successArea.style.opacity = '0';
+
+                    setTimeout(() => {
+                        // Completely hide success area
+                        successArea.style.display = 'none';
+                        successArea.classList.add('hidden');
+
+                        // Show upload area
+                        uploadArea.style.display = 'block';
+                        uploadArea.classList.remove('hidden');
+
+                        // Reset styles for next time
+                        successArea.style.opacity = '';
+                        successArea.style.transition = '';
+                        successArea.style.transform = '';
+
+                        console.log(`UI transition completed for ${inputId}`);
+                    }, 200);
                 }
 
                 // Reset container styling
                 if (container) {
                     container.classList.remove('bg-green-50', 'border-green-200');
-                    container.classList.add('bg-gray-50', 'border-gray-200');
+                    container.classList.add('bg-gray-50', 'border-gray-300');
                 }
+
+                // Trigger file dialog after a short delay to ensure UI is updated
+                setTimeout(() => {
+                    if (input) {
+                        input.click();
+                    }
+                }, 250);
             }
 
             function formatFileSize(bytes) {
@@ -1004,6 +1024,30 @@
                 const i = Math.floor(Math.log(bytes) / Math.log(k));
 
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function truncateFilename(filename, maxLength = 25) {
+                if (filename.length <= maxLength) {
+                    return filename;
+                }
+
+                // Get file extension
+                const lastDotIndex = filename.lastIndexOf('.');
+                const extension = lastDotIndex !== -1 ? filename.substring(lastDotIndex) : '';
+                const nameWithoutExtension = lastDotIndex !== -1 ? filename.substring(0, lastDotIndex) : filename;
+
+                // Calculate available space for the name (excluding extension and dots)
+                const availableLength = maxLength - extension.length - 3; // 3 for "..."
+
+                if (availableLength <= 0) {
+                    // If extension is too long, just show dots + extension
+                    return '...' + extension;
+                }
+
+                // Truncate the name and add dots
+                // Example: "very_long_document_name_here.png" becomes "very_long_documen...png"
+                const truncatedName = nameWithoutExtension.substring(0, availableLength);
+                return truncatedName + '...' + extension;
             }
 
             // DOM Content Loaded Event - Main Initialization
@@ -1520,10 +1564,12 @@
             0% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.02);
                 box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
             }
+
             100% {
                 transform: scale(1);
             }
@@ -1597,6 +1643,71 @@
             .upload-retry-btn,
             button {
                 display: none !important;
+            }
+        }
+
+        /* File upload area positioning fix */
+        [id$="-upload-area"],
+        [id$="-success-area"] {
+            position: relative;
+            width: 100%;
+        }
+
+        [id$="-upload-area"].hidden,
+        [id$="-success-area"].hidden {
+            display: none !important;
+        }
+
+        /* Filename tooltip styles */
+        .filename-display {
+            cursor: help;
+            position: relative;
+        }
+
+        .filename-display:hover::before {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            animation: tooltipFadeIn 0.2s ease-in-out 0.5s forwards;
+        }
+
+        .filename-display:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 94%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            pointer-events: none;
+            opacity: 0;
+            animation: tooltipFadeIn 0.2s ease-in-out 0.5s forwards;
+        }
+
+        @keyframes tooltipFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-2px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
             }
         }
     </style>

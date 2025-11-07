@@ -244,9 +244,9 @@ class ShippingInstructionData extends Component
                 'container_notes'
             ]);
 
-            session()->flash('success', "Shipping instructions created successfully with ID: $instructionsId ($createdCount records created)");
+            session()->flash('success', "Shipping Instruction has been approved and document uploaded successfully");
         } catch (\Exception $e) {
-            session()->flash('error', 'Failed to create shipping instructions: ' . $e->getMessage());
+            session()->flash('error', 'Failed to create Shipping Instruction: ' . $e->getMessage());
         }
 
         return redirect()->route('shipping-instruction');

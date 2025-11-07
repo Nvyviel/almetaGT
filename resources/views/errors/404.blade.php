@@ -10,94 +10,122 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
+            background-color: #f8fafc;
         }
 
         .error-container {
-            background: linear-gradient(to bottom right, #ffffff, #f9fafb);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .error-code {
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 800;
             line-height: 1;
-            background: linear-gradient(to right, #ef4444, #f43f5e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #dc2626;
         }
     </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex items-center justify-center px-4">
-    <div class="max-w-xl w-full bg-white border border-gray-200 error-container shadow-md rounded-md">
-        <div class="p-8 border-b border-gray-100">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-2xl w-full bg-white border border-gray-300 error-container rounded">
+        <!-- Header -->
+        <div class="p-4 border-b border-gray-300 bg-gray-50">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <span class="p-2 bg-red-50 text-red-600 mr-3 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
+                    <span class="p-2 bg-red-100 text-red-600 mr-3 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                     </span>
                     <h1 class="error-code">404</h1>
+                    <span class="ml-3 text-lg font-bold text-black">Page Not Found</span>
                 </div>
-                <a href="{{ route('dashboard') }}"
-                    class="text-red-600 hover:text-red-800 font-medium text-sm flex items-center transition duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Dashboard
-                </a>
+                <div class="flex items-center gap-2">
+                    <span class="px-2 py-1 bg-blue-800 text-white text-xs rounded">ERROR</span>
+                    <a href="{{ route('dashboard') }}" class="text-blue-800 hover:text-blue-900 font-medium text-sm flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        Dashboard
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="p-8">
-            <div class="flex flex-col items-center mb-8">
-                <div class="mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-                        stroke-linejoin="round" class="text-gray-300">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
-                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                    </svg>
+        <!-- Content -->
+        <div class="p-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Left Column - Error Info -->
+                <div class="space-y-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-black mb-2">What happened?</h2>
+                        <p class="text-gray-600 text-sm">
+                            The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.
+                        </p>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-semibold text-black">Quick Actions</h3>
+                        <div class="space-y-2">
+                            <a href="{{ url()->previous() }}" 
+                                class="flex items-center px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm border border-gray-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Go Back to Previous Page
+                            </a>
+                            <a href="{{ route('dashboard') }}" 
+                                class="flex items-center px-3 py-2 bg-blue-800 hover:bg-blue-900 text-white rounded text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                Return to Dashboard
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Page Not Found</h2>
-                <p class="text-gray-600 mb-6 text-center max-w-md">
-                    We couldn't find the page you're looking for. It might have been removed, renamed, or doesn't exist.
-                </p>
+                <!-- Right Column - Helpful Links -->
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-semibold text-black mb-3">Helpful Links</h3>
+                        <div class="bg-gray-50 rounded p-4 space-y-2">
+                            <a href="{{ route('dashboard') }}" class="block text-sm text-blue-800 hover:text-blue-900">
+                                • Dashboard Home
+                            </a>
+                            @if(Auth::check())
+                                <a href="{{ route('admin.bills.list') }}" class="block text-sm text-blue-800 hover:text-blue-900">
+                                    • Bills Management
+                                </a>
+                                <a href="{{ route('dashboard-admin') }}" class="block text-sm text-blue-800 hover:text-blue-900">
+                                    • User Management
+                                </a>
+                            @endif
+                            <a href="{{ route('login') }}" class="block text-sm text-blue-800 hover:text-blue-900">
+                                • Login Page
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Error Details -->
+                    <div class="bg-red-50 border border-red-200 rounded p-3">
+                        <h4 class="text-sm font-semibold text-red-700 mb-2">Error Details</h4>
+                        <div class="space-y-1 text-xs text-red-600">
+                            <p>• Status: 404 Not Found</p>
+                            <p>• URL: {{ request()->fullUrl() }}</p>
+                            <p>• Time: {{ now()->format('Y-m-d H:i:s') }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="flex justify-center space-x-4">
-                <a href="{{ url()->previous() }}"
-                    class="inline-flex items-center px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md transition duration-200 text-sm border border-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Go Back
-                </a>
-                <a href="{{ route('dashboard') }}"
-                    class="inline-flex items-center px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition duration-200 text-sm shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    Home
-                </a>
-            </div>
-
-            <div class="mt-12 pt-6 border-t border-gray-100 text-center text-sm text-gray-500">
-                <p>© 2025 PT. ALMETA GLOBAL TRILINDO. All rights reserved.</p>
-                <p class="mt-1.5">Current Time: {{ now()->format('Y-m-d H:i:s') }}</p>
+            <!-- Footer -->
+            <div class="mt-6 pt-4 border-t border-gray-200 text-center text-xs text-gray-500">
+                <p>© {{ date('Y') }} PT. ALMETA GLOBAL TRILINDO. All rights reserved.</p>
             </div>
         </div>
     </div>

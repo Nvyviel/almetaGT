@@ -86,7 +86,7 @@
                                 <i class="fa-solid fa-ship text-gray-400 text-sm"></i>
                             </div>
                             <input type="text" wire:model.defer="vessel_name" id="vessel_name"
-                                class="w-full pl-10 pr-3 py-3 text-base border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white"
+                                class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white"
                                 placeholder="Enter vessel name" style="text-transform: uppercase;">
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                         <span class="text-gray-500 font-medium text-sm">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_20"
-                                        class="w-full pl-10 pr-3 py-3 text-base border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
                                         placeholder="Enter base rate" data-format="currency" onfocus="this.select()">
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                         <span class="text-gray-500 font-medium text-sm">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_40"
-                                        class="w-full pl-10 pr-3 py-3 text-base border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
                                         placeholder="Enter container rate" data-format="currency" onfocus="this.select()">
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="open_stack"
-                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
                             <div class="space-y-1">
@@ -163,7 +163,7 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="closing_cargo"
-                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
                             <div class="space-y-1">
@@ -176,7 +176,7 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="etd"
-                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
                             <div class="space-y-1">
@@ -189,7 +189,7 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="eta"
-                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
                                 </div>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                         </svg>
                                     </div>
                                     <select wire:model.defer="from_city"
-                                        class="w-full pl-10 pr-8 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
+                                        class="w-full pl-10 pr-8 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
                                         <option value="">Select Port of Loading</option>
                                         @php
                                             $sortedCitiesPOL = collect($cities)->sort()->values();
@@ -238,7 +238,7 @@
                                         </svg>
                                     </div>
                                     <select wire:model.defer="to_city"
-                                        class="w-full pl-10 pr-8 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
+                                        class="w-full pl-10 pr-8 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
                                         <option value="">Select Port of Discharge</option>
                                         @php
                                             $sortedCitiesPOD = collect($cities)->sort()->values();
@@ -253,18 +253,18 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="flex justify-center pt-6">
+                    <div class="flex justify-center pt-4">
                         <button type="submit"
-                            class="w-full sm:w-auto px-12 py-4 bg-blue-800 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-800">
+                            class="w-full sm:w-auto px-8 py-3 bg-blue-800 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-800 transition-colors duration-150">
                             <span wire:loading.remove class="flex items-center justify-center">
-                                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
                                 Create Shipment Schedule
                             </span>
                             <span wire:loading class="flex items-center justify-center">
-                                <svg class="animate-spin h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24">
+                                <svg class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10"
                                         stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor"
@@ -300,42 +300,45 @@
                         <div
                             class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow">
                             <!-- Shipment Card Header -->
-                            <div class="relative bg-blue-800 text-white p-3 sm:p-4 lg:p-5">
-                                <div class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16">
+                            <div class="relative bg-blue-800 text-white p-3 sm:p-4">
+                                <div class="absolute top-0 right-0 w-10 h-10 sm:w-12 sm:h-12">
                                     <div
-                                        class="absolute transform rotate-45 bg-green-600 text-center text-white font-semibold py-1 right-[-25px] sm:right-[-30px] top-[20px] sm:top-[24px] w-[120px] sm:w-[140px] shadow-md text-xs">
-                                        Available
+                                        class="absolute transform rotate-45 bg-blue-600 text-center text-white font-semibold py-0.5 right-[-20px] sm:right-[-25px] top-[16px] sm:top-[20px] w-[100px] sm:w-[120px] shadow-md text-xs">
+                                        ACTIVE
                                     </div>
                                 </div>
 
-                                <div class="pr-8 sm:pr-12">
-                                    <div class="flex flex-wrap items-baseline gap-3 mb-2">
-                                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold break-words">
+                                <div class="pr-6 sm:pr-8">
+                                    <div class="flex flex-wrap items-baseline gap-2 mb-1.5">
+                                        <h3 class="text-base sm:text-lg lg:text-xl font-bold break-words">
                                             {{ $shipment->vessel_name }}
                                         </h3>
-                                        <div class="flex items-center text-white text-xs bg-red-600 px-3 py-2 rounded-full">
-                                            <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="flex items-center text-white text-xs bg-red-600 px-2.5 py-1.5 rounded-full">
+                                            <svg class="h-2.5 w-2.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            <span class="font-medium">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
+                                            <span class="font-medium text-xs">{{ \Carbon\Carbon::parse($shipment->open_stack)->format('d M Y - H:i') }}</span>
                                         </div>
                                     </div>
                                     <div
-                                        class="flex flex-col sm:flex-row sm:items-center text-white text-sm lg:text-base xl:text-lg">
+                                        class="flex flex-col sm:flex-row sm:items-center text-white text-sm">
                                         <span class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
 
                                         <!-- Mobile Route Indicator -->
-                                        <div class="flex sm:hidden items-center justify-center my-2">
-                                            <div class="flex flex-col items-center space-y-1">
+                                        <div class="flex sm:hidden items-center justify-center my-1.5">
+                                            <div class="flex flex-col items-center space-y-0.5">
+                                                <span class="w-1 h-1 bg-white rounded-full"></span>
+                                                <span class="w-0.5 h-6 bg-white"></span>
+                                                <span class="w-1 h-1 bg-white rounded-full"></span>
                                             </div>
                                         </div>
 
                                         <!-- Desktop Route Indicator -->
-                                        <div class="hidden sm:flex items-center mx-2 lg:mx-3 space-x-1">
-                                            <span class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
-                                            <span class="w-8 lg:w-16 h-0.5 bg-white"></span>
-                                            <span class="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full"></span>
+                                        <div class="hidden sm:flex items-center mx-2 space-x-1">
+                                            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+                                            <span class="w-6 lg:w-8 h-0.5 bg-white"></span>
+                                            <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
                                         </div>
 
                                         <span class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
@@ -343,49 +346,49 @@
                                 </div>
                             </div>
 
-                                <div class="p-3 sm:p-4 lg:p-5">
+                                <div class="p-3 sm:p-4">
                                 <!-- Timeline Section -->
                                 <div
-                                    class="bg-gray-50 rounded-lg p-3 sm:p-4 lg:p-5 mb-4 sm:mb-5 border border-gray-200">
+                                    class="bg-gray-50 rounded-lg p-3 mb-3 border border-gray-200">
                                     <h4
-                                        class="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
+                                        class="text-sm font-bold text-gray-900 mb-2.5 flex items-center">
                                         <i
-                                            class="fas fa-calendar-alt text-blue-800 mr-1.5 sm:mr-2 text-xs sm:text-sm lg:text-base"></i>
-                                        <span class="text-sm sm:text-base lg:text-lg">Voyage Schedule</span>
+                                            class="fas fa-calendar-alt text-blue-800 mr-1.5 text-xs"></i>
+                                        <span class="text-sm">Voyage Schedule</span>
                                     </h4>
 
                                     <div class="relative">
                                         <!-- Desktop Timeline bar -->
                                         <div
-                                            class="hidden sm:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2 z-0 mx-12 lg:mx-16 xl:mx-20">
+                                            class="hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 transform -translate-y-1/2 z-0 mx-8 lg:mx-12">
                                         </div>
 
                                         <!-- Mobile: Vertical Timeline -->
                                         <div
-                                            class="sm:hidden absolute left-6 top-16 bottom-16 w-0.5 bg-gray-200 z-0">
+                                            class="sm:hidden absolute left-5 top-12 bottom-12 w-0.5 bg-gray-200 z-0">
                                         </div>
 
                                         <!-- Mobile: Connect lines between timeline items -->
-                                        <div class="sm:hidden space-y-6 relative">
+                                        <div class="sm:hidden space-y-4 relative">
                                             @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
-                                                <div class="flex items-center space-x-4 relative z-10">
+                                                <div class="flex items-center space-x-3 relative z-10">
                                                     <!-- Timeline dot -->
                                                     <div
-                                                        class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                        class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
                                                         <i
-                                                            class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                            class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                     </div>
 
                                                     <!-- Content -->
                                                     <div
-                                                        class="flex-1 bg-white rounded-lg p-3 shadow-sm border border-gray-200">
-                                                        <p class="text-sm font-bold text-blue-800 mb-1">
+                                                        class="flex-1 bg-white rounded-lg p-2.5 shadow-sm border border-gray-200">
+                                                        <p class="text-xs font-bold text-blue-800 mb-0.5">
                                                             {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                         </p>
-                                                        <p class="font-bold text-gray-800 text-base">
+                                                        <p class="font-bold text-gray-800 text-sm">
                                                             {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                         </p>
-                                                        <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                                        <p class="text-xs text-gray-500 mt-0.5 flex items-center">
                                                             <i class="far fa-clock mr-1"></i>
                                                             {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
                                                         </p>
@@ -395,23 +398,23 @@
                                         </div>
 
                                         <!-- Desktop Timeline -->
-                                        <div class="hidden sm:grid sm:grid-cols-3 gap-6 lg:gap-10 relative">
+                                        <div class="hidden sm:grid sm:grid-cols-3 gap-4 lg:gap-6 relative">
                                             @foreach (['closing_cargo', 'etd', 'eta'] as $index => $timeKey)
-                                                <div class="bg-white rounded-lg p-4 shadow-md border border-gray-200 relative z-10 text-center">
-                                                    <div class="flex items-center justify-center mb-3">
+                                                <div class="bg-white rounded-lg p-3 shadow-sm border border-gray-200 relative z-10 text-center">
+                                                    <div class="flex items-center justify-center mb-2">
                                                         <div
-                                                            class="flex items-center justify-center w-10 h-10 rounded-full shadow-md {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                            class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
                                                             <i
-                                                                class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-sm"></i>
+                                                                class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                         </div>
                                                     </div>
-                                                    <p class="text-sm font-bold text-blue-800 mb-2">
+                                                    <p class="text-xs font-bold text-blue-800 mb-1">
                                                         {{ strtoupper(str_replace('_', ' ', $timeKey)) }}
                                                     </p>
-                                                    <p class="font-bold text-gray-800 text-lg">
+                                                    <p class="font-bold text-gray-800 text-sm">
                                                         {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('d M Y') }}
                                                     </p>
-                                                    <p class="text-sm text-gray-500 mt-1 flex items-center justify-center">
+                                                    <p class="text-xs text-gray-500 mt-0.5 flex items-center justify-center">
                                                         <i class="far fa-clock mr-1"></i>
                                                         {{ \Carbon\Carbon::parse($shipment->$timeKey)->format('H:i') }}
                                                     </p>

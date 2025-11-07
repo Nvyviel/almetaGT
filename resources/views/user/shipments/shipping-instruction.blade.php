@@ -2,134 +2,354 @@
 
 @section('title', 'Shipping Instruction')
 @section('component')
-    <div class="container mx-auto px-4 py-6 max-w-7xl">
-        <!-- Header with improved spacing and visual hierarchy -->
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Shipping Instructions</h1>
-            <a href="{{ route('request-si') }}" wire:navigate
-                class="w-full sm:w-auto px-5 py-2.5 bg-red-600 text-white rounded-full shadow-md hover:bg-red-700 transition duration-200 ease-in-out text-center flex items-center justify-center space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                        clip-rule="evenodd" />
-                </svg>
-                <span>New Instruction</span>
-            </a>
+    <div class="container mx-auto px-4 py-4 max-w-7xl">
+        <!-- Header Section -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-800 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Shipping Instructions</h1>
+                        <p class="text-sm text-gray-600">Manage and track shipping instruction requests</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="text-right">
+                        <p class="text-sm font-medium text-gray-900">{{ $containers->total() ?? count($containers) }} Total</p>
+                        <p class="text-xs text-gray-500">Instructions</p>
+                    </div>
+                    <a href="{{ route('request-si') }}" wire:navigate
+                        class="inline-flex items-center px-4 py-2 bg-blue-800 hover:bg-blue-900 text-white text-sm font-medium rounded-lg">
+                        <i class="fas fa-plus mr-2"></i>
+                        New Request
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <div class="mb-6 overflow-x-auto -mx-4 px-4">
-            <div class="flex flex-nowrap gap-2 justify-start min-w-max py-1">
+        <!-- Filter Tabs -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-md font-semibold text-gray-900">Filter by Status</h3>
+                <span class="text-sm text-gray-500">Quick filters</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
                 <a href="{{ route('shipping-instruction', ['filter' => 'all']) }}" wire:navigate
-                    class="px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap {{ request('filter', 'all') === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                    All
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg {{ request('filter', 'all') === 'all' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                    <i class="fas fa-list mr-2"></i>All Instructions
+                    @php $allCount = $containers->total() ?? count($containers); @endphp
+                    @if($allCount > 0)
+                        <span class="ml-2 px-2 py-0.5 bg-white bg-opacity-20 rounded text-xs">{{ $allCount }}</span>
+                    @endif
                 </a>
                 <a href="{{ route('shipping-instruction', ['filter' => 'requested']) }}" wire:navigate
-                    class="px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap {{ request('filter') === 'requested' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                    Requested
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg {{ request('filter') === 'requested' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                    <i class="fas fa-clock mr-2"></i>Pending
                 </a>
                 <a href="{{ route('shipping-instruction', ['filter' => 'approved']) }}" wire:navigate
-                    class="px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap {{ request('filter') === 'approved' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                    Approved
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg {{ request('filter') === 'approved' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                    <i class="fas fa-check-circle mr-2"></i>Approved
                 </a>
                 <a href="{{ route('shipping-instruction', ['filter' => 'rejected']) }}" wire:navigate
-                    class="px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap {{ request('filter') === 'rejected' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
-                    Rejected
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg {{ request('filter') === 'rejected' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                    <i class="fas fa-times-circle mr-2"></i>Rejected
                 </a>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-4">
+        <!-- Instructions List -->
+        <div class="space-y-3">
             @forelse ($containers as $container)
-                <div class="bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
+                <div class="bg-white border border-gray-200 rounded-lg hover:shadow-sm">
                     <div class="p-4">
-                        <!-- Header: Status dan Instructions ID bersebelahan -->
-                        <div class="flex justify-between items-center mb-3">
+                        <!-- Header Row -->
+                        <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center space-x-3">
+                                <!-- Instruction ID with copy functionality -->
                                 <button
-                                    class="bg-indigo-50 text-indigo-600 px-2 py-1 border text-xs font-semibold rounded space-x-3"
-                                    onclick="navigator.clipboard.writeText('{{ $container->shippingInstructions->first()->instructions_id }}').then(() => { this.innerText = 'Copied!'; setTimeout(() => { this.innerText = '{{ $container->shippingInstructions->first()->instructions_id }}'; }, 1000); });"
-                                    type="button">
-                                    {{ $container->shippingInstructions->first()->instructions_id }}
+                                    class="bg-blue-50 text-blue-800 px-3 py-1 border border-blue-200 text-xs font-medium rounded-lg hover:bg-blue-100"
+                                    onclick="navigator.clipboard.writeText('{{ $container->shippingInstructions->first()->instructions_id }}').then(() => { 
+                                        this.innerHTML = '<i class=\'fas fa-check mr-1\'></i>Copied!'; 
+                                        setTimeout(() => { 
+                                            this.innerHTML = '<i class=\'fas fa-copy mr-1\'></i>{{ $container->shippingInstructions->first()->instructions_id }}'; 
+                                        }, 2000); 
+                                    });"
+                                    type="button"
+                                    title="Click to copy ID">
+                                    <i class="fas fa-copy mr-1"></i>{{ $container->shippingInstructions->first()->instructions_id }}
                                 </button>
+                                
+                                <!-- Status Badge -->
                                 @php
-                                    $statusClasses = [
-                                        'Approved' => 'bg-green-100 text-green-800 border-green-200',
-                                        'Rejected' => 'bg-red-100 text-red-800 border-red-200',
-                                        'Requested' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
+                                    $status = $container->shippingInstructions->first()?->status;
+                                    $statusConfig = [
+                                        'Approved' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'border' => 'border-green-200', 'icon' => 'fas fa-check-circle'],
+                                        'Rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'border' => 'border-red-200', 'icon' => 'fas fa-times-circle'],
+                                        'Requested' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'border' => 'border-yellow-200', 'icon' => 'fas fa-clock'],
                                     ];
-                                    $statusClass =
-                                        $statusClasses[$container->shippingInstructions->first()?->status] ??
-                                        'bg-yellow-100 text-yellow-800 border-yellow-200';
+                                    $config = $statusConfig[$status] ?? $statusConfig['Requested'];
                                 @endphp
-                                <span
-                                    class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $statusClass }} border">
-                                    <span class="mr-1 h-1.5 w-1.5 rounded-full"
-                                        style="background-color: currentColor"></span>
-                                    {{ $container->shippingInstructions->first()?->status }}
+                                <span class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium {{ $config['bg'] }} {{ $config['text'] }} {{ $config['border'] }} border">
+                                    <i class="{{ $config['icon'] }} mr-1"></i>
+                                    {{ $status }}
                                 </span>
                             </div>
 
-                            <span class="bg-gray-100 text-gray-600 px-2 py-1 text-xs font-medium rounded">
-                                {{ $container->quantity }} Instructions
+                            <!-- Container Count -->
+                            <span class="bg-gray-100 text-gray-700 px-2 py-1 text-xs font-medium rounded">
+                                <i class="fas fa-box mr-1"></i>{{ $container->quantity }} Container{{ $container->quantity > 1 ? 's' : '' }}
                             </span>
                         </div>
 
-                        <!-- Content: Industry & Container Info -->
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-semibold text-gray-800 text-base mb-1">
-                                    Consignee
-                                    {{ optional($container->shippingInstructions->first()->consignee)->industry ?? 'No Consignee Industry' }}
+                        <!-- Content Row -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+                            <!-- Consignee Info -->
+                            <div class="lg:col-span-2">
+                                <h3 class="font-semibold text-gray-900 text-sm mb-2">
+                                    <i class="fas fa-building text-blue-800 mr-2"></i>
+                                    {{ optional($container->shippingInstructions->first()->consignee)->name_consignee ?? 'Unknown Consignee' }}
                                 </h3>
-                                <div class="flex items-center space-x-4 text-sm text-gray-500">
-                                    <div class="flex items-center space-x-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                        </svg>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                    <div class="flex items-center text-gray-600">
+                                        <i class="fas fa-industry w-4 text-gray-400 mr-1"></i>
+                                        <span class="truncate">{{ optional($container->shippingInstructions->first()->consignee)->industry ?? 'N/A' }}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <i class="fas fa-cube w-4 text-gray-400 mr-1"></i>
                                         <span>{{ $container->container_type }}</span>
                                     </div>
-                                    <div class="flex items-center space-x-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
+                                    <div class="flex items-center text-gray-600">
+                                        <i class="fas fa-calendar w-4 text-gray-400 mr-1"></i>
                                         <span>{{ \Carbon\Carbon::parse($container->created_at)->format('d M Y') }}</span>
                                     </div>
                                 </div>
+                                @if(optional($container->shippingInstructions->first()->consignee)->city)
+                                <div class="mt-1 flex items-center text-xs text-gray-500">
+                                    <i class="fas fa-map-marker-alt w-4 text-gray-400 mr-1"></i>
+                                    <span>{{ optional($container->shippingInstructions->first()->consignee)->city }}</span>
+                                </div>
+                                @endif
                             </div>
 
-                            <!-- Action Button -->
-                            <a href="{{ route('shipping-instruction-detail', $container->id) }}" wire:navigate
-                                class="inline-flex items-center px-3 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition duration-200">
-                                <span class="mr-1">View Details</span>
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
+                            <!-- Action Buttons -->
+                            <div class="lg:text-right">
+                                <a href="{{ route('shipping-instruction-detail', $container->id) }}" wire:navigate
+                                    class="inline-flex items-center px-4 py-2 bg-blue-800 hover:bg-blue-900 text-white text-sm font-medium rounded-lg">
+                                    <i class="fas fa-eye mr-2"></i>View Details
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             @empty
-                <div class="text-center p-6 bg-gray-50 rounded-lg">
-                    <svg class="mx-auto h-10 w-10 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <h3 class="text-lg font-medium text-gray-700 mb-1">No shipping instructions found</h3>
-                    <p class="text-sm text-gray-500">Try changing your filter criteria or create a new shipping instruction.
-                    </p>
+                <div class="bg-white rounded-lg border border-gray-200 p-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-file-alt text-2xl text-gray-400"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">No Shipping Instructions Found</h3>
+                        <p class="text-sm text-gray-500 mb-6">
+                            @if(request('filter') && request('filter') !== 'all')
+                                No instructions match your current filter. Try changing the filter or create a new instruction.
+                            @else
+                                Get started by creating your first shipping instruction request.
+                            @endif
+                        </p>
+                        <div class="flex items-center justify-center space-x-3">
+                            @if(request('filter') && request('filter') !== 'all')
+                                <a href="{{ route('shipping-instruction') }}" 
+                                   class="px-4 py-2 text-gray-600 hover:text-blue-800 text-sm font-medium">
+                                    <i class="fas fa-filter mr-1"></i>Clear Filters
+                                </a>
+                            @endif
+                            <a href="{{ route('request-si') }}" wire:navigate
+                                class="inline-flex items-center px-6 py-3 bg-blue-800 hover:bg-blue-900 text-white font-medium rounded-lg">
+                                <i class="fas fa-plus mr-2"></i>Create New Instruction
+                            </a>
+                        </div>
+                    </div>
                 </div>
             @endforelse
         </div>
 
-        <!-- Pagination with improved styling -->
-        <div class="mt-10">
-            {{ $containers->links() }}
+        <!-- Pagination -->
+        @if(method_exists($containers, 'hasPages') && $containers->hasPages())
+        <div class="mt-6">
+            <div class="bg-white rounded-lg border border-gray-200 p-4">
+                {{ $containers->links() }}
+            </div>
+        </div>
+        @endif
+    </div>
+
+    <!-- Quick Stats Dashboard -->
+    <div class="fixed bottom-4 right-4 z-40" id="quickStats" style="display: none;">
+        <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-3 max-w-xs">
+            <div class="flex items-center justify-between mb-2">
+                <h4 class="text-sm font-semibold text-gray-900">Quick Stats</h4>
+                <button onclick="document.getElementById('quickStats').style.display='none'" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="text-center">
+                    <div class="font-medium text-gray-900" id="totalCount">{{ $containers->total() ?? count($containers) }}</div>
+                    <div class="text-gray-500">Total</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-medium text-blue-800" id="currentFilter">{{ ucfirst(request('filter', 'all')) }}</div>
+                    <div class="text-gray-500">Filter</div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Remove excessive animations */
+        * {
+            transition-duration: 0.15s;
+        }
+
+        /* Custom focus styles */
+        input:focus, select:focus, button:focus {
+            outline: none;
+        }
+
+        /* Hover effects for cards */
+        .hover\:shadow-sm:hover {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        /* Copy button animation */
+        .copy-success {
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Status badge styles */
+        .status-badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .status-badge:hover::before {
+            left: 100%;
+        }
+
+        /* Filter button enhancement */
+        .filter-active {
+            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+        }
+
+        /* Smooth transitions */
+        .transition-smooth {
+            transition: all 0.15s ease-in-out;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show quick stats after 3 seconds
+            setTimeout(function() {
+                const quickStats = document.getElementById('quickStats');
+                if (quickStats) {
+                    quickStats.style.display = 'block';
+                    quickStats.style.opacity = '0';
+                    quickStats.style.transform = 'translateY(20px)';
+                    quickStats.style.transition = 'all 0.3s ease-out';
+                    
+                    setTimeout(() => {
+                        quickStats.style.opacity = '1';
+                        quickStats.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+            }, 3000);
+
+            // Copy button enhancement
+            document.querySelectorAll('[onclick*="clipboard"]').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    this.classList.add('copy-success');
+                    setTimeout(() => {
+                        this.classList.remove('copy-success');
+                    }, 300);
+                });
+            });
+
+            // Filter button active state enhancement
+            document.querySelectorAll('a[href*="filter"]').forEach(function(filterBtn) {
+                if (filterBtn.classList.contains('bg-blue-800')) {
+                    filterBtn.classList.add('filter-active');
+                }
+            });
+
+            // Add smooth transitions to all interactive elements
+            document.querySelectorAll('button, a, [onclick]').forEach(function(el) {
+                el.classList.add('transition-smooth');
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + N for new instruction
+                if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                    e.preventDefault();
+                    const newBtn = document.querySelector('a[href*="request-si"]');
+                    if (newBtn) newBtn.click();
+                }
+
+                // Number keys for filters
+                if (e.key >= '1' && e.key <= '4') {
+                    const filters = ['all', 'requested', 'approved', 'rejected'];
+                    const filterIndex = parseInt(e.key) - 1;
+                    if (filters[filterIndex]) {
+                        const filterBtn = document.querySelector(`a[href*="filter=${filters[filterIndex]}"]`);
+                        if (filterBtn) filterBtn.click();
+                    }
+                }
+            });
+
+            // Enhanced copy functionality with better UX
+            window.copyToClipboard = function(text, button) {
+                navigator.clipboard.writeText(text).then(function() {
+                    const originalHtml = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check mr-1 text-green-600"></i>Copied!';
+                    button.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
+                    button.classList.remove('bg-blue-50', 'border-blue-200', 'text-blue-800');
+                    
+                    setTimeout(function() {
+                        button.innerHTML = originalHtml;
+                        button.classList.remove('bg-green-50', 'border-green-200', 'text-green-800');
+                        button.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-800');
+                    }, 2000);
+                }).catch(function() {
+                    console.error('Failed to copy text');
+                });
+            };
+        });
+
+        // Auto-refresh data every 30 seconds (optional)
+        // setInterval(function() {
+        //     if (document.hasFocus()) {
+        //         window.location.reload();
+        //     }
+        // }, 30000);
+    </script>
 @endsection

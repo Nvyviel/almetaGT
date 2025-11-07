@@ -18,6 +18,7 @@ require __DIR__ . '/auth.php';
 Route::middleware('accessable')->group(function () {
     Route::get('/', [ShipmentController::class, 'guestFiltering'])->name('landing-page');
     Route::get('/feedback/new', [UnauthenticatedSessionController::class, 'newFeedback'])->name('new-feedback');
+    Route::post('/save-search-data', [ShipmentController::class, 'saveSearchData'])->name('save-search-data');
 });
 
 Route::middleware(['session', 'status'])->group(function () {
@@ -60,7 +61,7 @@ Route::middleware(['session', 'status'])->group(function () {
     });
 
     Route::prefix('/detail')->group(function () {
-        Route::get('/release-order/detail/{id}', [ContainerController::class, 'showDetail'])->name('show-detail');
+        Route::get('/release-order/detail/{id_order}', [ContainerController::class, 'showDetail'])->name('show-detail');
         Route::get('/bills/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
         Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
     });

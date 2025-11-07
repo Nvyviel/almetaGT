@@ -6,6 +6,7 @@ use App\Models\Shipment;
 use App\Models\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 class ShipmentController extends Controller
@@ -133,10 +134,18 @@ class ShipmentController extends Controller
         // Get cities for dropdown
         $fromCities = $this->getFromCities();
 
+        // Get saved search data from session
+        $savedSearchData = [
+            'pol' => session('last_search_pol'),
+            'pod' => session('last_search_pod'),
+            'timestamp' => session('last_search_timestamp')
+        ];
+
         if (empty($pod) || empty($pol)) {
             return view('user.landings.index', [
                 'shipments' => collect(),
-                'fromCities' => $fromCities
+                'fromCities' => $fromCities,
+                'savedSearchData' => $savedSearchData
             ]);
         }
 
@@ -147,7 +156,8 @@ class ShipmentController extends Controller
                 'error' => 'Port of Loading (POL) and Port of Discharge (POD) cannot be the same location. Please select different ports.',
                 'old_pod' => $pod,
                 'old_pol' => $pol,
-                'fromCities' => $fromCities
+                'fromCities' => $fromCities,
+                'savedSearchData' => $savedSearchData
             ]);
         }
 
@@ -155,7 +165,7 @@ class ShipmentController extends Controller
             ->where('from_city', $pol)
             ->get();
 
-        return view('user.landings.index', compact('shipments', 'fromCities'));
+        return view('user.landings.index', compact('shipments', 'fromCities', 'savedSearchData'));
     }
 
     public function dashboardFiltering(Request $request)
@@ -166,10 +176,18 @@ class ShipmentController extends Controller
         // Get cities for dropdown
         $fromCities = $this->getFromCities();
 
+        // Get saved search data from session
+        $savedSearchData = [
+            'pol' => session('last_search_pol'),
+            'pod' => session('last_search_pod'),
+            'timestamp' => session('last_search_timestamp')
+        ];
+
         if (empty($pod) || empty($pol)) {
             return view('user.landings.dashboard', [
                 'shipments' => collect(),
-                'fromCities' => $fromCities
+                'fromCities' => $fromCities,
+                'savedSearchData' => $savedSearchData
             ]);
         }
 
@@ -180,7 +198,8 @@ class ShipmentController extends Controller
                 'error' => 'Port of Loading (POL) and Port of Discharge (POD) cannot be the same location. Please select different ports.',
                 'old_pod' => $pod,
                 'old_pol' => $pol,
-                'fromCities' => $fromCities
+                'fromCities' => $fromCities,
+                'savedSearchData' => $savedSearchData
             ]);
         }
 
@@ -188,7 +207,7 @@ class ShipmentController extends Controller
             ->where('from_city', $pol)
             ->get();
 
-        return view('user.landings.dashboard', compact('shipments', 'fromCities'));
+        return view('user.landings.dashboard', compact('shipments', 'fromCities', 'savedSearchData'));
     }
 
     private function getFromCities()
@@ -305,5 +324,46 @@ class ShipmentController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Container has been canceled successfully');
+    }
+
+    public function saveSearchData(Request $request)
+    {
+        try {
+            // Validate the request
+            $request->validate([
+                'pol' => 'nullable|string|max:255',
+                'pod' => 'nullable|string|max:255',
+                'timestamp' => 'nullable|integer'
+            ]);
+
+            // Save to session for persistence across requests
+            session([
+                'last_search_pol' => $request->pol,
+                'last_search_pod' => $request->pod,
+                'last_search_timestamp' => $request->timestamp ?? now()->timestamp
+            ]);
+
+            // If user is logged in, we can also save to user preferences/database
+            if (Auth::check()) {
+                // You can extend this to save to a user_preferences table if needed
+                Log::info('Search data saved for user: ' . Auth::id(), [
+                    'pol' => $request->pol,
+                    'pod' => $request->pod
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Search data saved successfully'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Error saving search data: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Error saving search data'
+            ], 500);
+        }
     }
 }

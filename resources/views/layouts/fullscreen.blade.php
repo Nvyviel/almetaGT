@@ -5,8 +5,8 @@
             <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('dashboard') }}" wire:navigate>
-                        <img src="{{ asset('assets/img/almeta-global-trilindo.png') }}" alt="Almeta Logo"
-                            class="h-8 md:h-12 w-auto max-w-[210px] object-contain">
+                        <img src="{{ asset('assets/img/Kop Surat Almeta Global Trilindo For Websites (BG Removed).png') }}" alt="Almeta Logo"
+                            class="h-8 md:h-12 w-auto max-w-[230px] object-contain">
                     </a>
                     <div class="hidden md:block border-l border-gray-300 pl-4 text-gray-400 text-sm">
                         Logistics Management
@@ -24,7 +24,7 @@
                                     {{ Auth::user()->company_name }}
                                 </div>
                                 <div class="text-xs text-gray-500">
-                                    {{ Auth::user()->is_admin ? 'Administrator' : 'User' }}
+                                    {{ Auth::user()->is_admin ? 'Administrator' : Auth::user()->name }}
                                 </div>
                             </div>
                             <i class="fas fa-chevron-down text-gray-400 ml-2"></i>

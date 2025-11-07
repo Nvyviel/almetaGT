@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('industry');
             $table->string('name_consignee');
-            $table->enum('city', ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'sampit', 'jakarta', 'kumai', 'samarinda', 'balikpapan', 'berau', 'palu', 'bitung', 'gorontalo', 'ambon']);
+            $table->enum('city', ['Surabaya', 'Pontianak', 'Semarang', 'Banjarmasin', 'Sampit', 'Jakarta', 'Kumai', 'Samarinda', 'Balikpapan', 'Berau', 'Palu', 'Bitung', 'Gorontalo', 'Ambon', 'Makassar', 'Morowali', 'Kendari', 'Pomala', 'Ternate', 'Jayapura', 'Kupang', 'Sorong', 'Manokwari', 'Merauke', 'Bau-Bau', 'Maumere', 'Tual', 'Fak-Fak', 'Bintuni', 'Nabire', 'Serui']);
             $table->string('email')->unique();
             $table->bigInteger('phone_number');
             $table->text('consignee_address');
