@@ -1,13 +1,13 @@
-@extends('layouts.main')
+@extends('layouts.fullscreen')
 
 @section('title', 'Payment Confirmation')
 
 @section('component')
 <div class="min-h-screen bg-gray-50 py-6">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Back Button --}}
         <div class="mb-4">
-            <a href="{{ route('detail-bill', $bill) }}" class="inline-flex items-center text-sm text-blue-800 hover:text-blue-600 font-medium">
+            <a href="{{ route('detail-bill', $bill->bill_id) }}" class="inline-flex items-center text-sm text-blue-800 hover:text-blue-600 font-medium">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -75,7 +75,7 @@
             </div>
 
             {{-- Payment Form --}}
-            <form action="{{ route('bills.confirm-payment', $bill) }}" method="POST" enctype="multipart/form-data" class="px-5 py-5">
+            <form action="{{ route('bills.confirm-payment', $bill->bill_id) }}" method="POST" enctype="multipart/form-data" class="px-5 py-5">
                 @csrf
                 
                 <!-- Error Messages -->
@@ -135,7 +135,12 @@
                                 <div class="flex text-sm text-gray-600">
                                     <label for="upload_confirmation" class="relative cursor-pointer bg-white rounded font-medium text-blue-800 hover:text-blue-600">
                                         <span>Upload a file</span>
-                                        <input id="upload_confirmation" name="upload_confirmation" type="file" accept=".jpg,.jpeg,.png,.pdf" class="sr-only">
+                                        <input id="upload_confirmation" 
+                                               name="upload_confirmation" 
+                                               type="file" 
+                                               accept=".jpg,.jpeg,.png,.pdf" 
+                                               required
+                                               class="sr-only">
                                     </label>
                                     <p class="pl-1">or drag and drop</p>
                                 </div>
@@ -147,6 +152,16 @@
                         @error('upload_confirmation')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
+                        
+                        <!-- File Status Indicator -->
+                        <div id="file-status" class="mt-2 text-sm text-gray-600 hidden">
+                            <span class="inline-flex items-center">
+                                <svg class="w-4 h-4 mr-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                File selected and ready to upload
+                            </span>
+                        </div>
                     </div>
 
                     <!-- Important Notes -->
@@ -162,6 +177,8 @@
                                 <ul class="mt-2 text-sm text-blue-700 list-disc list-inside space-y-1">
                                     <li>Upload clear image or PDF of payment receipt</li>
                                     <li>Amount must match: <strong>Rp {{ number_format($bill->grand_total, 0, ',', '.') }}</strong></li>
+                                    <li>File must be less than 5MB (JPG, PNG, or PDF format)</li>
+                                    <li>Wait for "File selected" message before submitting</li>
                                     <li>Payment will be verified by our team</li>
                                 </ul>
                             </div>
@@ -172,7 +189,7 @@
                 <!-- Submit Button -->
                 <div class="pt-5 border-t border-gray-200 mt-5">
                     <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
-                        <a href="{{ route('detail-bill', $bill) }}" 
+                        <a href="{{ route('detail-bill', $bill->bill_id) }}" 
                            class="inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                             Cancel
                         </a>
@@ -194,10 +211,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('upload_confirmation');
     const dropZone = fileInput.closest('.border-dashed');
+    const originalContent = dropZone.innerHTML;
     
     fileInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
             displaySelectedFile(this.files[0]);
+            // Show file status indicator
+            document.getElementById('file-status').classList.remove('hidden');
         }
     });
     
@@ -223,21 +243,102 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function displaySelectedFile(file) {
         const fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
-        dropZone.innerHTML = `
-            <div class="space-y-2 text-center">
-                <svg class="mx-auto h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div class="text-sm">
-                    <p class="font-medium text-gray-900">${file.name}</p>
-                    <p class="text-gray-500">${fileSize}</p>
-                </div>
-                <button type="button" onclick="location.reload()" class="text-sm text-red-600 hover:text-red-700">
-                    Remove file
-                </button>
+        
+        // Create preview without removing the original input
+        const preview = document.createElement('div');
+        preview.className = 'space-y-2 text-center';
+        preview.innerHTML = `
+            <svg class="mx-auto h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div class="text-sm">
+                <p class="font-medium text-gray-900">${file.name}</p>
+                <p class="text-gray-500">${fileSize}</p>
             </div>
+            <button type="button" onclick="resetFileUpload()" class="text-sm text-red-600 hover:text-red-700">
+                Remove file
+            </button>
         `;
+        
+        // Hide original content and show preview
+        dropZone.innerHTML = '';
+        dropZone.appendChild(preview);
+        
+        // Keep the original input but hidden
+        fileInput.style.display = 'none';
+        dropZone.appendChild(fileInput);
     }
+    
+    window.resetFileUpload = function() {
+        fileInput.value = '';
+        fileInput.style.display = 'block';
+        dropZone.innerHTML = originalContent;
+        
+        // Hide file status indicator
+        document.getElementById('file-status').classList.add('hidden');
+        
+        // Re-attach the input
+        const newFileInput = dropZone.querySelector('#upload_confirmation');
+        if (newFileInput) {
+            newFileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    displaySelectedFile(this.files[0]);
+                    // Show file status indicator
+                    document.getElementById('file-status').classList.remove('hidden');
+                }
+            });
+        }
+    };
+    
+    // Form validation before submit
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const fileInputValue = document.getElementById('upload_confirmation');
+        
+        console.log('Form submission started');
+        console.log('File input element:', fileInputValue);
+        console.log('Files:', fileInputValue ? fileInputValue.files : 'No input found');
+        
+        if (!fileInputValue || !fileInputValue.files || fileInputValue.files.length === 0) {
+            e.preventDefault();
+            alert('Please select a payment confirmation file before submitting.');
+            console.log('Form submission blocked: No file selected');
+            return false;
+        }
+        
+        // Check file size (5MB limit)
+        const file = fileInputValue.files[0];
+        console.log('Selected file:', file.name, 'Size:', file.size, 'Type:', file.type);
+        
+        if (file.size > 5 * 1024 * 1024) {
+            e.preventDefault();
+            alert('File size must be less than 5MB.');
+            console.log('Form submission blocked: File too large');
+            return false;
+        }
+        
+        // Check file type
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+        if (!allowedTypes.includes(file.type)) {
+            e.preventDefault();
+            alert('Please upload only JPG, PNG, or PDF files.');
+            console.log('Form submission blocked: Invalid file type');
+            return false;
+        }
+        
+        console.log('Form validation passed, submitting...');
+        // Show loading state
+        const submitButton = this.querySelector('button[type="submit"]');
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Uploading...
+            `;
+        }
+    });
 });
 </script>
 @endsection

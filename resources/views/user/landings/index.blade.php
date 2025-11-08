@@ -109,6 +109,25 @@
             </div>
         </nav>
 
+        <!-- Feedback Success Alert -->
+        @if (session('feedback_success'))
+            <div id="feedback-success-alert"
+                class="fixed top-20 right-4 z-50 flex items-center justify-between bg-blue-100 border-l-4 border-blue-800 text-blue-800 p-4 rounded-lg shadow-lg max-w-sm"
+                x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)">
+                <div class="flex items-center">
+                    <i class="fas fa-comment-dots mr-3 text-blue-800"></i>
+                    <span class="font-medium text-sm">{{ session('feedback_success') }}</span>
+                </div>
+                <button onclick="document.getElementById('feedback-success-alert').style.display='none'"
+                    class="text-blue-600 hover:text-blue-800 focus:outline-none ml-4 flex-shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        @endif
+
         <!-- Hero Section -->
         <div class="pt-16 md:pt-18 relative min-h-[55vh] sm:min-h-[60vh] lg:min-h-[65vh] flex items-center"
             style="background: linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.8)), url('{{ asset('assets/img/1st-birth-almeta.png') }}'); 
@@ -509,8 +528,8 @@
                 <div class="text-center mb-8 sm:mb-12">
                     <h2
                         class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 flex items-center justify-center gap-3">
-                        <img src="{{ asset('../assets/img/Almeta Logo Website V-1.png') }}" alt="Almeta Logo"
-                            class="h-8 sm:h-12 w-auto">
+                        <img src="{{ asset('../assets/img/Logo Polos Almeta Global Trilindo.png') }}" alt="Almeta Logo"
+                            class="h-20 sm:h-24 w-auto">
                         Company Background
                     </h2>
                     <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">

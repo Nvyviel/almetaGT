@@ -62,14 +62,14 @@ Route::middleware(['session', 'status'])->group(function () {
 
     Route::prefix('/detail')->group(function () {
         Route::get('/release-order/detail/{id_order}', [ContainerController::class, 'showDetail'])->name('show-detail');
-        Route::get('/bills/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
+        Route::get('/bills/{bill_id}', [BillController::class, 'detailBill'])->name('detail-bill');
         Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
     });
 
     Route::prefix('/bills')->group(function () {
-        Route::get('/{bill}/payment-confirmation', [BillController::class, 'showPaymentConfirmation'])->name('bills.payment-confirmation');
-        Route::post('/{bill}/confirm-payment', [BillController::class, 'confirmPayment'])->name('bills.confirm-payment');
-        Route::delete('/{bill}/cancel-payment-confirmation', [BillController::class, 'cancelPaymentConfirmation'])->name('bills.cancel-payment-confirmation');
+        Route::get('/{bill_id}/payment-confirmation', [BillController::class, 'showPaymentConfirmation'])->name('bills.payment-confirmation');
+        Route::post('/{bill_id}/confirm-payment', [BillController::class, 'confirmPayment'])->name('bills.confirm-payment');
+        Route::delete('/{bill_id}/cancel-payment-confirmation', [BillController::class, 'cancelPaymentConfirmation'])->name('bills.cancel-payment-confirmation');
     });
 
     Route::prefix('/book')->group(function () {
@@ -142,8 +142,8 @@ Route::middleware(['session', 'status'])->group(function () {
             // Admin Bills Management Routes
             Route::prefix('/bills')->group(function () {
                 Route::get('/list', [BillController::class, 'adminListBill'])->name('admin.bills.list');
-                Route::post('/{bill}/mark-paid', [BillController::class, 'markAsPaid'])->name('admin.bills.mark-paid');
-                Route::post('/{bill}/mark-unpaid', [BillController::class, 'markAsUnpaid'])->name('admin.bills.mark-unpaid');
+                Route::post('/{bill_id}/mark-paid', [BillController::class, 'markAsPaid'])->name('admin.bills.mark-paid');
+                Route::post('/{bill_id}/mark-unpaid', [BillController::class, 'markAsUnpaid'])->name('admin.bills.mark-unpaid');
             });
         });
     });

@@ -61,6 +61,25 @@
         </div>
     @endif
 
+    <!-- Feedback Success Alert -->
+    @if (session('feedback_success'))
+        <div id="feedback-success-alert"
+            class="fixed top-4 right-4 z-50 flex items-center justify-between bg-blue-100 border-l-4 border-blue-800 text-blue-800 p-4 rounded-lg shadow-lg"
+            x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)">
+            <div class="flex items-center">
+                <i class="fas fa-comment-dots mr-3 text-blue-800"></i>
+                <span class="font-medium">{{ session('feedback_success') }}</span>
+            </div>
+            <button onclick="document.getElementById('feedback-success-alert').style.display='none'"
+                class="text-blue-600 hover:text-blue-800 focus:outline-none ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    @endif
+
     <!-- Search Form Section -->
     <div class="py-6 sm:py-8 lg:py-10">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

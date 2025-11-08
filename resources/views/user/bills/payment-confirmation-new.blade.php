@@ -7,11 +7,11 @@
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Back Button --}}
         <div class="mb-6">
-            <a href="{{ route('detail-bill', $bill) }}" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors">
+y            <a href="{{ route('detail-bill', $bill->bill_id) }}" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Back to Bill Detail
+                Back
             </a>
         </div>
 
@@ -53,7 +53,7 @@
             </div>
 
             {{-- Payment Form --}}
-            <form action="{{ route('bills.confirm-payment', $bill) }}" method="POST" enctype="multipart/form-data" class="px-6 py-6">
+            <form action="{{ route('bills.confirm-payment', $bill->bill_id) }}" method="POST" enctype="multipart/form-data" class="px-6 py-6">
                 @csrf
                 
                 <!-- Error Messages -->
@@ -150,7 +150,7 @@
                 <!-- Submit Button -->
                 <div class="pt-6 border-t border-gray-200 mt-6">
                     <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
-                        <a href="{{ route('detail-bill', $bill) }}" 
+                        <a href="{{ route('detail-bill', $bill->bill_id) }}" 
                            class="inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                             Cancel
                         </a>

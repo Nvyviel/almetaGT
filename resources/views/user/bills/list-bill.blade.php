@@ -130,7 +130,7 @@
 
                         {{-- Right Section: Action Buttons --}}
                         <div class="lg:col-span-3 flex justify-start lg:justify-end space-x-2">
-                            @if ($bill->status === 'Unpaid')
+                            {{-- @if ($bill->status === 'Unpaid')
                                 <form id="payment-form">
                                     @csrf
                                     <button type="button" onclick="payBill({{ $bill->id }})"
@@ -142,9 +142,9 @@
                                         Pay
                                     </button>
                                 </form>
-                            @endif
+                            @endif --}}
 
-                            <a href="{{ route('detail-bill', $bill->id) }}"
+                            <a href="{{ route('detail-bill', $bill->bill_id) }}"
                                 class="inline-flex items-center px-3 py-2 bg-blue-800 hover:bg-blue-900 text-white rounded-lg text-sm font-medium">
                                 <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

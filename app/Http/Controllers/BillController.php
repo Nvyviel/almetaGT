@@ -82,10 +82,12 @@ class BillController extends Controller
         return view('admin.bills.list-bill-admin', compact('bills'));
     }
 
-    public function markAsPaid(Bill $bill)
+    public function markAsPaid($bill_id)
     {
         // Middleware 'admin' sudah memastikan hanya admin yang bisa akses
         try {
+            $bill = Bill::where('bill_id', $bill_id)->firstOrFail();
+            
             $bill->update([
                 'status' => 'Paid'
             ]);
@@ -101,7 +103,7 @@ class BillController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Failed to mark bill as paid', [
-                'bill_id' => $bill->bill_id,
+                'bill_id' => $bill_id,
                 'admin_id' => Auth::id(),
                 'error' => $e->getMessage()
             ]);
@@ -110,11 +112,13 @@ class BillController extends Controller
         }
     }
 
-    public function markAsUnpaid(Bill $bill)
+    public function markAsUnpaid($bill_id)
     {
         // Middleware 'admin' sudah memastikan hanya admin yang bisa akses
 
         try {
+            $bill = Bill::where('bill_id', $bill_id)->firstOrFail();
+            
             // Hapus file konfirmasi jika ada
             if ($bill->upload_confirmation && Storage::disk('public')->exists($bill->upload_confirmation)) {
                 Storage::disk('public')->delete($bill->upload_confirmation);
@@ -137,7 +141,7 @@ class BillController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Failed to mark bill as unpaid', [
-                'bill_id' => $bill->bill_id,
+                'bill_id' => $bill_id,
                 'admin_id' => Auth::id(),
                 'error' => $e->getMessage()
             ]);
@@ -146,9 +150,9 @@ class BillController extends Controller
         }
     }
 
-    public function detailBill(Bill $bill)
+    public function detailBill($bill_id)
     {
-        $bill->load(['user', 'shipment', 'container']);
+        $bill = Bill::where('bill_id', $bill_id)->with(['user', 'shipment', 'container'])->firstOrFail();
 
         $weightRate = ceil($bill->container->weight / 100) * 90000;
 
@@ -159,8 +163,10 @@ class BillController extends Controller
         return view('user.bills.bill-detail', compact('bill', 'weightRate', 'containerTotalRate', 'totalPrice'));
     }
 
-    public function showPaymentConfirmation(Bill $bill)
+    public function showPaymentConfirmation($bill_id)
     {
+        $bill = Bill::where('bill_id', $bill_id)->firstOrFail();
+        
         // Pastikan bill milik user yang login
         if ($bill->user_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this bill.');
@@ -168,15 +174,17 @@ class BillController extends Controller
 
         // Pastikan bill belum dikonfirmasi atau masih unpaid
         if ($bill->status === 'Paid') {
-            return redirect()->route('detail-bill', $bill)
+            return redirect()->route('detail-bill', $bill_id)
                 ->with('error', 'Payment has already been confirmed for this bill.');
         }
 
         return view('user.bills.payment-confirmation', compact('bill'));
     }
 
-    public function confirmPayment(Request $request, Bill $bill)
+    public function confirmPayment(Request $request, $bill_id)
     {
+        $bill = Bill::where('bill_id', $bill_id)->firstOrFail();
+        
         // Pastikan bill milik user yang login
         if ($bill->user_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this bill.');
@@ -184,7 +192,7 @@ class BillController extends Controller
 
         // Pastikan bill belum dikonfirmasi
         if ($bill->status === 'Paid') {
-            return redirect()->route('detail-bill', $bill)
+            return redirect()->route('detail-bill', $bill_id)
                 ->with('error', 'Payment has already been confirmed for this bill.');
         }
 
@@ -226,7 +234,7 @@ class BillController extends Controller
                     'paid_at' => $request->paid_at
                 ]);
 
-                return redirect()->route('detail-bill', $bill)
+                return redirect()->route('detail-bill', $bill_id)
                     ->with('success', 'Payment confirmation has been submitted successfully. Your payment is now under verification.');
             }
 
@@ -243,8 +251,10 @@ class BillController extends Controller
         }
     }
 
-    public function cancelPaymentConfirmation(Bill $bill)
+    public function cancelPaymentConfirmation($bill_id)
     {
+        $bill = Bill::where('bill_id', $bill_id)->firstOrFail();
+        
         // Pastikan bill milik user yang login
         if ($bill->user_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this bill.');
@@ -252,7 +262,7 @@ class BillController extends Controller
 
         // Hanya bisa cancel jika status Under Verification
         if ($bill->status !== 'Under Verification') {
-            return redirect()->route('detail-bill', $bill)
+            return redirect()->route('detail-bill', $bill_id)
                 ->with('error', 'Cannot cancel payment confirmation for this bill.');
         }
 
@@ -275,7 +285,7 @@ class BillController extends Controller
                 'user_id' => Auth::id()
             ]);
 
-            return redirect()->route('detail-bill', $bill)
+            return redirect()->route('detail-bill', $bill_id)
                 ->with('success', 'Payment confirmation has been cancelled successfully.');
 
         } catch (\Exception $e) {

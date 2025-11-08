@@ -4,11 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UnauthenticatedSessionController extends Controller
 {
-    public function newFeedback()
+    public function newFeedback(Request $request)
     {
+        // Simpan URL sebelumnya ke session jika user sudah login
+        if (Auth::check()) {
+            $previousUrl = url()->previous();
+            // Pastikan bukan dari halaman feedback itu sendiri
+            if (!str_contains($previousUrl, '/feedback/new')) {
+                session(['feedback_return_url' => $previousUrl]);
+            }
+        }
+        
         return view('user.others.feedback');
     }
 

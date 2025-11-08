@@ -55,14 +55,19 @@
                     </h3>
                     <div class="flex flex-wrap gap-2">
                         {{-- Admin Status Toggle Button --}}
-                        @if (auth()->user()->id == 1 && $user->status == 'Approved')
+
+                        @if (auth()->user()->id == 1)
                             <form id="adminStatusForm" action="{{ route('isadmin', $user->id) }}" method="POST"
                                 class="inline">
                                 @csrf
-                                <button type="button"
-                                    onclick="confirmAdminStatusChange('{{ $user->name }}', {{ $user->is_admin }})"
-                                    class="inline-flex items-center px-3 py-1 rounded text-sm font-medium
-                                    {{ $user->is_admin ? 'bg-gray-600 text-white hover:bg-gray-700' : 'bg-blue-800 text-white hover:bg-blue-900' }}">
+                                <button type="button" 
+                                    id="adminStatusBtn"
+                                    data-username="{{ $user->name }}"
+                                    data-is-admin="{{ $user->is_admin ? 'true' : 'false' }}"
+                                    onclick="confirmAdminStatusChange('{{ $user->name }}', '{{ $user->is_admin ? 'true' : 'false' }}')"
+                                    class="inline-flex items-center px-3 py-1 rounded text-sm font-medium cursor-pointer z-10 relative
+                                    {{ $user->is_admin ? 'bg-gray-600 text-white hover:bg-gray-700' : 'bg-blue-800 text-white hover:bg-blue-900' }}"
+                                    style="position: relative; z-index: 10; pointer-events: auto;">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -73,13 +78,6 @@
                                     {{ $user->is_admin ? 'Remove Admin' : 'Make Admin' }}
                                 </button>
                             </form>
-                        @elseif (auth()->user()->id == 1 && $user->status != 'Approved')
-                            <div class="inline-flex items-center px-3 py-1 rounded text-sm font-medium bg-gray-100 text-gray-500 border cursor-not-allowed">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                                Admin Actions (Requires Approval)
-                            </div>
                         @endif
 
                         {{-- Approve Button - Only show if user is not Approved --}}
@@ -118,8 +116,8 @@
                             </form>
                         @endif
 
-                        {{-- Warn Button - Show if user is Under Verification --}}
-                        @if ($user->status == 'Under Verification')
+                        {{-- Warn Button - Show if user is Under Verification or Approved --}}
+                        @if ($user->status == 'Under Verification' || $user->status == 'Approved')
                             <form action="{{ route('update-status', $user->id) }}" method="POST" class="inline">
                                 @csrf
                                 <input type="hidden" name="status" value="Warned">
@@ -408,65 +406,240 @@
         </div>
     </div>
 
+    {{-- Custom Status Change Modal --}}
+    <div id="statusChangeModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 items-center justify-center" style="display: none;">
+        <div class="bg-white rounded-xl shadow-2xl transform transition-all duration-300 scale-95 opacity-0 max-w-md w-full mx-4" id="statusChangeModalContent">
+            {{-- Modal Header --}}
+            <div class="rounded-t-xl px-6 py-4" id="statusModalHeader">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center mr-3" id="statusModalIcon">
+                        <!-- Icon will be set dynamically -->
+                    </div>
+                    <h3 class="text-lg font-semibold text-white" id="statusModalTitle">Confirm Action</h3>
+                </div>
+            </div>
+            
+            {{-- Modal Body --}}
+            <div class="px-6 py-6">
+                <p class="text-gray-700 mb-4" id="statusModalText">Are you sure?</p>
+                <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-800">
+                    <div class="text-sm">
+                        <div class="font-medium text-blue-800">User Details:</div>
+                        <div class="text-blue-700 mt-1" id="statusModalUserName"></div>
+                        <div class="text-blue-600 text-xs mt-1" id="statusModalNewStatus"></div>
+                    </div>
+                </div>
+            </div>
+            
+            {{-- Modal Footer --}}
+            <div class="px-6 py-4 bg-gray-50 rounded-b-xl">
+                <div class="flex items-center justify-end space-x-3">
+                    <button onclick="hideStatusChangeModal()" 
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 font-medium transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button onclick="confirmStatusChangeAction()" 
+                            class="px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center" id="statusModalConfirmBtn">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span id="statusModalConfirmText">Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Scripts --}}
     <script>
+        let currentStatusForm = null;
+        
         function confirmStatusChange(form, status, userName) {
-            let title, text, confirmButtonText, confirmButtonColor, icon;
+            currentStatusForm = form;
+            let title, text, confirmButtonText, headerColor, iconColor, iconBg;
             
             switch(status) {
                 case 'Approved':
                     title = 'Approve User?';
                     text = `Are you sure you want to approve ${userName}?`;
                     confirmButtonText = 'Yes, Approve!';
-                    confirmButtonColor = '#1e40af'; // blue-800
-                    icon = 'success';
+                    headerColor = 'bg-blue-800';
+                    iconColor = 'text-white';
+                    iconBg = 'bg-blue-700';
                     break;
                 case 'Under Verification':
                     title = 'Set to Under Verification?';
                     text = `Are you sure you want to set ${userName}'s status to under verification?`;
                     confirmButtonText = 'Yes, Set to Under Verification!';
-                    confirmButtonColor = '#1e40af'; // blue-800
-                    icon = 'question';
+                    headerColor = 'bg-blue-800';
+                    iconColor = 'text-white';
+                    iconBg = 'bg-blue-700';
                     break;
                 case 'Warned':
                     title = 'Warn User?';
                     text = `Are you sure you want to warn ${userName}?`;
                     confirmButtonText = 'Yes, Set Warning!';
-                    confirmButtonColor = '#dc2626'; // red-600
-                    icon = 'warning';
+                    headerColor = 'bg-red-600';
+                    iconColor = 'text-white';
+                    iconBg = 'bg-red-500';
                     break;
                 default:
                     title = 'Confirm Action';
                     text = `Are you sure you want to change ${userName}'s status?`;
                     confirmButtonText = 'Yes, Continue!';
-                    confirmButtonColor = '#1e40af';
-                    icon = 'question';
+                    headerColor = 'bg-blue-800';
+                    iconColor = 'text-white';
+                    iconBg = 'bg-blue-700';
             }
-
-            Swal.fire({
-                title: title,
-                text: text,
-                icon: icon,
-                showCancelButton: true,
-                confirmButtonColor: confirmButtonColor,
-                cancelButtonColor: '#dc2626', // red-600
-                confirmButtonText: confirmButtonText,
-                cancelButtonText: 'Cancel',
-                reverseButtons: true,
-                customClass: {
-                    popup: 'custom-swal-popup',
-                    title: 'custom-swal-title',
-                    content: 'custom-swal-content',
-                    confirmButton: 'custom-swal-confirm',
-                    cancelButton: 'custom-swal-cancel'
-                },
-                buttonsStyling: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
+            
+            // Set modal content
+            document.getElementById('statusModalTitle').textContent = title;
+            document.getElementById('statusModalText').textContent = text;
+            document.getElementById('statusModalUserName').textContent = `User: ${userName}`;
+            document.getElementById('statusModalNewStatus').textContent = `New Status: ${status}`;
+            document.getElementById('statusModalConfirmText').textContent = confirmButtonText;
+            
+            // Set header color
+            const header = document.getElementById('statusModalHeader');
+            header.className = `rounded-t-xl px-6 py-4 ${headerColor}`;
+            
+            // Set icon
+            const iconContainer = document.getElementById('statusModalIcon');
+            iconContainer.className = `w-8 h-8 ${iconBg} rounded-full flex items-center justify-center mr-3`;
+            
+            if (status === 'Approved') {
+                iconContainer.innerHTML = '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+            } else if (status === 'Warned') {
+                iconContainer.innerHTML = '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>';
+            } else {
+                iconContainer.innerHTML = '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            }
+            
+            // Set button color
+            const confirmBtn = document.getElementById('statusModalConfirmBtn');
+            if (status === 'Warned') {
+                confirmBtn.className = 'px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center';
+            } else {
+                confirmBtn.className = 'px-4 py-2 bg-blue-800 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center';
+            }
+            
+            showStatusChangeModal();
         }
+        
+        function showStatusChangeModal() {
+            const modal = document.getElementById('statusChangeModal');
+            const content = document.getElementById('statusChangeModalContent');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        function hideStatusChangeModal() {
+            const modal = document.getElementById('statusChangeModal');
+            const content = document.getElementById('statusChangeModalContent');
+            
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function confirmStatusChangeAction() {
+            if (currentStatusForm) {
+                const confirmButton = event.target;
+                const originalText = confirmButton.innerHTML;
+                confirmButton.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Processing...';
+                confirmButton.disabled = true;
+                
+                currentStatusForm.submit();
+            }
+        }
+
+        // Admin Status Management Functions
+        function confirmAdminStatusChange(userName, isAdmin) {
+            console.log('confirmAdminStatusChange called with:', userName, isAdmin);
+            console.log('About to show modal...');
+            
+            // Convert string parameter to boolean
+            const isCurrentlyAdmin = isAdmin === 'true';
+            const newStatus = isCurrentlyAdmin ? 'User' : 'Administrator';
+            const confirmText = `Yes, make ${newStatus}!`;
+            
+            console.log('isCurrentlyAdmin:', isCurrentlyAdmin, 'newStatus:', newStatus);
+            
+            // Check if elements exist before setting content
+            const statusText = document.getElementById('adminStatusText');
+            const userName_el = document.getElementById('adminStatusUserName');
+            const newRole_el = document.getElementById('adminStatusNewRole');
+            const confirmText_el = document.getElementById('adminStatusConfirmText');
+            
+            console.log('Elements found:', {
+                statusText, 
+                userName_el, 
+                newRole_el, 
+                confirmText_el
+            });
+            
+            if (statusText) statusText.innerHTML = `Do you want to change <strong>${userName}</strong>'s status to <strong>${newStatus}</strong>?`;
+            if (userName_el) userName_el.textContent = `User: ${userName}`;
+            if (newRole_el) newRole_el.textContent = `New Role: ${newStatus}`;
+            if (confirmText_el) confirmText_el.textContent = confirmText;
+            
+            showAdminStatusModal();
+        }
+        
+        function showAdminStatusModal() {
+            console.log('showAdminStatusModal called');
+            const modal = document.getElementById('adminStatusModal');
+            const content = document.getElementById('adminStatusModalContent');
+            console.log('Modal element:', modal);
+            console.log('Content element:', content);
+            
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        function hideAdminStatusModal() {
+            const modal = document.getElementById('adminStatusModal');
+            const content = document.getElementById('adminStatusModalContent');
+            
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function confirmAdminStatusAction() {
+            const confirmButton = event.target;
+            confirmButton.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Processing...';
+            confirmButton.disabled = true;
+            
+            document.getElementById('adminStatusForm').submit();
+        }
+
+        // Add event listener as backup for admin button
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminBtn = document.getElementById('adminStatusBtn');
+            if (adminBtn) {
+                adminBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Admin button clicked via event listener');
+                    const userName = this.dataset.username;
+                    const isAdmin = this.dataset.isAdmin;
+                    confirmAdminStatusChange(userName, isAdmin);
+                });
+            }
+        });
     </script>
 
     <script>
@@ -497,37 +670,53 @@
                 closeModal();
             }
         });
-
-        function confirmAdminStatusChange(userName, isAdmin) {
-            const newStatus = isAdmin ? 'User' : 'Administrator';
-            const icon = isAdmin ? 'warning' : 'question';
-            const confirmButtonColor = '#1e40af'; // blue-800
-
-            Swal.fire({
-                title: 'Change Admin Status?',
-                html: `Do you want to change <strong>${userName}</strong>'s status to <strong>${newStatus}</strong>?`,
-                icon: icon,
-                showCancelButton: true,
-                confirmButtonColor: confirmButtonColor,
-                cancelButtonColor: '#dc2626', // red-600
-                confirmButtonText: `Yes, make ${newStatus}!`,
-                cancelButtonText: 'Cancel',
-                reverseButtons: true,
-                customClass: {
-                    popup: 'custom-swal-popup',
-                    title: 'custom-swal-title',
-                    content: 'custom-swal-content',
-                    confirmButton: 'custom-swal-confirm',
-                    cancelButton: 'custom-swal-cancel'
-                },
-                buttonsStyling: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('adminStatusForm').submit();
-                }
-            });
-        }
     </script>
+
+    {{-- Custom Admin Status Modal --}}
+    <div id="adminStatusModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 items-center justify-center" style="display: none;">
+            <div class="bg-white rounded-xl shadow-2xl transform transition-all duration-300 scale-95 opacity-0 max-w-md w-full mx-4" id="adminStatusModalContent">
+                {{-- Modal Header --}}
+                <div class="bg-blue-800 rounded-t-xl px-6 py-4">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white">Change Admin Status?</h3>
+                    </div>
+                </div>
+                
+                {{-- Modal Body --}}
+                <div class="px-6 py-6">
+                    <p class="text-gray-700 mb-4" id="adminStatusText">Do you want to change this user's admin status?</p>
+                    <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-800">
+                        <div class="text-sm">
+                            <div class="font-medium text-blue-800">Status Change:</div>
+                            <div class="text-blue-700 mt-1" id="adminStatusUserName"></div>
+                            <div class="text-blue-600 text-xs mt-1" id="adminStatusNewRole"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                {{-- Modal Footer --}}
+                <div class="px-6 py-4 bg-gray-50 rounded-b-xl">
+                    <div class="flex items-center justify-end space-x-3">
+                        <button onclick="hideAdminStatusModal()" 
+                                class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 font-medium transition-colors duration-200">
+                            Cancel
+                        </button>
+                        <button onclick="confirmAdminStatusAction()" 
+                                class="px-4 py-2 bg-blue-800 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            <span id="adminStatusConfirmText">Confirm</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     {{-- Custom SweetAlert Styling --}}
     <style>
@@ -619,6 +808,25 @@
         .swal2-actions {
             gap: 8px !important;
             margin-top: 1.5rem !important;
+        }
+        
+        /* Custom modal animations */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
+        }
+        
+        /* Loading animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-spin {
+            animation: spin 1s linear infinite;
         }
     </style>
 

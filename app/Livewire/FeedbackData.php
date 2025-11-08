@@ -77,16 +77,15 @@ class FeedbackData extends Component
 
             // Set success data
             $this->submittedFeedbackId = $feedback->feedback_id;
-            $this->showSuccess = true;
             
-            // Reset form setelah berhasil
-            $this->resetForm();
-
-            // Flash message untuk backup
+            // Flash message untuk feedback
             session()->flash('success', 'Feedback submitted successfully! ID: ' . $this->submittedFeedbackId);
 
-            // Auto-hide success message setelah 5 detik
-            $this->dispatch('auto-hide-success');
+            // Determine redirect URL based on authentication status
+            $redirectUrl = $this->getRedirectUrl();
+            
+            // Redirect with success message
+            return redirect()->to($redirectUrl)->with('feedback_success', 'Thank you for your feedback! ID: ' . $this->submittedFeedbackId);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -167,6 +166,22 @@ class FeedbackData extends Component
         $this->resetForm();
         $this->showSuccess = false;
         $this->submittedFeedbackId = '';
+    }
+
+    private function getRedirectUrl(): string
+    {
+        if (Auth::check()) {
+            // Jika user sudah login, kembali ke halaman sebelumnya atau dashboard
+            $returnUrl = session('feedback_return_url', route('dashboard'));
+            
+            // Clear the session data
+            session()->forget('feedback_return_url');
+            
+            return $returnUrl;
+        } else {
+            // Jika user belum login, kembali ke landing page
+            return route('landing-page');
+        }
     }
 
     public function render()
