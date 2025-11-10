@@ -1,39 +1,5 @@
 <div class="container mx-auto px-4 py-4">
-    @php
-        $fromCities = [
-            'Surabaya',
-            'Pontianak',
-            'Semarang',
-            'Banjarmasin',
-            'Sampit',
-            'Jakarta',
-            'Kumai',
-            'Samarinda',
-            'Balikpapan',
-            'Berau',
-            'Palu',
-            'Bitung',
-            'Gorontalo',
-            'Ambon',
-            'Makassar',
-            'Morowali',
-            'Kendari',
-            'Pomala',
-            'Ternate',
-            'Jayapura',
-            'Kupang',
-            'Sorong',
-            'Manokwari',
-            'Merauke',
-            'Bau-Bau',
-            'Maumere',
-            'Tual',
-            'Fak-Fak',
-            'Bintuni',
-            'Nabire',
-            'Serui',
-        ];
-    @endphp
+
 
     <!-- Header Section -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
@@ -113,8 +79,8 @@
                         <select wire:model="city"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800">
                             <option value="">Select City</option>
-                            @foreach ($fromCities as $city)
-                                <option value="{{ $city }}">{{ strtoupper($city) }}</option>
+                            @foreach ($availableCities as $cityOption)
+                                <option value="{{ $cityOption }}">{{ strtoupper($cityOption) }}</option>
                             @endforeach
                         </select>
                         @error('city')

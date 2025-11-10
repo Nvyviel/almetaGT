@@ -6,6 +6,7 @@ use App\Models\Consignee;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class ConsigneeManagement extends Component
 {
@@ -21,20 +22,37 @@ class ConsigneeManagement extends Component
     public $npwp;
 
     protected $cities = [
-        'surabaya',
-        'pontianak',
-        'semarang',
-        'banjarmasin',
-        'sampit',
-        'jakarta',
-        'kumai',
-        'samarinda',
-        'balikpapan',
-        'berau',
-        'palu',
-        'bitung',
-        'gorontalo',
-        'ambon'
+        'Surabaya',
+        'Pontianak',
+        'Semarang',
+        'Banjarmasin',
+        'Sampit',
+        'Jakarta',
+        'Kumai',
+        'Samarinda',
+        'Balikpapan',
+        'Berau',
+        'Palu',
+        'Bitung',
+        'Gorontalo',
+        'Ambon',
+        'Makassar',
+        'Morowali',
+        'Kendari',
+        'Pomala',
+        'Ternate',
+        'Jayapura',
+        'Kupang',
+        'Sorong',
+        'Manokwari',
+        'Merauke',
+        'Bau-Bau',
+        'Maumere',
+        'Tual',
+        'Fak-Fak',
+        'Bintuni',
+        'Nabire',
+        'Serui'
     ];
 
     // Aturan validasi
@@ -81,6 +99,17 @@ class ConsigneeManagement extends Component
 
         try {
             Log::info('Starting validation.');
+            Log::info('Form data:', [
+                'industry' => $this->industry,
+                'name_consignee' => $this->name_consignee,
+                'email' => $this->email,
+                'city' => $this->city,
+                'phone_number' => $this->phone_number,
+                'consignee_address' => $this->consignee_address,
+                'ktp' => $this->ktp ? 'File uploaded' : 'No file',
+                'npwp' => $this->npwp ? 'File uploaded' : 'No file'
+            ]);
+            Log::info('Valid cities:', $this->cities);
 
             $this->validate();
 
@@ -109,7 +138,7 @@ class ConsigneeManagement extends Component
             Log::info('Creating consignee...');
 
             $consignee = Consignee::create([
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'industry' => $this->industry,
                 'name_consignee' => $this->name_consignee,
                 'email' => $this->email,
@@ -147,8 +176,15 @@ class ConsigneeManagement extends Component
         }
     }
 
+    public function getCitiesProperty()
+    {
+        return $this->cities;
+    }
+
     public function render()
     {
-        return view('livewire.consignee-management');
+        return view('livewire.consignee-management', [
+            'availableCities' => $this->cities
+        ]);
     }
 }
