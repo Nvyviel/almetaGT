@@ -2,7 +2,7 @@
     <!-- Notifications -->
     @if (session()->has('success'))
         <div class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md">
-            <div class="bg-blue-800 text-white px-6 py-4 rounded-lg shadow-lg flex ite                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">s-center">
+            <div class="bg-green-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
@@ -374,7 +374,7 @@
                                                 <div class="flex items-center space-x-3 relative z-10">
                                                     <!-- Timeline dot -->
                                                     <div
-                                                        class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                        class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm {{ $index == 0 ? 'bg-green-100 text-green-800' : ($index == 1 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white') }}">
                                                         <i
                                                             class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                     </div>
@@ -403,7 +403,7 @@
                                                 <div class="bg-white rounded-lg p-3 shadow-sm border border-gray-200 relative z-10 text-center">
                                                     <div class="flex items-center justify-center mb-2">
                                                         <div
-                                                            class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                            class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm {{ $index == 0 ? 'bg-green-100 text-green-800' : ($index == 1 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white') }}">
                                                             <i
                                                                 class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                         </div>

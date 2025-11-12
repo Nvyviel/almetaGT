@@ -5,13 +5,19 @@ namespace App\Models;
 use App\Models\Container;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Shipment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    /**
+     * The attributes that should be mutated to dates.
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * The "booted" method of the model.

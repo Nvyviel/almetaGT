@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('freight_20');
             $table->unsignedBigInteger('freight_40');
             $table->timestamps();
+            $table->softDeletes(); // Add soft delete functionality
         });
     }
 

@@ -52,11 +52,11 @@
 
         {{-- Flash Messages --}}
         @if (session()->has('success'))
-            <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded flex items-center">
-                <div class="w-4 h-4 bg-blue-800 rounded-full mr-3 flex items-center justify-center">
+            <div class="mb-4 p-3 bg-green-50 border border-green-200 rounded flex items-center">
+                <div class="w-4 h-4 bg-green-600 rounded-full mr-3 flex items-center justify-center">
                     <i class="fas fa-check text-white text-xs"></i>
                 </div>
-                <p class="text-sm text-blue-900">{{ session('success') }}</p>
+                <p class="text-sm text-green-700">{{ session('success') }}</p>
             </div>
         @endif
 

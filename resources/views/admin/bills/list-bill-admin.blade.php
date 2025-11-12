@@ -31,8 +31,8 @@
 
     {{-- Compact Flash Messages --}}
     @if(session('success'))
-        <div class="mb-4 bg-blue-50 border-l-4 border-blue-800 p-3">
-            <p class="text-sm font-medium text-blue-800">✓ {{ session('success') }}</p>
+        <div class="mb-4 bg-green-50 border-l-4 border-green-500 p-3">
+            <p class="text-sm font-medium text-green-700">✓ {{ session('success') }}</p>
         </div>
     @endif
 

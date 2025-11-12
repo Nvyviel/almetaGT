@@ -64,14 +64,14 @@
     <!-- Feedback Success Alert -->
     @if (session('feedback_success'))
         <div id="feedback-success-alert"
-            class="fixed top-4 right-4 z-50 flex items-center justify-between bg-blue-100 border-l-4 border-blue-800 text-blue-800 p-4 rounded-lg shadow-lg"
+            class="fixed top-4 right-4 z-50 flex items-center justify-between bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg"
             x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)">
             <div class="flex items-center">
-                <i class="fas fa-comment-dots mr-3 text-blue-800"></i>
+                <i class="fas fa-comment-dots mr-3 text-green-700"></i>
                 <span class="font-medium">{{ session('feedback_success') }}</span>
             </div>
             <button onclick="document.getElementById('feedback-success-alert').style.display='none'"
-                class="text-blue-600 hover:text-blue-800 focus:outline-none ml-4">
+                class="text-green-600 hover:text-green-800 focus:outline-none ml-4">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -335,7 +335,7 @@
                                                         <div class="flex items-center space-x-3 relative z-10">
                                                             <!-- Timeline dot -->
                                                             <div
-                                                                class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                                class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm {{ $index == 0 ? 'bg-green-100 text-green-800' : ($index == 1 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white') }}">
                                                                 <i
                                                                     class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                             </div>
@@ -365,7 +365,7 @@
                                                             class="bg-white rounded-lg p-3 shadow-sm border border-gray-200 relative z-10 hover:border-blue-800 transition-colors text-center">
                                                             <div class="flex items-center justify-center mb-2">
                                                                 <div
-                                                                    class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm {{ $index == 0 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white' }}">
+                                                                    class="flex items-center justify-center w-8 h-8 rounded-full shadow-sm {{ $index == 0 ? 'bg-green-100 text-green-800' : ($index == 1 ? 'bg-blue-100 text-blue-800' : 'bg-blue-800 text-white') }}">
                                                                     <i
                                                                         class="fas {{ $index == 0 ? 'fa-ship' : ($index == 1 ? 'fa-anchor' : 'fa-check') }} text-xs"></i>
                                                                 </div>
@@ -389,15 +389,38 @@
 
                                         <!-- Book Now Button -->
                                         <div class="flex justify-center">
-                                            <a href="{{ route('booking', ['shipment_id' => $shipment->shipment_id]) }}"
-                                                class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-blue-800 text-white font-semibold text-sm rounded-md hover:bg-blue-700 transition-colors shadow-md">
-                                                <span class="mr-2">Book</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </a>
+                                            @php
+                                                $now = \Carbon\Carbon::now();
+                                                $closingCargo = \Carbon\Carbon::parse($shipment->closing_cargo);
+                                                $hoursUntilClosing = $now->diffInHours($closingCargo, false);
+                                                $isBookingDisabled = $hoursUntilClosing <= 3;
+                                            @endphp
+                                            
+                                            @if($isBookingDisabled)
+                                                <div class="w-full sm:w-auto" data-closing-cargo="{{ $shipment->closing_cargo }}">
+                                                    <button disabled
+                                                        class="w-full inline-flex items-center justify-center px-5 py-2.5 bg-gray-400 text-gray-200 font-semibold text-sm rounded-md cursor-not-allowed shadow-md">
+                                                        <span class="mr-2">Booking Closed</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            @else
+                                                <div class="w-full sm:w-auto" data-closing-cargo="{{ $shipment->closing_cargo }}">
+                                                    <a href="{{ route('booking', ['shipment_id' => $shipment->shipment_id]) }}"
+                                                        class="w-full inline-flex items-center justify-center px-5 py-2.5 bg-blue-800 text-white font-semibold text-sm rounded-md hover:bg-blue-700 transition-colors shadow-md">
+                                                        <span class="mr-2">Book Now</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -684,6 +707,45 @@
                 event.target.submit();
             }, 300);
         }
+
+        // Function to update booking button status in real-time
+        function updateBookingButtons() {
+            const bookingButtons = document.querySelectorAll('[data-closing-cargo]');
+            const now = new Date();
+
+            bookingButtons.forEach(container => {
+                const closingCargoTime = new Date(container.getAttribute('data-closing-cargo'));
+                const hoursUntilClosing = (closingCargoTime - now) / (1000 * 60 * 60);
+                
+                const button = container.querySelector('a, button');
+                
+                if (hoursUntilClosing <= 3) {
+                    // Disable booking
+                    if (button.tagName === 'A') {
+                        // Convert link to disabled button
+                        const newButton = document.createElement('button');
+                        newButton.disabled = true;
+                        newButton.className = 'w-full inline-flex items-center justify-center px-5 py-2.5 bg-gray-400 text-gray-200 font-semibold text-sm rounded-md cursor-not-allowed shadow-md';
+                        newButton.innerHTML = `
+                            <span class="mr-2">Booking Closed</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        `;
+                        button.replaceWith(newButton);
+                    }
+                }
+            });
+        }
+
+        // Update booking buttons every minute
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial update
+            updateBookingButtons();
+            
+            // Update every minute
+            setInterval(updateBookingButtons, 60000);
+        });
     </script>
 
     <style>

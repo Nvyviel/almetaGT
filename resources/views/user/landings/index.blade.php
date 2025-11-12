@@ -111,14 +111,14 @@
         <!-- Feedback Success Alert -->
         @if (session('feedback_success'))
             <div id="feedback-success-alert"
-                class="fixed top-20 right-4 z-50 flex items-center justify-between bg-blue-100 border-l-4 border-blue-800 text-blue-800 p-4 rounded-lg shadow-lg max-w-sm"
+                class="fixed top-20 right-4 z-50 flex items-center justify-between bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg max-w-sm"
                 x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)">
                 <div class="flex items-center">
-                    <i class="fas fa-comment-dots mr-3 text-blue-800"></i>
+                    <i class="fas fa-comment-dots mr-3 text-green-700"></i>
                     <span class="font-medium text-sm">{{ session('feedback_success') }}</span>
                 </div>
                 <button onclick="document.getElementById('feedback-success-alert').style.display='none'"
-                    class="text-blue-600 hover:text-blue-800 focus:outline-none ml-4 flex-shrink-0">
+                    class="text-green-600 hover:text-green-800 focus:outline-none ml-4 flex-shrink-0">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">

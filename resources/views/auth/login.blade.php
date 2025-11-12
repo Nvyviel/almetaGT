@@ -24,7 +24,7 @@
 
     @if (session('success'))
         <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
-            <div class="mx-4 bg-blue-50 border border-blue-800 text-blue-800 px-4 py-3 rounded shadow">
+            <div class="mx-4 bg-green-50 border border-green-500 text-green-700 px-4 py-3 rounded shadow">
                 <div class="flex items-center justify-between">
                     <div>
                         <span class="text-sm">
@@ -32,7 +32,7 @@
                         </span>
                     </div>
                     <button onclick="this.parentElement.remove()"
-                        class="text-blue-800 hover:text-black focus:outline-none">
+                        class="text-green-700 hover:text-green-900 focus:outline-none">
                         <span class="text-xl">&times;</span>
                     </button>
                 </div>

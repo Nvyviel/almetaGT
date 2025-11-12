@@ -271,33 +271,6 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <!-- Closing Cargo -->
-                            <div class="space-y-1">
-                                <label for="closing_cargo" class="block text-gray-800 font-semibold text-sm">Closing Cargo</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                    <input type="datetime-local" name="closing_cargo" id="closing_cargo"
-                                        value="{{ old('closing_cargo', date('Y-m-d\TH:i', strtotime($shipment->closing_cargo))) }}"
-                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white @error('closing_cargo') border-red-600 ring-red-600 @enderror">
-                                </div>
-                                @error('closing_cargo')
-                                    <p class="text-xs text-red-600 flex items-center mt-0.5">
-                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-
                             <!-- Open Stack -->
                             <div class="space-y-1">
                                 <label for="open_stack" class="block text-gray-800 font-semibold text-sm">Open Stack</label>
@@ -314,6 +287,33 @@
                                         class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white @error('open_stack') border-red-600 ring-red-600 @enderror">
                                 </div>
                                 @error('open_stack')
+                                    <p class="text-xs text-red-600 flex items-center mt-0.5">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+
+                            <!-- Closing Cargo -->
+                            <div class="space-y-1">
+                                <label for="closing_cargo" class="block text-gray-800 font-semibold text-sm">Closing Cargo</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <input type="datetime-local" name="closing_cargo" id="closing_cargo"
+                                        value="{{ old('closing_cargo', date('Y-m-d\TH:i', strtotime($shipment->closing_cargo))) }}"
+                                        class="w-full pl-10 pr-3 py-3 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white @error('closing_cargo') border-red-600 ring-red-600 @enderror">
+                                </div>
+                                @error('closing_cargo')
                                     <p class="text-xs text-red-600 flex items-center mt-0.5">
                                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd"

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Rules\ChronologicalDates;
 
 class ShipmentController extends Controller
 {
@@ -66,14 +67,21 @@ class ShipmentController extends Controller
     public function update(Request $request, Shipment $shipment)
     {
         try {
+            $dates = [
+                'open_stack' => $request->open_stack,
+                'closing_cargo' => $request->closing_cargo,
+                'etd' => $request->etd,
+                'eta' => $request->eta
+            ];
+            
             $request->validate([
                 'from_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
                 'to_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
                 'vessel_name' => 'required|string',
-                'closing_cargo' => 'required|date',
-                'open_stack' => 'required|date',
-                'etd' => 'required|date',
-                'eta' => 'required|date',
+                'open_stack' => ['required', 'date', new ChronologicalDates($dates)],
+                'closing_cargo' => ['required', 'date', new ChronologicalDates($dates)],
+                'etd' => ['required', 'date', new ChronologicalDates($dates)],
+                'eta' => ['required', 'date', new ChronologicalDates($dates)],
                 'freight_20' => 'required|numeric|min:0',
                 'freight_40' => 'required|numeric|min:0'
             ]);
@@ -161,8 +169,10 @@ class ShipmentController extends Controller
             ]);
         }
 
+        // Only get shipments that are not soft deleted
         $shipments = Shipment::where('to_city', $pod)
             ->where('from_city', $pol)
+            ->whereNull('deleted_at')  // Exclude soft deleted shipments
             ->get();
 
         return view('user.landings.index', compact('shipments', 'fromCities', 'savedSearchData'));
@@ -203,8 +213,10 @@ class ShipmentController extends Controller
             ]);
         }
 
+        // Only get shipments that are not soft deleted
         $shipments = Shipment::where('to_city', $pod)
             ->where('from_city', $pol)
+            ->whereNull('deleted_at')  // Exclude soft deleted shipments
             ->get();
 
         return view('user.landings.dashboard', compact('shipments', 'fromCities', 'savedSearchData'));
