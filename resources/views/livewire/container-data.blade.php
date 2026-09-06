@@ -1,34 +1,8 @@
 <div class=" py-4 px-3 sm:px-6">
     <form wire:submit.prevent="addContainer" class="max-w-6xl mx-auto space-y-4">
-        <!-- Error Messages -->
-        @if ($errors->any())
-            <div class="mb-4 rounded-lg bg-red-50 border border-red-600 p-3">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <div class="ml-3 flex-1">
-                        <h3 class="text-sm font-medium text-red-700">Please fix the following errors:</h3>
-                        <div class="mt-1 text-sm text-red-600">
-                            <ul class="list-disc space-y-1 pl-5">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
         <!-- Hidden Fields -->
         <input type="hidden" wire:model="shipment_id" name="shipment_id" value="{{ $shipmentId }}">
         <input type="hidden" wire:model="user_id" name="user_id" value="{{ $userId }}">
-        <input type="hidden" name="is_danger" value="No">
 
         <!-- Shipment Information Section -->
         <div
@@ -224,7 +198,7 @@
                         <label class="flex items-center space-x-2">
                             <input type="checkbox" wire:model="is_danger" id="is_danger"
                                 class="rounded border-gray-300 text-red-600 focus:ring-red-600 h-4 w-4"
-                                value="Yes" @if ($is_danger === 'Yes') checked @endif>
+                                value="Yes">
                             <span class="text-sm font-medium text-black">This shipment contains dangerous
                                 goods</span>
                         </label>

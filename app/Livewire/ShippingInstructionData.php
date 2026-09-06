@@ -8,7 +8,6 @@ use App\Models\Shipment;
 use App\Models\ShippingInstruction;
 use App\Models\Consignee;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class ShippingInstructionData extends Component
 {
@@ -44,7 +43,7 @@ class ShippingInstructionData extends Component
 
             $instructionId = $letters . $numbers;
 
-            $exists = ShippingInstruction::where('instructions_id', $instructionId)->exists();
+            $exists = ShippingInstruction::where('si_id', $instructionId)->exists();
         } while ($exists);
 
         return $instructionId;
@@ -52,14 +51,9 @@ class ShippingInstructionData extends Component
 
     protected function loadConsignees()
     {
-        $this->consignees = Consignee::select(
-            'id',
-            'name_consignee',
-            'industry',
-            'city',
-            'email',
-            'phone_number',
-            'consignee_address'
+        $this->consignees = Consignee::selectRaw(
+            'id, consignee_name AS name_consignee, industry, city,
+             consignee_email AS email, consignee_phone AS phone_number, consignee_address'
         )
             ->where('user_id', $this->user->id)
             ->get();
@@ -126,7 +120,7 @@ class ShippingInstructionData extends Component
                 ->select('id', 'id_order', 'container_type', 'quantity', 'weight')
                 ->get();
 
-            if ($this->containers->isEmpty()) {
+            if (count($this->containers) === 0) {
                 session()->flash('info', 'No available approved containers for this shipment.');
             }
         } else {
@@ -167,7 +161,7 @@ class ShippingInstructionData extends Component
         $containerCount = count($this->container_numbers);
 
         for ($i = 0; $i < $containerCount; $i++) {
-            $rules["container_numbers.$i"] = 'required|string|max:255';
+            $rules["container_numbers.$i"] = 'required|string|max:12';
             $rules["seal_numbers.$i"] = 'required|string|max:255';
             $rules["container_notes.$i"] = 'nullable|string|max:255';
         }
@@ -198,10 +192,9 @@ class ShippingInstructionData extends Component
         }
 
         try {
-            // Generate SATU instructions_id untuk seluruh container dalam order ini
-            $instructionsId = $this->generateInstructionId();
             $createdCount = 0;
             $quantity = $container->quantity;
+            $consignee = Consignee::findOrFail($this->consignee_id);
 
             for ($i = 0; $i < $quantity; $i++) {
                 // Pastikan data ada di index ini
@@ -213,16 +206,28 @@ class ShippingInstructionData extends Component
                 $sealNumber = $this->seal_numbers[$i] ?? '';
                 $note = $this->container_notes[$i] ?? null;
 
+                $instructionsId = $this->generateInstructionId();
+
                 ShippingInstruction::create([
-                    'instructions_id' => $instructionsId,
+                    'si_id' => $instructionsId,
                     'user_id' => $this->user->id,
                     'shipment_id' => $this->shipment_id,
                     'container_id' => $this->container_id,
                     'consignee_id' => $this->consignee_id,
-                    'no_container' => $containerNumber,
-                    'no_seal' => $sealNumber,
-                    'note' => $note,
-                    'status' => 'Requested'
+                    'shipper_name' => $consignee->name_consignee,
+                    'shipper_address' => $consignee->consignee_address,
+                    'shipper_phone' => $consignee->phone_number,
+                    'shipper_email' => $consignee->email,
+                    'description_of_goods' => $container->commodity,
+                    'gross_weight' => $container->weight,
+                    'net_weight' => $container->weight,
+                    'measurement' => 0,
+                    'packages' => $container->quantity,
+                    'package_type' => $container->container_type,
+                    'marks_and_numbers' => $containerNumber,
+                    'special_instructions' => trim('Seal: ' . $sealNumber . ($note ? ' | ' . $note : '')),
+                    'status' => 'Submitted',
+                    'submitted_at' => now(),
                 ]);
 
                 $createdCount++;
@@ -244,7 +249,7 @@ class ShippingInstructionData extends Component
                 'container_notes'
             ]);
 
-            session()->flash('success', "Shipping Instruction has been approved and document uploaded successfully");
+            session()->flash('success', 'Shipping Instruction berhasil dikirim untuk approval.');
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to create Shipping Instruction: ' . $e->getMessage());
         }

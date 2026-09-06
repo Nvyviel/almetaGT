@@ -11,6 +11,21 @@ class Consignee extends Model
 
     protected $guarded = [];
 
+    public function getNameConsigneeAttribute($value)
+    {
+        return $value ?? ($this->attributes['consignee_name'] ?? null);
+    }
+
+    public function getEmailAttribute($value)
+    {
+        return $value ?? ($this->attributes['consignee_email'] ?? null);
+    }
+
+    public function getPhoneNumberAttribute($value)
+    {
+        return $value ?? ($this->attributes['consignee_phone'] ?? null);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

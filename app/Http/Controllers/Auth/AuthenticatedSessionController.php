@@ -126,6 +126,11 @@ class AuthenticatedSessionController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $user = User::findOrFail($id);
+
+        if ($request->input('status') === 'Warned' && Auth::id() === $user->id) {
+            return redirect()->back()->with('error', 'Admin tidak dapat memperingatkan akun sendiri.');
+        }
+
         $user->status = $request->status;
         $user->save();
 

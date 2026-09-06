@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Consignee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ConsigneeController extends Controller
 {
     public function index()
     {
-        $consignees = Consignee::where('user_id', auth()->id())->paginate(10);
+        $consignees = Consignee::where('user_id', Auth::id())->paginate(10);
         return view('user.consignees.consignee', compact('consignees'));
     }
 
@@ -27,17 +28,22 @@ class ConsigneeController extends Controller
         $validated = $request->validate([
             'industry' => 'required|string|max:255',
             'name_consignee' => 'required|string|max:255',
-            'email' => 'required|email|unique:consignees,email,' . $id,
-            'city' => 'required|string|max:255|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon',
+            'email' => 'required|email|unique:consignees,consignee_email,' . $id,
+            'city' => 'required|string|max:255',
             'phone_number' => 'required|numeric',
             'consignee_address' => 'required|string',
-            'ktp_consignee' => 'nullable|digits_between:1,20',
-            'npwp_consignee' => 'nullable|digits_between:1,20'
         ]);
 
         $consignee = Consignee::findOrFail($id);
 
-        $consignee->update($validated);
+        $consignee->update([
+            'industry' => $validated['industry'],
+            'city' => $validated['city'],
+            'consignee_name' => $validated['name_consignee'],
+            'consignee_email' => $validated['email'],
+            'consignee_phone' => $validated['phone_number'],
+            'consignee_address' => $validated['consignee_address'],
+        ]);
 
         return redirect()->route('consignee')
             ->with('success', 'Data consignee berhasil diperbarui');
@@ -48,11 +54,8 @@ class ConsigneeController extends Controller
     {
         $consignee = Consignee::findOrFail($id);
 
-        if ($consignee->ktp_consignee) {
-            Storage::delete('public/' . $consignee->ktp_consignee);
-        }
-        if ($consignee->npwp_consignee) {
-            Storage::delete('public/' . $consignee->npwp_consignee);
+        if ($consignee->consignee_id) {
+            Storage::disk('public')->deleteDirectory('consignee/' . $consignee->consignee_id);
         }
 
         $consignee->delete();

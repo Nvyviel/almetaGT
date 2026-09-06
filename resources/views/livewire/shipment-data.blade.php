@@ -86,9 +86,10 @@
                                 <i class="fa-solid fa-ship text-gray-400 text-sm"></i>
                             </div>
                             <input type="text" wire:model.defer="vessel_name" id="vessel_name"
-                                class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white"
+                                class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white {{ $errors->has('vessel_name') ? 'border-red-500' : 'border-gray-200' }}"
                                 placeholder="Enter vessel name" style="text-transform: uppercase;">
                         </div>
+                        @error('vessel_name') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Rates Section -->
@@ -110,9 +111,10 @@
                                         <span class="text-gray-500 font-medium text-sm">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_20"
-                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input {{ $errors->has('freight_20') ? 'border-red-500' : 'border-gray-200' }}"
                                         placeholder="Enter base rate" data-format="currency" onfocus="this.select()">
                                 </div>
+                                @error('freight_20') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                             </div>
                             <div class="space-y-1">
                                 <label class="block text-gray-700 font-medium text-sm">Freight 40 (IDR)</label>
@@ -121,9 +123,10 @@
                                         <span class="text-gray-500 font-medium text-sm">Rp</span>
                                     </div>
                                     <input type="text" wire:model.defer="freight_40"
-                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input"
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white freight-input {{ $errors->has('freight_40') ? 'border-red-500' : 'border-gray-200' }}"
                                         placeholder="Enter container rate" data-format="currency" onfocus="this.select()">
                                 </div>
+                                @error('freight_40') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
@@ -150,8 +153,9 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="open_stack"
-                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white {{ $errors->has('open_stack') ? 'border-red-500' : 'border-gray-200' }}">
                                 </div>
+                                @error('open_stack') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                             </div>
                             <div class="space-y-1">
                                 <label class="block text-gray-700 font-medium text-sm">Closing Cargo</label>
@@ -163,8 +167,9 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="closing_cargo"
-                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white {{ $errors->has('closing_cargo') ? 'border-red-500' : 'border-gray-200' }}">
                                 </div>
+                                @error('closing_cargo') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                             </div>
                             <div class="space-y-1">
                                 <label class="block text-gray-700 font-medium text-sm">ETD</label>
@@ -176,8 +181,9 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="etd"
-                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white {{ $errors->has('etd') ? 'border-red-500' : 'border-gray-200' }}">
                                 </div>
+                                @error('etd') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                             </div>
                             <div class="space-y-1">
                                 <label class="block text-gray-700 font-medium text-sm">ETA</label>
@@ -189,8 +195,9 @@
                                         </svg>
                                     </div>
                                     <input type="datetime-local" wire:model.defer="eta"
-                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white">
+                                        class="w-full pl-10 pr-3 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white {{ $errors->has('eta') ? 'border-red-500' : 'border-gray-200' }}">
                                 </div>
+                                @error('eta') <p class="text-xs font-medium text-red-600">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
@@ -217,7 +224,7 @@
                                         </svg>
                                     </div>
                                     <select wire:model.defer="from_city"
-                                        class="w-full pl-10 pr-8 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
+                                        class="w-full pl-10 pr-8 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none {{ $errors->has('from_city') ? 'border-red-500' : 'border-gray-200' }}">
                                         <option value="">Select Port of Loading</option>
                                         @php
                                             $sortedCitiesPOL = collect($cities)->sort()->values();
@@ -227,6 +234,14 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @error('from_city')
+                                    <p class="mt-1 flex items-center text-xs font-medium text-red-600">
+                                        <svg class="mr-1 h-3 w-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div class="space-y-1">
                                 <label class="block text-gray-700 font-medium text-sm">Port of Discharge (POD)</label>
@@ -238,7 +253,7 @@
                                         </svg>
                                     </div>
                                     <select wire:model.defer="to_city"
-                                        class="w-full pl-10 pr-8 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none">
+                                        class="w-full pl-10 pr-8 py-2 text-sm border-2 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-blue-800 bg-gray-50 focus:bg-white appearance-none {{ $errors->has('to_city') ? 'border-red-500' : 'border-gray-200' }}">
                                         <option value="">Select Port of Discharge</option>
                                         @php
                                             $sortedCitiesPOD = collect($cities)->sort()->values();
@@ -248,6 +263,14 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @error('to_city')
+                                    <p class="mt-1 flex items-center text-xs font-medium text-red-600">
+                                        <svg class="mr-1 h-3 w-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                         </div>
                     </div>

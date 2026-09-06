@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ConsigneeManagement extends Component
 {
@@ -61,12 +62,12 @@ class ConsigneeManagement extends Component
         return [
             'industry' => 'required|string',
             'name_consignee' => 'required|string',
-            'email' => 'required|email|unique:consignees,email',
+            'email' => 'required|email|unique:consignees,consignee_email',
             'city' => 'required|string|in:' . implode(',', $this->cities),
             'phone_number' => 'required|numeric',
             'consignee_address' => 'required|string',
-            'ktp' => 'required|image|max:2048',
-            'npwp' => 'required|image|max:2048'
+            'ktp' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'npwp' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ];
     }
 
@@ -85,10 +86,12 @@ class ConsigneeManagement extends Component
             'phone_number.numeric' => 'Nomor telepon harus berupa angka.',
             'consignee_address.required' => 'Alamat consignee wajib diisi.',
             'ktp.required' => 'File KTP wajib diunggah.',
-            'ktp.image' => 'File KTP harus berupa gambar.',
+            'ktp.file' => 'File KTP tidak valid.',
+            'ktp.mimes' => 'File KTP harus berformat JPG, JPEG, PNG, atau PDF.',
             'ktp.max' => 'Ukuran file KTP maksimal 2MB.',
             'npwp.required' => 'File NPWP wajib diunggah.',
-            'npwp.image' => 'File NPWP harus berupa gambar.',
+            'npwp.file' => 'File NPWP tidak valid.',
+            'npwp.mimes' => 'File NPWP harus berformat JPG, JPEG, PNG, atau PDF.',
             'npwp.max' => 'Ukuran file NPWP maksimal 2MB.',
         ];
     }
@@ -120,11 +123,13 @@ class ConsigneeManagement extends Component
                 return;
             }
 
-            // Upload files
+            $consigneeId = $this->generateConsigneeId();
+
+            // Store documents under the generated legacy consignee ID.
             Log::info('Uploading files...');
             try {
-                $ktpPath = $this->ktp->store('consignee/ktp', 'public');
-                $npwpPath = $this->npwp->store('consignee/npwp', 'public');
+                $ktpPath = $this->ktp->storeAs("consignee/{$consigneeId}", 'ktp.' . $this->ktp->getClientOriginalExtension(), 'public');
+                $npwpPath = $this->npwp->storeAs("consignee/{$consigneeId}", 'npwp.' . $this->npwp->getClientOriginalExtension(), 'public');
 
                 Log::info('All files uploaded successfully');
                 Log::info('KTP Path: ' . $ktpPath);
@@ -139,14 +144,13 @@ class ConsigneeManagement extends Component
 
             $consignee = Consignee::create([
                 'user_id' => Auth::id(),
+                'consignee_id' => $consigneeId,
                 'industry' => $this->industry,
-                'name_consignee' => $this->name_consignee,
-                'email' => $this->email,
                 'city' => $this->city,
-                'phone_number' => $this->phone_number,
+                'consignee_name' => $this->name_consignee,
+                'consignee_email' => $this->email,
+                'consignee_phone' => $this->phone_number,
                 'consignee_address' => $this->consignee_address,
-                'ktp' => $ktpPath,
-                'npwp' => $npwpPath,
             ]);
 
             Log::info('Consignee created with ID: ' . $consignee->id);
@@ -169,11 +173,20 @@ class ConsigneeManagement extends Component
             return redirect()->route('consignee');
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Validation failed: ' . json_encode($e->errors()));
-            // Livewire akan otomatis menampilkan error validasi
+            throw $e;
         } catch (\Exception $e) {
             Log::error('Error in ConsigneeManagement store function: ' . $e->getMessage());
-            session()->flash('error', 'Terjadi kesalahan. Silakan coba lagi.');
+            session()->flash('error', 'Data Consignee gagal disimpan. Periksa kembali data dan format file KTP/NPWP.');
         }
+    }
+
+    protected function generateConsigneeId(): string
+    {
+        do {
+            $consigneeId = 'CG' . strtoupper(Str::random(8));
+        } while (Consignee::where('consignee_id', $consigneeId)->exists());
+
+        return $consigneeId;
     }
 
     public function getCitiesProperty()

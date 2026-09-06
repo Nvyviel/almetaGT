@@ -117,7 +117,7 @@
                         @endif
 
                         {{-- Warn Button - Show if user is Under Verification or Approved --}}
-                        @if ($user->status == 'Under Verification' || $user->status == 'Approved')
+                        @if (($user->status == 'Under Verification' || $user->status == 'Approved') && auth()->id() !== $user->id)
                             <form action="{{ route('update-status', $user->id) }}" method="POST" class="inline">
                                 @csrf
                                 <input type="hidden" name="status" value="Warned">
@@ -530,7 +530,7 @@
             const modal = document.getElementById('statusChangeModal');
             const content = document.getElementById('statusChangeModalContent');
             
-            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
             setTimeout(() => {
                 content.classList.remove('scale-95', 'opacity-0');
                 content.classList.add('scale-100', 'opacity-100');
@@ -545,7 +545,7 @@
             content.classList.add('scale-95', 'opacity-0');
             
             setTimeout(() => {
-                modal.classList.add('hidden');
+                modal.style.display = 'none';
             }, 300);
         }
 

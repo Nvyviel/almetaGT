@@ -89,16 +89,17 @@
                         <span>Select Consignee *</span>
                     </label>
                     <select wire:model.live="consignee_id" id="consignee_id"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 text-sm @error('consignee_id') border-red-600 ring-red-600/20 @enderror">
+                        class="w-full px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 text-sm {{ $errors->has('consignee_id') ? 'border-red-600 ring-red-600/20' : 'border border-gray-300' }}">
                         <option value="">Choose a Consignee</option>
                         @foreach ($consignees as $consignee)
                             <option value="{{ $consignee->id }}">{{ $consignee->name_consignee }}</option>
                         @endforeach
                     </select>
                     @error('consignee_id')
-                        <span class="text-red-600 text-sm flex items-center mt-1">
-                            <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
-                        </span>
+                        <div class="mt-2 flex items-start gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                            <i class="fas fa-exclamation-circle mt-0.5 flex-shrink-0"></i>
+                            <span>{{ $message }}</span>
+                        </div>
                     @enderror
                 </div>
 
@@ -205,7 +206,7 @@
                                     </label>
                                     <input type="text" wire:model="container_numbers.{{ $index }}"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800/20 focus:border-blue-800 text-sm @error("container_numbers.{$index}") border-red-600 ring-red-600/20 @enderror"
-                                        placeholder="Enter container number">
+                                        placeholder="Enter container number" maxlength="12">
                                     @error("container_numbers.{$index}")
                                         <span class="text-red-600 text-sm flex items-center mt-1">
                                             <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
@@ -282,16 +283,15 @@
                     @endif
                 </div>
                 
-                <button type="submit"
+                <button type="submit" wire:loading.attr="disabled"
                     class="w-full py-3 px-6 rounded-lg flex items-center justify-center text-sm font-medium
-                    {{ $container_id && count($container_numbers) > 0 ? 'bg-blue-800 hover:bg-blue-900 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed' }}"
-                    {{ !$container_id || count($container_numbers) == 0 ? 'disabled' : '' }}>
+                    {{ $container_id && count($container_numbers) > 0 ? 'bg-blue-800 hover:bg-blue-900 text-white' : 'bg-gray-500 hover:bg-gray-600 text-white' }}">
                     @if ($container_id && count($container_numbers) > 0)
                         <i class="fas fa-paper-plane mr-2"></i>
                         Create Shipping Instructions
                     @else
-                        <i class="fas fa-lock mr-2"></i>
-                        Complete Form to Submit
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Validate Required Fields
                     @endif
                 </button>
             </div>

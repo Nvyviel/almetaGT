@@ -7,6 +7,8 @@ use App\Models\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Rules\ChronologicalDates;
 
@@ -75,7 +77,15 @@ class ShipmentController extends Controller
             ];
             
             $request->validate([
-                'from_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
+                'from_city' => [
+                    'required',
+                    'in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
+                    function ($attribute, $value, $fail) use ($request) {
+                        if (strcasecmp(trim($value), trim((string) $request->input('to_city'))) === 0) {
+                            $fail('POL dan POD tidak boleh berada di kota yang sama.');
+                        }
+                    },
+                ],
                 'to_city' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon,makassar,morowali,kendari,pomala,ternate,jayapura,kupang,sorong,manokwari,merauke,bau-bau,maumere,tual,fak-fak,bintuni,nabire,serui',
                 'vessel_name' => 'required|string',
                 'open_stack' => ['required', 'date', new ChronologicalDates($dates)],
@@ -105,6 +115,8 @@ class ShipmentController extends Controller
             return redirect()->route('create-shipment')
                 ->with('success', 'Data shipment berhasil diperbarui');
                 
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (\Illuminate\Database\QueryException $e) {
             Log::error('Database error updating shipment: ' . $e->getMessage());
             return redirect()->back()
@@ -304,9 +316,15 @@ class ShipmentController extends Controller
     {
         $container = Container::findOrFail($id);
 
-        request()->validate([
+        $validator = Validator::make(request()->all(), [
             'pdf_ro' => 'required|mimes:pdf|max:10240', // max 10MB
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors(['pdf_ro.' . $id => $validator->errors()->first('pdf_ro')])
+                ->withInput();
+        }
 
         if (request()->hasFile('pdf_ro')) {
             // Generate unique filename
@@ -321,7 +339,7 @@ class ShipmentController extends Controller
                 'status' => 'Approved'
             ]);
 
-            return redirect()->back()->with('success', 'Release Order has been approved and document uploaded successfully');
+            return redirect()->back()->with('success', 'PDF Release Order untuk order ' . $container->id_order . ' berhasil diupload dan order disetujui.');
         }
 
         return redirect()->back()->with('error', 'Please upload the Release Order PDF before approving');

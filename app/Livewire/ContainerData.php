@@ -19,7 +19,7 @@ class ContainerData extends Component
     public $commodity;
     public $weight;
     public $notes;
-    public $is_danger = "No";
+    public $is_danger = false;
     public $shipment_id;
     public $user_id;
 
@@ -32,7 +32,7 @@ class ContainerData extends Component
         'commodity' => 'required',
         'weight' => 'required|numeric',
         'notes' => 'nullable|string',
-        'is_danger' => 'in:Yes,No',
+        'is_danger' => 'boolean',
                     'shipment_id' => 'required|exists:shipments,shipment_id',
         'user_id' => 'required|exists:users,id',
     ];
@@ -48,7 +48,7 @@ class ContainerData extends Component
         'weight.required' => 'The weight field is required.',
         'weight.numeric' => 'The weight must be a number.',
         'notes.string' => 'The notes must be a valid string.',
-        'is_danger.in' => 'The is danger field must be either Yes or No.',
+        'is_danger.boolean' => 'The is danger field must be either enabled or disabled.',
         'shipment_id.required' => 'The shipment ID is required.',
         'shipment_id.exists' => 'The selected shipment ID is invalid.',
         'user_id.required' => 'The user ID is required.',
@@ -57,14 +57,14 @@ class ContainerData extends Component
 
     public function mount(Request $request)
     {
-        $this->is_danger = "No";
+        $this->is_danger = false;
         $this->shipment_id = $request->input('shipment_id');
         $this->user_id = $request->input('user_id') ?? Auth::id();
     }
 
     public function updatedIsDanger($value)
     {
-        $this->is_danger = $value ? 'Yes' : 'No';
+        $this->is_danger = $value === 'Yes' || $value === true;
     }
 
     public function generateUniqueOrderId()
@@ -89,7 +89,7 @@ class ContainerData extends Component
             'commodity' => 'required',
             'weight' => 'required|numeric',
             'notes' => 'nullable|string',
-            'is_danger' => 'in:Yes,No',
+            'is_danger' => 'boolean',
             'shipment_id' => 'required|exists:shipments,shipment_id',
             'user_id' => 'required|exists:users,id',
         ], [
@@ -103,12 +103,14 @@ class ContainerData extends Component
             'weight.required' => 'The weight field is required.',
             'weight.numeric' => 'The weight must be a number.',
             'notes.string' => 'The notes must be a valid string.',
-            'is_danger.in' => 'The is danger field must be either Yes or No.',
+            'is_danger.boolean' => 'The is danger field must be either enabled or disabled.',
             'shipment_id.required' => 'The shipment ID is required.',
             'shipment_id.exists' => 'The selected shipment ID is invalid.',
             'user_id.required' => 'The user ID is required.',
             'user_id.exists' => 'The selected user ID is invalid.',
         ]);
+
+        $validated['is_danger'] = $this->is_danger ? 'Yes' : 'No';
         
         try {
             // Find the shipment by shipment_id and get its primary key

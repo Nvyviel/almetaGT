@@ -40,6 +40,25 @@
                 </div>
             @endif
 
+            @if (session('error') || request()->boolean('needs_consignee'))
+                <div class="mb-6 overflow-hidden rounded-xl border border-red-200 bg-gradient-to-r from-red-50 to-white shadow-sm">
+                    <div class="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                        <div class="flex items-start gap-3">
+                            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-sm font-bold text-red-900">Consignee diperlukan</h2>
+                                <p class="mt-1 max-w-2xl text-sm leading-relaxed text-red-800">
+                                    {{ session('error') ?? 'Anda belum memiliki Consignee. Buat minimal satu Consignee sebelum mengajukan Shipping Instruction.' }}
+                                    Data consignee akan digunakan untuk melengkapi Shipping Instruction Anda.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Consignees Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 @forelse($consignees as $consignee)

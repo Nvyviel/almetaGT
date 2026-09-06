@@ -104,7 +104,7 @@
                 @endphp
 
                 @forelse($groupedInstructions as $orderId => $instructions)
-                    <div class="bg-white border border-gray-200 rounded-lg">
+                    <div class="si-order-card bg-white border border-gray-200 rounded-lg">
                         <div class="p-4">
                             <!-- Header Row -->
                             <div class="flex items-center justify-between mb-3">
@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="flex items-center text-gray-600">
                                             <i class="fas fa-user w-4 text-blue-800 mr-1"></i>
-                                            <span>{{ $instructions->first()->consignee->name ?? 'N/A' }}</span>
+                                            <span>{{ $instructions->first()->consignee->consignee_name ?? 'N/A' }}</span>
                                         </div>
                                     </div>
                                     @if($instructions->first()->notes ?? null)
@@ -178,22 +178,26 @@
 
                             <!-- Upload Section -->
                             <div class="bg-gray-50 rounded-lg p-3 mb-3">
-                                <div x-data="{ fileChosen: false }">
+                                <div x-data="{ fileChosen: false, fileName: '' }">
                                     <h4 class="text-sm font-semibold text-gray-800 mb-2 flex items-center">
                                         <i class="fas fa-file-signature text-blue-800 mr-2"></i>
                                         Upload Shipping Instruction Document
                                     </h4>
-                                    <label class="flex flex-col items-center justify-center px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 @error('si_file') border-red-600 @enderror">
-                                        <input type="file" name="si_file" id="si_file" class="sr-only" accept=".pdf" x-on:change="fileChosen = true" required>
+                                    <label class="flex flex-col items-center justify-center px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100 {{ $errors->has('si_file.' . $instructions->first()->id) ? 'border-red-600' : 'border-gray-300' }}">
+                                        <input type="file" name="si_file" id="si_file_{{ $instructions->first()->id }}" form="approve-si-{{ $instructions->first()->id }}" class="sr-only" accept=".pdf" x-on:change="fileChosen = true; fileName = $event.target.files[0]?.name || ''" required>
                                         <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-1"></i>
                                         <span class="text-sm text-gray-600">Choose PDF file or drag here</span>
                                         <p class="text-xs text-gray-500">Max 10MB</p>
                                     </label>
-                                    <div x-show="fileChosen" class="mt-2 p-2 bg-blue-50 rounded text-xs" style="display: none;">
-                                        <i class="fas fa-check-circle text-blue-800 mr-1"></i>
-                                        <span class="text-blue-800">File selected</span>
+                                    <div x-show="fileChosen" class="mt-2 flex items-center gap-2 rounded border border-blue-200 bg-blue-50 p-2 text-xs" style="display: none;">
+                                        <i class="fas fa-file-pdf text-red-600"></i>
+                                        <div class="min-w-0 flex-1">
+                                            <p class="font-semibold text-blue-900">PDF Shipping Instruction selected</p>
+                                            <p class="truncate text-blue-700" x-text="fileName"></p>
+                                        </div>
+                                        <i class="fas fa-check-circle text-green-600"></i>
                                     </div>
-                                    @error('si_file')
+                                    @error('si_file.' . $instructions->first()->id)
                                         <p class="mt-2 text-xs text-red-600">
                                             <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
                                         </p>
@@ -203,10 +207,9 @@
 
                             <!-- Action Buttons -->
                             <div class="flex flex-col sm:flex-row gap-2">
-                                <form action="{{ route('approved-si', $instructions->first()->id) }}" method="POST" class="flex-1" enctype="multipart/form-data">
+                                <form id="approve-si-{{ $instructions->first()->id }}" action="{{ route('approved-si', $instructions->first()->id) }}" method="POST" class="flex-1" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
-                                    <input type="file" name="si_file" id="approve_si_file" class="hidden" accept=".pdf">
                                     <button type="submit" class="w-full flex items-center justify-center px-4 py-2 bg-blue-800 hover:bg-blue-900 text-white text-sm font-medium rounded-lg transition-colors duration-150">
                                         <i class="fas fa-check mr-2"></i>Approve Instruction
                                     </button>
@@ -314,23 +317,4 @@
         </div>
     @endif
 
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // File selection handler
-            const fileInput = document.getElementById('si_file');
-            const approveInput = document.getElementById('approve_si_file');
-            
-            if (fileInput && approveInput) {
-                fileInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const dataTransfer = new DataTransfer();
-                        dataTransfer.items.add(file);
-                        approveInput.files = dataTransfer.files;
-                    }
-                });
-            }
-        });
-    </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Shipment;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class ShipmentData extends Component
 {
@@ -75,8 +76,18 @@ class ShipmentData extends Component
         'serui',
     ];
 
-    protected $rules = [
-        'from_city' => 'required|string',
+    protected function rules()
+    {
+        return [
+        'from_city' => [
+            'required',
+            'string',
+            function ($attribute, $value, $fail) {
+                if (strcasecmp(trim($value), trim((string) $this->to_city)) === 0) {
+                    $fail('POL and POD cannot be the same city.');
+                }
+            },
+        ],
         'to_city' => 'required|string',
         'vessel_name' => 'required|string|max:255',
         'closing_cargo' => 'required|date',
@@ -85,7 +96,8 @@ class ShipmentData extends Component
         'eta' => 'required|date|after:etd',
         'freight_20' => 'required|numeric|min:0',
         'freight_40' => 'required|numeric|min:0',
-    ];
+        ];
+    }
 
     protected $messages = [
         'from_city.required' => 'Port of Loading is required',
@@ -125,6 +137,8 @@ class ShipmentData extends Component
 
             // Show success message
             session()->flash('success', 'Shipment schedule created successfully!');
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (\Exception $e) {
             Log::error('Error creating shipment: ' . $e->getMessage());
             session()->flash('error', 'Failed to create shipment schedule. Please try again.');
@@ -193,6 +207,8 @@ class ShipmentData extends Component
 
             session()->flash('success', 'Shipment updated successfully');
             return redirect()->route('dashboard-admin');
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (\Exception $e) {
             Log::error('Error updating shipment: ' . $e->getMessage());
             session()->flash('error', 'Failed to update shipment. Please try again.');

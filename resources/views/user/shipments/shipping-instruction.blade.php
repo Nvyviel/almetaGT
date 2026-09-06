@@ -20,7 +20,7 @@
                         <p class="text-sm font-medium text-gray-900">{{ $containers->total() ?? count($containers) }} Total</p>
                         <p class="text-xs text-gray-500">Instructions</p>
                     </div>
-                    <a href="{{ route('request-si') }}" wire:navigate
+                    <a href="{{ $hasConsignee ? route('request-si') : route('consignee', ['needs_consignee' => 1]) }}" wire:navigate
                         class="inline-flex items-center px-4 py-2 bg-blue-800 hover:bg-blue-900 text-white text-sm font-medium rounded-lg">
                         <i class="fas fa-plus mr-2"></i>
                         New Request
@@ -87,6 +87,7 @@
                                     $statusConfig = [
                                         'Approved' => ['bg' => 'bg-green-100', 'text' => 'text-green-800', 'border' => 'border-green-200', 'icon' => 'fas fa-check-circle'],
                                         'Rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'border' => 'border-red-200', 'icon' => 'fas fa-times-circle'],
+                                        'Submitted' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'border' => 'border-yellow-200', 'icon' => 'fas fa-clock'],
                                         'Requested' => ['bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'border' => 'border-yellow-200', 'icon' => 'fas fa-clock'],
                                     ];
                                     $config = $statusConfig[$status] ?? $statusConfig['Requested'];
@@ -164,7 +165,7 @@
                                     <i class="fas fa-filter mr-1"></i>Clear Filters
                                 </a>
                             @endif
-                            <a href="{{ route('request-si') }}" wire:navigate
+                            <a href="{{ $hasConsignee ? route('request-si') : route('consignee', ['needs_consignee' => 1]) }}" wire:navigate
                                 class="inline-flex items-center px-6 py-3 bg-blue-800 hover:bg-blue-900 text-white font-medium rounded-lg">
                                 <i class="fas fa-plus mr-2"></i>Create New Instruction
                             </a>

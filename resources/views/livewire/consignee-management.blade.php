@@ -158,11 +158,11 @@
                                     <label for="ktp" class="cursor-pointer">
                                         <span class="text-sm text-blue-800 font-medium hover:text-blue-900">Choose KTP
                                             file</span>
-                                        <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG up to 2MB</p>
+                                        <p class="text-xs text-gray-500 mt-1">JPG, JPEG, PNG, PDF up to 2MB</p>
                                     </label>
                                 </div>
                             @endif
-                            <input id="ktp" wire:model="ktp" type="file" class="sr-only" accept="image/*">
+                            <input id="ktp" wire:model="ktp" type="file" class="sr-only" accept="image/*,.pdf">
                         </div>
                         @error('ktp')
                             <span class="text-red-600 text-sm flex items-center mt-1">
@@ -201,12 +201,12 @@
                                     <label for="npwp" class="cursor-pointer">
                                         <span class="text-sm text-blue-800 font-medium hover:text-blue-900">Choose NPWP
                                             file</span>
-                                        <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG up to 2MB</p>
+                                        <p class="text-xs text-gray-500 mt-1">JPG, JPEG, PNG, PDF up to 2MB</p>
                                     </label>
                                 </div>
                             @endif
                             <input id="npwp" wire:model="npwp" type="file" class="sr-only"
-                                accept="image/*">
+                                accept="image/*,.pdf">
                         </div>
                         @error('npwp')
                             <span class="text-red-600 text-sm flex items-center mt-1">

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Shipment;
 use App\Models\Container;
+use App\Models\Consignee;
 use Illuminate\Http\Request;
 use App\Models\ShippingInstruction;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,19 +19,21 @@ class ShippingInstructionController extends Controller
     {
         $query = Container::with(['shipment_container', 'shippingInstructions'])
             ->whereHas('shippingInstructions')
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->orderByDesc('id');
 
         if ($request->has('filter') && $request->filter != '') {
             if ($request->filter !== 'all') {
                 $query->whereHas('shippingInstructions', function ($q) use ($request) {
-                    $q->where('status', $request->filter);
+                    $q->where('status', $request->filter === 'requested' ? 'Submitted' : ucfirst($request->filter));
                 });
             }
         }
 
         $containers = $query->paginate(10);
-        return view('user.shipments.shipping-instruction', compact('containers'));
+        $hasConsignee = Consignee::where('user_id', Auth::id())->exists();
+
+        return view('user.shipments.shipping-instruction', compact('containers', 'hasConsignee'));
     }
 
     public function showDetail($container)
@@ -41,6 +46,11 @@ class ShippingInstructionController extends Controller
 
     public function requestSi()
     {
+        if (!Consignee::where('user_id', Auth::id())->exists()) {
+            return redirect()->route('consignee')
+                ->with('error', 'Buat minimal satu Consignee sebelum mengajukan Shipping Instruction.');
+        }
+
         return view('user.shipments.request-si');
     }
 
@@ -84,7 +94,7 @@ class ShippingInstructionController extends Controller
                 });
             }
 
-            $query->where('status', 'Requested');
+            $query->where('status', 'Submitted');
 
             $availableVessel = Shipment::pluck('vessel_name');
             $shippingInstructions = $query->paginate(10);
@@ -155,15 +165,17 @@ class ShippingInstructionController extends Controller
 
     public function approvedSi(Request $request, $id)
     {
-        // Validate request
-        $request->validate(
-            [
-                'si_file' => 'required|mimes:pdf|max:10240',
-            ],
-            [
-                'si_file.required' => 'File Shipping Instruction harus diupload untuk melakukan approval'
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'si_file' => 'required|mimes:pdf|max:10240',
+        ], [
+            'si_file.required' => 'File Shipping Instruction harus diupload untuk melakukan approval'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors(['si_file.' . $id => $validator->errors()->first('si_file')])
+                ->withInput();
+        }
 
         try {
             $shippingInstruction = ShippingInstruction::findOrFail($id);
@@ -197,7 +209,7 @@ class ShippingInstructionController extends Controller
                     ]);
                 }
 
-                return redirect()->back()->with('success', 'Semua Shipping Instruction dengan ID order yang sama berhasil diapprove.');
+                return redirect()->back()->with('success', 'PDF Shipping Instruction (' . $fileName . ') berhasil diupload dan semua data terkait berhasil diapprove.');
             }
 
             return redirect()->back()
